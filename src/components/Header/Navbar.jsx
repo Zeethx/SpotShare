@@ -20,35 +20,18 @@ function Navbar() {
                 <div className={`${isOpen ? 'flex' : 'hidden'} items-center justify-between w-full md:flex md:w-auto md:order-1`} id="navbar-sticky">
                     <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg  md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0  dark:border-gray-700">
                         <li>
-                            <a href="/" className="block py-2 px-3 rounded md:bg-transparent  md:p-0 " aria-current="page">Home</a>
+                            <a href="/" className="block py-2 px-3 rounded 
+                            hover:bg-gray-100 md:hover:bg-transparent 
+                            md:hover:text-primary-color md:p-0 
+                            md:dark:hover:text-primary-color md:dark:hover:bg-transparent 
+                            dark:border-gray-700">Find a Spot</a>
                         </li>
                         <li>
                             <a href="/" className="block py-2 px-3 rounded 
                             hover:bg-gray-100 md:hover:bg-transparent 
                             md:hover:text-primary-color md:p-0 
                             md:dark:hover:text-primary-color md:dark:hover:bg-transparent 
-                            dark:border-gray-700">About</a>
-                        </li>
-                        <li>
-                            <a href="/" className="block py-2 px-3 rounded 
-                            hover:bg-gray-100 md:hover:bg-transparent 
-                            md:hover:text-primary-color md:p-0 
-                            md:dark:hover:text-primary-color md:dark:hover:bg-transparent 
-                            dark:border-gray-700">Features</a>
-                        </li>
-                        <li>
-                            <a href="/" className="block py-2 px-3 rounded 
-                            hover:bg-gray-100 md:hover:bg-transparent 
-                            md:hover:text-primary-color md:p-0 
-                            md:dark:hover:text-primary-color md:dark:hover:bg-transparent 
-                            dark:border-gray-700">Pricing</a>
-                        </li>
-                        <li>
-                            <a href="/" className="block py-2 px-3 rounded 
-                            hover:bg-gray-100 md:hover:bg-transparent 
-                            md:hover:text-primary-color md:p-0 
-                            md:dark:hover:text-primary-color md:dark:hover:bg-transparent 
-                            dark:border-gray-700">Contact</a>
+                            dark:border-gray-700">Share a Spot</a>
                         </li>
                     </ul>
                 </div>
