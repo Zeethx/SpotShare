@@ -3,7 +3,7 @@ import { useForm, Controller } from "react-hook-form";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Container from "../Container/Container";
-import InputField from "./Input";
+import InputField from "./InputField";
 
 function SimpleParkingForm() {
   const { control, handleSubmit } = useForm({
@@ -23,7 +23,7 @@ function SimpleParkingForm() {
           <label className="block text-sm font-medium text-gray-700">
             Park at
           </label>
-          <InputField placeholder="Enter a place or postcode" />
+          <InputField placeholder="Enter a place or postcode" type="text" />
 
         </div>
         <div className="flex items-center justify-between">
