@@ -2,10 +2,9 @@ import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import Container from "../Container/Container";
 import InputField from "./InputField";
 
-function SimpleParkingForm() {
+function ParkingForm() {
   const { control, handleSubmit } = useForm({
     defaultValues: {
       location: "",
@@ -81,14 +80,5 @@ function SimpleParkingForm() {
   );
 }
 
-function Form() {
-  return (
-    <div>
-      <Container>
-        <SimpleParkingForm />
-      </Container>
-    </div>
-  );
-}
 
-export default Form;
+export default ParkingForm;
