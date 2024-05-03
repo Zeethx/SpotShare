@@ -1,5 +1,6 @@
 import React from 'react'
 import Container from '../components/Container/Container'
+import  Form from '../components/Form/Form'
 
 function Home() {
   return (
@@ -11,6 +12,7 @@ function Home() {
                     <h2 className='text-primary-black'>
                         Where every parking space is an opportunity to earn and save.
                     </h2>
+                    <Form />
                 </div>
                 <div className='w-1/2'>
                     <img src='/parking.png' alt='parking' />
