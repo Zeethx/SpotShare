@@ -9,10 +9,16 @@
 }
 body {
   background-color: var(--bg-color);
-  padding-top: 5vw;
+  padding-top: 7vw;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+@media screen and (max-width: 768px){
+  body {
+    padding-top: 20vw;
+  }
 }
