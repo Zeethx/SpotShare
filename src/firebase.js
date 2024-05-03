@@ -6,12 +6,12 @@ import {getAuth} from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyB_TmrPNkYANkqbtKCmhm6sguUBcd-We8U",
-  authDomain: "spotshare-c26b4.firebaseapp.com",
-  projectId: "spotshare-c26b4",
-  storageBucket: "spotshare-c26b4.appspot.com",
-  messagingSenderId: "1019862944954",
-  appId: "1:1019862944954:web:243ba62dd0636492228683"
+  apiKey: "",
+  authDomain: "",
+  projectId: "",
+  storageBucket: "",
+  messagingSenderId: "",
+  appId: ""
 };
 
 // Initialize Firebase
