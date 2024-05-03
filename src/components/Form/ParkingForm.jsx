@@ -2,7 +2,7 @@ import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import InputField from "./InputField";
+import { InputField, Button } from "../";
 
 function ParkingForm() {
   const { control, handleSubmit } = useForm({
@@ -69,12 +69,8 @@ function ParkingForm() {
           </div>
         </div>
 
-        <button
-          type="submit"
-          className="w-full px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-md shadow-sm hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
-        >
-          Show parking spaces
-        </button>
+        <Button type="submit" text="Submit" 
+        className="w-full bg-green-500 text-white p-2 rounded-md"/>
       </form>
     </div>
   );

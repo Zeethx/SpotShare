@@ -3,7 +3,7 @@ import Footer from './Footer/Footer'
 import Container from './Container/Container'
 import ParkingForm from './Form/ParkingForm'
 import InputField from './Form/InputField'
-// import Button from './Form/Button'
+import Button from './Form/Button'
 import TestFooter from './Footer/TestFooter'
 
 export { 
@@ -12,7 +12,7 @@ export {
     Container,
     ParkingForm,
     InputField,
-    // Button,
+    Button,
     TestFooter
  }
 
