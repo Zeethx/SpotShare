@@ -3,7 +3,7 @@ import { ParkingForm } from "../";
 
 function HeroSection() {
   return (
-    <div className="flex flex-col lg:flex-row">
+    <div className="flex flex-col lg:flex-row lg:h-screen items-center ">
       <div className="lg:w-1/2">
         <span className="text-center">
           <h2 className="text-primary-color text-4xl font-bold">
