@@ -1,11 +1,13 @@
 import React from "react";
-import {Container, HeroSection} from "../components"
+import { Container, HeroSection, HowTo} from "../components"
+
 
 function Home() {
   return (
     <div>
       <Container>
         <HeroSection />
+        <HowTo />
       </Container>
     </div>
   );
