@@ -5,6 +5,8 @@ import ParkingForm from './Form/ParkingForm'
 import InputField from './Form/InputField'
 import Button from './Form/Button'
 import TestFooter from './Footer/TestFooter'
+import Logo from './Header/Logo'
+import LogoutBtn from './Header/LogoutBtn'
 
 export { 
     HeroSection,
@@ -13,6 +15,8 @@ export {
     ParkingForm,
     InputField,
     Button,
-    TestFooter
+    TestFooter,
+    Logo,
+    LogoutBtn
  }
 
