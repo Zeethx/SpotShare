@@ -9,6 +9,7 @@ function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const dispatch = useDispatch();
 
@@ -30,9 +31,12 @@ function LoginForm() {
       password,
     };
     const response = await signIn(user.email, user.password);
-    if (response) {
+    if (response && response.user) {
+      console.log('Signed in:', response.user);
       dispatch(login(user));
       setIsLoggedIn(true);
+    } else {
+      setErrorMessage('Invalid email or password');
     }
   };
 
@@ -42,17 +46,18 @@ function LoginForm() {
   }
 
   return (
-    <div className="bg-white relative">
+    <div className="bg-white relative pt-[7vw]">
       <div className="flex flex-col items-center justify-center p-10 mt-0 mr-auto mb-0 ml-auto max-w-md rounded-lg shadow-2xl">
         <h2 className="text-4xl font-semibold mb-6">Login to SpotShare</h2>
+        {errorMessage && <p className="text-red-500">{errorMessage}</p>}
         <form onSubmit={onSubmit} className="w-full space-y-6">
           <div className="relative">
             <InputField label="Email" type="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)}
-            className="border focus:border-primary-color w-full"/>
+            className="border focus:border-primary-color w-full" required/>
           </div>
           <div className="relative">
             <InputField label="Password" type="password" placeholder="Enter your password" value={password} onChange={(e) => setPassword(e.target.value)}
-            className="border focus:border-primary-color w-full"/>
+            className="border focus:border-primary-color w-full" required/>
           </div>
           <div className="relative">
             <Button type="submit" text="Log In" />
