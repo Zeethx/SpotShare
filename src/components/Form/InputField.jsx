@@ -6,7 +6,7 @@ function InputField({
     className = "",
     ...rest 
 }, ref) {
-    const defaultClasses = "mt-1 w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500";
+    const defaultClasses = "mt-1 w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-color focus:border-primary-color";
     const id = useId();
     return (
       <div className='w-full'>

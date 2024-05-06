@@ -46,7 +46,7 @@ function LoginForm() {
   }
 
   return (
-    <div className="bg-white relative pt-[7vw]">
+    <div className="flex bg-white relative pt-[7vw] h-screen items-center justify-center">
       <div className="flex flex-col items-center justify-center p-10 mt-0 mr-auto mb-0 ml-auto max-w-md rounded-lg shadow-2xl">
         <h2 className="text-4xl font-semibold mb-6">Login to SpotShare</h2>
         {errorMessage && <p className="text-red-500">{errorMessage}</p>}

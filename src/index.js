@@ -11,6 +11,7 @@ import Home from './pages/Home';
 import Profile from './pages/Profile';
 import Login from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
+import BecomeHost from './pages/BecomeHost';
 
 
 
@@ -26,6 +27,7 @@ root.render(
           <Route path="/profile" element={<Profile />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/become-a-host" element={<BecomeHost />} />
         </Route>
 
       </Routes>

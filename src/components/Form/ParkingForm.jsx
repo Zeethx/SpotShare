@@ -15,7 +15,7 @@ function ParkingForm() {
   const onSubmit = (data) => console.log(data);
 
   return (
-    <div className="max-w-md mx-auto my-10 p-5 border rounded-lg shadow-lg">
+    <div className="mx-auto my-10 p-5 border rounded-lg shadow-lg max-w-xl">
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <h2 className="text-2xl font-bold text-gray-700 text-center ">Find parking spaces</h2>
         <div>
@@ -41,7 +41,7 @@ function ParkingForm() {
                   timeFormat="HH:mm"
                   timeIntervals={15}
                   dateFormat="MMMM d, yyyy h:mm aa"
-                  className="mt-1 w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500"
+                  className="mt-1 w-full p-2 justify-center border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-color focus:border-primary-color"
                 />
               )}
             />
