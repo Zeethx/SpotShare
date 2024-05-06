@@ -3,8 +3,8 @@ import React from "react";
 
 function WhySection() {
   return (
-    <div className="flex flex-col ">
-      <div className="flex flex-col  lg:flex-row mt-10">
+    <div className="flex flex-col">
+      <div className="flex flex-col  lg:flex-row my-16">
         <div className="flex w-full lg:w-1/2 text-primary-black items-center justify-center">
           <img
             className="rounded-t-lg "

@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, HeroSection, WhySection, HowTo} from "../components"
+import { Container, HeroSection, WhySection, HowTo, Testimonial} from "../components"
 
 
 function Home() {
@@ -9,6 +9,7 @@ function Home() {
         <HeroSection />
         <HowTo />
         <WhySection />
+        <Testimonial />
       </Container>
     </div>
   );
