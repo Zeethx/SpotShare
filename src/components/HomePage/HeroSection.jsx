@@ -16,7 +16,8 @@ function HeroSection() {
         <ParkingForm />
       </div>
       <div className="lg:w-1/2">
-        <img src="/parking.png" alt="parking" />
+        <img src="images/hero_image.png" alt="Parking" 
+        className="rounded-lg"/>
       </div>
     </div>
   );

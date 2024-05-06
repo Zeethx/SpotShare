@@ -11,6 +11,7 @@ function SignUpForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isSignedUp, setIsSignedUp] = useState(false); // State to track sign up status
+  const [errorMessage, setErrorMessage] = useState(''); 
 
   const dispatch = useDispatch(); // Get the dispatch function
 
@@ -22,9 +23,13 @@ function SignUpForm() {
       password,
     };
     const response = await signUp(user.email, user.password);
-    if (response) {
-      dispatch(login(user)); 
-      setIsSignedUp(true); 
+    if (response === "auth/email-already-in-use") {
+      setErrorMessage('Email already in use');
+    } else if (response && response.user) {
+      dispatch(login(user));
+      setIsSignedUp(true);
+    } else {
+      setErrorMessage('Sign up failed. Please try again.');
     }
   };
 
@@ -48,25 +53,26 @@ function SignUpForm() {
             <div className="flex flex-col items-start justify-start pt-10 pr-10 pb-10 pl-10 bg-white shadow-2xl rounded-xl relative z-10">
               <p className="w-full text-4xl font-medium text-center leading-snug font-serif">Sign up for an account</p>
               <div className="w-full mt-6 mr-0 mb-0 ml-0 relative space-y-8">
+                {errorMessage && <p className="text-red-500 text-center">{errorMessage}</p>}
                 <div className="relative">
                   <p className="bg-white pt-0 pr-2 pb-0 pl-2 -mt-3 mr-0 mb-0 ml-2 font-medium text-gray-600
                   absolute">Username</p>
                   <InputField label="Username" type="text" placeholder="John" value={username} onChange={(e) => setUsername(e.target.value)}
-                  className="border focus:border-primary-color"/>
+                  className="border focus:border-primary-color" required/>
                 </div>
                 
                 <div className="relative">
                   <p className="bg-white pt-0 pr-2 pb-0 pl-2 -mt-3 mr-0 mb-0 ml-2 font-medium text-gray-600
                   absolute">Email</p>
                   <InputField label="Email" type="text" placeholder="123@ex.com" value={email} onChange={(e) => setEmail(e.target.value)}
-                  className="border focus:border-primary-color"/>
+                  className="border focus:border-primary-color" required/>
                 </div>
 
                 <div className="relative">
                   <p className="bg-white pt-0 pr-2 pb-0 pl-2 -mt-3 mr-0 mb-0 ml-2 font-medium text-gray-600
                   absolute">Password</p>
                   <InputField label="Password" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}
-                  className="border focus:border-primary-color"/>
+                  className="border focus:border-primary-color" required/>
                 </div>
                 <div className="relative">
                   <Button type="submit" text="Sign Up" 
