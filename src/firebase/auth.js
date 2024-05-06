@@ -16,8 +16,9 @@ export const signUp = async (email, password) => {
     try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         return userCredential;
-    } catch (error) {
-        return ("Signup failed:", error);
+    } catch(signUpError) {
+        // if signuperror is email-already-in-use, return the error code
+        return signUpError.code;
     }
 }
 

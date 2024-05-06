@@ -36,23 +36,31 @@ const HowTo = () => {
       {
         title: "Park Your Car",
         description: "Follow the directions and easily park your car in the reserved spot.",
-        imageUrl: "https://source.unsplash.com/random/6"
+        imageUrl: "images/park_your_car.svg"
       }
     ]
   };
 
   return (
     <div className="bg-white py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[75vw] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8">
           <h2 className="text-5xl text-indigo-600 font-semibold tracking-wide uppercase">How it works</h2>
           <div className="flex justify-center items-center mt-4">
-            <span className="text-lg font-medium mr-2">For Hosts</span>
-            <label htmlFor="toggle" className="inline-flex relative items-center cursor-pointer">
-              <input type="checkbox" id="toggle" className="sr-only peer" checked={!isHostView} onChange={() => setIsHostView(!isHostView)} />
-              <div className="w-14 h-8 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-indigo-300 dark:peer-focus:ring-indigo-800 transition duration-300 ease-in-out after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-7 after:w-7 after:transition-all after:duration-300 peer-checked:after:translate-x-6 "></div>
-            </label>
-            <span className="text-lg font-medium ml-2">For Drivers</span>
+            <div className="flex items-center justify-center bg-gray-200 p-1 rounded-lg w-max">
+              <button 
+                className={`px-4 py-2 rounded-lg text-lg font-medium ${isHostView ? 'text-gray-500' : 'bg-white shadow'}`}
+                onClick={() => setIsHostView(false)}
+              >
+                Drivers
+              </button>
+              <button 
+                className={`px-4 py-2 rounded-lg text-lg font-medium ${isHostView ? 'bg-white shadow' : 'text-gray-500'}`}
+                onClick={() => setIsHostView(true)}
+              >
+                Hosts
+              </button>
+            </div>
           </div>
         </div>
         <div className="flex justify-around flex-wrap">
