@@ -12,6 +12,7 @@ import LogoutBtn from './Header/LogoutBtn'
 import HorizontalCard from './Card/HorizontalCard'
 import WhySection from './HomePage/WhySection'
 import Testimonial from './HomePage/Testimonial'
+import GetStarted from './Host/GetStarted'
 
 export { 
     HeroSection,
@@ -27,6 +28,7 @@ export {
     LogoutBtn,
     HorizontalCard,
     WhySection,
-    Testimonial
+    Testimonial,
+    GetStarted
  }
 
