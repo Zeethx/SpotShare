@@ -11,6 +11,7 @@ import Logo from './Header/Logo'
 import LogoutBtn from './Header/LogoutBtn'
 import HorizontalCard from './Card/HorizontalCard'
 import WhySection from './HomePage/WhySection'
+import Testimonial from './HomePage/Testimonial'
 
 export { 
     HeroSection,
@@ -25,6 +26,7 @@ export {
     Logo,
     LogoutBtn,
     HorizontalCard,
-    WhySection
+    WhySection,
+    Testimonial
  }
 
