@@ -25,11 +25,11 @@ function ParkingForm() {
           <InputField placeholder="Enter a place or postcode" type="text" />
 
         </div>
-        <div className="flex items-center justify-between">
-          <div>
+        <div className="flex flex-col lg:flex-row justify-between">
+          <div className="mb-4 lg:mb-0">
             <label className="block text-sm font-medium text-gray-700">
               From
-            </label>
+            </label>  
             <Controller
               control={control}
               name="dateTimeIn"
