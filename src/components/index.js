@@ -13,6 +13,7 @@ import HorizontalCard from './Card/HorizontalCard'
 import WhySection from './HomePage/WhySection'
 import Testimonial from './HomePage/Testimonial'
 import GetStarted from './Host/GetStarted'
+import Map from './Map/Map'
 
 export { 
     HeroSection,
@@ -29,6 +30,7 @@ export {
     HorizontalCard,
     WhySection,
     Testimonial,
-    GetStarted
+    GetStarted,
+    Map
  }
 
