@@ -6,10 +6,10 @@ function HeroSection() {
     <div className="flex flex-col lg:flex-row lg:h-screen justify-center items-center pt-20 ">
       <div className="lg:w-1/2">
         <span className="text-center">
-          <h2 className="text-primary-color text-6xl font-bold">
-            Stop Searching, Start SpotSharing!
+          <h2 className="text-6xl font-black">
+            Stop Searching, Start <span className='text-primary-color'>SpotSharing!</span>
           </h2>
-          <p className="text-lg text-gray-600 mt-2">
+          <p className="text-xl text-gray-600 mt-3">
             The convenient way to find and share your perfect parking spot.
           </p>
         </span>

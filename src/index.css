@@ -4,7 +4,7 @@
 
 /* create a variable for the background color of the body element in the src/index.css file:  */
 :root {
-  --bg-color: #ffffff;
+  --bg-color: #fafafa;
   /* --primary-color: #177E89; */
 }
 body {

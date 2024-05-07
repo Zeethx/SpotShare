@@ -8,7 +8,7 @@ export function HorizontalCard({description, imageUrl , title="" ,imgClass = ""}
           <h2 className="text-xl font-bold text-primary-black">
             {title}
           </h2>
-          <p className="mt-3 text-sm text-gray-600">
+          <p className="mt-3 text-md lg:text-lg text-gray-600">
             {description}
           </p>
           

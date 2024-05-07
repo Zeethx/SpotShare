@@ -46,7 +46,7 @@ const HowTo = () => {
   };
 
   return (
-    <div className="bg-white py-8">
+    <div className="py-8">
       <div className="max-w-[80vw] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8">
           <h2 className="text-5xl font-bold">How it Works</h2>
