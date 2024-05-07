@@ -12,8 +12,8 @@ import Profile from './pages/Profile';
 import Login from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
 import BecomeHost from './pages/BecomeHost';
-
-
+import Location from './pages/host/Location';
+import SpotDetails from './pages/host/SpotDetails';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -28,6 +28,8 @@ root.render(
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/become-a-host" element={<BecomeHost />} />
+          <Route path="/become-a-host/location" element={<Location />} />
+          <Route path="/become-a-host/spot-details" element={<SpotDetails />} />
         </Route>
 
       </Routes>
