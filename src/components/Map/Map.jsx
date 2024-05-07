@@ -49,7 +49,7 @@ function Map() {
 
   return (
     <LoadScriptNext
-      googleMapsApiKey="AIzaSyB-B9_TDOa-m71hGMobTOVjIZLmKJ-B3NY"
+      googleMapsApiKey=""
       libraries={["places"]}
     >
       
