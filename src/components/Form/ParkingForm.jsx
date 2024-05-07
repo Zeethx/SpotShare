@@ -62,7 +62,7 @@ function ParkingForm() {
                   timeFormat="HH:mm"
                   timeIntervals={15}
                   dateFormat="MMMM d, yyyy h:mm aa"
-                  className="mt-1 w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500"
+                  className="mt-1 w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-color focus:border-primary-color"
                 />
               )}
             />
@@ -70,7 +70,7 @@ function ParkingForm() {
         </div>
 
         <Button type="submit" text="Submit" 
-        className="w-full bg-green-500 text-white p-2 rounded-md"/>
+        className="w-full bg-primary-color text-white p-2 rounded-md"/>
       </form>
     </div>
   );
