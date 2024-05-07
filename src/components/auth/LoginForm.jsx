@@ -17,23 +17,20 @@ function LoginForm() {
     const response = await googleSignIn();
     if (response && response.user) {
       console.log('Signed in with Google:', response.user);
-      // Handle successful sign-in here (e.g., update user state, navigate)
+      dispatch(login({ email: response.user.email, uid: response.user.uid }));
+      setIsLoggedIn(true);
     } else {
       console.error('Google Sign-In failed');
-      // Handle errors or failed sign-in here
+      setErrorMessage('Failed to sign in with Google.');
     }
   };
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    const user = {
-      email,
-      password,
-    };
-    const response = await signIn(user.email, user.password);
+    const response = await signIn(email, password);
     if (response && response.user) {
       console.log('Signed in:', response.user);
-      dispatch(login(user));
+      dispatch(login({ email, uid: response.user.uid }));
       setIsLoggedIn(true);
     } else {
       setErrorMessage('Invalid email or password');
@@ -46,30 +43,30 @@ function LoginForm() {
   }
 
   return (
-    <div className="flex bg-white relative pt-[7vw] h-screen items-center justify-center">
-      <div className="flex flex-col items-center justify-center p-10 mt-0 mr-auto mb-0 ml-auto max-w-md rounded-lg shadow-2xl">
-        <h2 className="text-4xl font-semibold mb-6">Login to SpotShare</h2>
-        {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-        <form onSubmit={onSubmit} className="w-full space-y-6">
-          <div className="relative">
+    <div className="flex flex-col lg:flex-row h-screen justify-center">
+      {/* Big image on the left */}
+      <div className='flex justify-center items-center'>
+        <div className="bg-center w-full bg-cover max-w-md lg:max-w-4xl lg:w-9/12 lg:pt-[7vw]">
+          <img src="images/login_form.svg" alt="Login" className="" />
+        </div>
+      </div>
+
+
+      <div className="flex lg:w-1/2 items-center justify-center text-center">
+        <div className="flex flex-col items-center justify-center p-10 mt-0 mr-auto mb-0 ml-auto max-w-md rounded-lg shadow-2xl">
+          <h2 className="text-4xl font-semibold mb-6">Login to SpotShare</h2>
+          {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+          <form onSubmit={onSubmit} className="w-full space-y-6">
             <InputField label="Email" type="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)}
-            className="border focus:border-primary-color w-full" required/>
-          </div>
-          <div className="relative">
+            className="border focus:border-primary-color w-full" required />
             <InputField label="Password" type="password" placeholder="Enter your password" value={password} onChange={(e) => setPassword(e.target.value)}
-            className="border focus:border-primary-color w-full" required/>
-          </div>
-          <div className="relative">
+            className="border focus:border-primary-color w-full" required />
             <Button type="submit" text="Log In" />
-          </div>
-          <div className="relative text-center">
             <Button text="Sign in with Google" onClick={handleGoogleSignIn}
             className='p-2 bg-blue-500 text-white rounded shadow' />
-          </div>
-          <div className="text-center">
-            <p>Don't have an account? <Link to="/signup" className="text-primary-color">Sign up</Link></p>
-          </div>
-        </form>
+            <p className="text-center">Don't have an account? <Link to="/signup" className="text-primary-color">Sign up</Link></p>
+          </form>
+        </div>
       </div>
     </div>
   );

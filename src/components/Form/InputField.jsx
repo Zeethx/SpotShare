@@ -9,7 +9,7 @@ function InputField({
     const defaultClasses = "mt-1 w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-color focus:border-primary-color";
     const id = useId();
     return (
-      <div className='w-full'>
+      <div className=''>
             <input
               type={type}
               placeholder={placeholder}
