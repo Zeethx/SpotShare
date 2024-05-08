@@ -1,4 +1,5 @@
-// Desc: Configuration file for the firebase project
+// Config file for the app
+
 
 const conf = {
     fbApiKey: process.env.REACT_APP_APIKEY,
