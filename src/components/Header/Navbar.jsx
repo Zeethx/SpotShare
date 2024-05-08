@@ -3,13 +3,13 @@ import { Logo, Button, LogoutBtn } from '../';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
-
 function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const isUserLoggedIn = useSelector((state) => state.auth.status)
 
     const navigate = useNavigate();
 
+    const buttonClass = "block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:px-4 md:py-2 md:dark:hover:bg-gray-200  md:dark:hover:rounded-full dark:border-gray-700"
 
 
     return (
@@ -23,7 +23,7 @@ function Navbar() {
                 )
                 : (
                 <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-                    <Button text="Login" className='font-bold rounded-lg px-4 py-2 text-center text-primary-color dark:hover:text-primary-black' 
+                    <Button text="Login" className={`${buttonClass} text-primary-color`} 
                     onClick={() => navigate('/login')} />
                 </div>
                 )}
@@ -31,18 +31,16 @@ function Navbar() {
                 <div className={`${isOpen ? 'flex' : 'hidden'} items-center justify-between w-full md:flex md:w-auto md:order-1`} id="navbar-sticky">
                     <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg  md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0  dark:border-gray-700">
                     <li>
-                            <Link to="/become-a-host" className="block py-2 px-3 rounded 
-                            hover:bg-gray-100 md:hover:bg-transparent md:px-4 md:py-2
-                             
-                            md:dark:hover:bg-gray-200  md:dark:hover:rounded-full
-                            dark:border-gray-700">Find a Spot</Link>
+                            <Link to="/become-a-host" className={buttonClass}>Find a Spot</Link>
                         </li>
                         <li>
-                            <Link to="/become-a-host" className="block py-2 px-3 rounded 
-                            hover:bg-gray-100 md:hover:bg-transparent md:px-4 md:py-2
-                             
-                            md:dark:hover:bg-gray-200  md:dark:hover:rounded-full
-                            dark:border-gray-700">Share a Spot</Link>
+                            {isUserLoggedIn ? (
+                                <Link to="/become-a-host" className={buttonClass}> Share a Spot</Link>
+                            ): (
+                                <Button text="Share a Spot" className={buttonClass} 
+                                onClick={() => navigate('/login')} />
+                            )}
+
                         </li>
                     </ul>
                 </div>

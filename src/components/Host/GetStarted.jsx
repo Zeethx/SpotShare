@@ -18,7 +18,7 @@ function GetStarted() {
           Turn Your <span className="text-[#32deaa]" >Empty</span> Space <br />into <span className="text-[#32deaa]" > Earning</span> Space
         </h1>
         <div className="mt-6">
-        <Button text="Get Started" className="w-1/2 lg:w-1/3 xl:w-1/3 2xl:w-1/4 inline-block pt-4 pr-5 pb-4 pl-5 text-xl font-medium text-center text-white bg-indigo-500 rounded-lg transition duration-200 hover:bg-indigo-600 ease"
+        <Button text="Get Started" className="w-1/2 lg:w-1/3 xl:w-1/3 2xl:w-1/4 inline-block pt-4 pr-5 pb-4 pl-5 text-xl font-medium text-center text-white bg-indigo-500 shadow-md shadow-slate-500 rounded-lg transition duration-200 hover:bg-indigo-600 ease"
         onClick={handleSubmit}/>
       </div></div>
       <div className="lg:w-1/2">
