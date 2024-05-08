@@ -28,7 +28,7 @@ function GetLocation() {
                 <Map onAddressChange={handleAddressChange}/>
             </div>
         </div>
-        <NextButton to="/become-a-host/spot-details" />
+        <NextButton to="/become-a-host/spot-details" disabledCondition={!address} />
     </div>
     </div>
   )
