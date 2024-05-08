@@ -14,6 +14,8 @@ import WhySection from './HomePage/WhySection'
 import Testimonial from './HomePage/Testimonial'
 import GetStarted from './Host/GetStarted'
 import Map from './Map/Map'
+import TextAreaInput from './Form/TextAreaInput'
+import NextButton from './Host/NextButton'
 
 export { 
     HeroSection,
@@ -31,6 +33,8 @@ export {
     WhySection,
     Testimonial,
     GetStarted,
-    Map
+    Map,
+    TextAreaInput,
+    NextButton
  }
 
