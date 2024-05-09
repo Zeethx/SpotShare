@@ -16,6 +16,7 @@ import GetStarted from './Host/GetStarted'
 import Map from './Map/Map'
 import TextAreaInput from './Form/TextAreaInput'
 import NextButton from './Host/NextButton'
+import FormFooter from './Footer/FormFooter'
 
 export { 
     HeroSection,
@@ -35,6 +36,7 @@ export {
     GetStarted,
     Map,
     TextAreaInput,
-    NextButton
+    NextButton,
+    FormFooter
  }
 
