@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import NextButton from "./NextButton";
+import { FormFooter } from "../";
 
 function GetSpotDetails3() {
   const [photos, setPhotos] = useState([]);
@@ -51,7 +51,7 @@ function GetSpotDetails3() {
           </div>
         </div>
       </div>
-      <NextButton to="/become-a-host/availability-and-pricing" />
+      <FormFooter text="Start Sharing Your Space: Step 2" to="/become-a-host/availability" />
     </div>
   );
 }

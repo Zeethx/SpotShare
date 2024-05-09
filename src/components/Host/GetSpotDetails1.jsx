@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { Button, InputField, NextButton } from '../'
+import { Button, InputField, FormFooter } from '../'
 
 function GetSpotDetails1({setStep}) {
     const [spotType, setSpotType] = useState("");
@@ -92,7 +92,7 @@ function GetSpotDetails1({setStep}) {
         </div>
       </div>
     </form>
-    <NextButton to="/become-a-host/spot-details" disabledCondition={ !vehicleSize || !spotType } onNextClick={()=> setStep(2)} />
+    <FormFooter text="Start Sharing Your Space: Step 2" to="/become-a-host/spot-details" disabledCondition={ !vehicleSize || !spotType } onNextClick={()=> setStep(2)} />
   </div>
   )
 }

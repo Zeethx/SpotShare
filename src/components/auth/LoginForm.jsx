@@ -47,7 +47,7 @@ function LoginForm() {
       {/* Big image on the left */}
       <div className='flex justify-center items-center'>
         <div className="bg-center w-full bg-cover max-w-md lg:max-w-4xl lg:w-9/12 lg:pt-[7vw]">
-          <img src="images/login_form.svg" alt="Login" className="" />
+          <img src="images/login_form.svg" alt="Login" className="w-1/2 lg:w-full lg:h-full lg:object-cover" />
         </div>
       </div>
 
@@ -58,9 +58,9 @@ function LoginForm() {
           {errorMessage && <p className="text-red-500">{errorMessage}</p>}
           <form onSubmit={onSubmit} className="w-full space-y-6">
             <InputField label="Email" type="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)}
-            className="border focus:border-primary-color w-full" required />
+            required />
             <InputField label="Password" type="password" placeholder="Enter your password" value={password} onChange={(e) => setPassword(e.target.value)}
-            className="border focus:border-primary-color w-full" required />
+            required />
             <Button type="submit" text="Log In" />
             <Button text="Sign in with Google" onClick={handleGoogleSignIn}
             className='p-2 bg-blue-500 text-white rounded shadow' />

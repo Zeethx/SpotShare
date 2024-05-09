@@ -11,7 +11,7 @@ function NextButton({ to='/become-a-host', disabledCondition=false, onNextClick}
     
 
   return (
-    <button className="absolute bottom-10 right-10 bg-primary-color text-white 
+    <button className="right-10 bg-primary-color text-white 
             px-14 py-2 rounded-lg shadow-md text-xl
             disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed" 
             onClick={onNextClick || handleClick} disabled={disabledCondition}>

@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react'
-import { TextAreaInput, InputField, NextButton } from '../'
+import { TextAreaInput, InputField, FormFooter } from '../'
 
 function GetSpotDetails2({setStep}) {
     const [title, setTitle] = useState("");
@@ -47,7 +47,7 @@ function GetSpotDetails2({setStep}) {
                         </div>
                     </div>
                 </div>
-                <NextButton to="/become-a-host/spot-details" disabledCondition={!title || !description} onNextClick={()=> setStep(3)} />
+                <FormFooter text="Start Sharing Your Space: Step 2" to="/become-a-host/spot-details" disabledCondition={ !title || description.length < 20 } onNextClick={()=> setStep(3)} />
             </div>
   )
 }

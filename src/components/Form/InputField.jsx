@@ -13,7 +13,7 @@ function InputField({
             <input
               type={type}
               placeholder={placeholder}
-              className={className || defaultClasses}
+              className={className ? className : defaultClasses}
               id={id}
               ref={ref}
               {...rest}

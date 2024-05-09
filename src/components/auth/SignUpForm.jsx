@@ -58,21 +58,21 @@ function SignUpForm() {
                   <p className="bg-white pt-0 pr-2 pb-0 pl-2 -mt-3 mr-0 mb-0 ml-2 font-medium text-gray-600
                   absolute">Username</p>
                   <InputField label="Username" type="text" placeholder="John" value={username} onChange={(e) => setUsername(e.target.value)}
-                  className="border focus:border-primary-color" required/>
+                  required/>
                 </div>
                 
                 <div className="relative">
                   <p className="bg-white pt-0 pr-2 pb-0 pl-2 -mt-3 mr-0 mb-0 ml-2 font-medium text-gray-600
                   absolute">Email</p>
                   <InputField label="Email" type="text" placeholder="123@ex.com" value={email} onChange={(e) => setEmail(e.target.value)}
-                  className="border focus:border-primary-color" required/>
+                  required/>
                 </div>
 
                 <div className="relative">
                   <p className="bg-white pt-0 pr-2 pb-0 pl-2 -mt-3 mr-0 mb-0 ml-2 font-medium text-gray-600
                   absolute">Password</p>
                   <InputField label="Password" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}
-                  className="border focus:border-primary-color" required/>
+                  required/>
                 </div>
                 <div className="relative">
                   <Button type="submit" text="Sign Up" 
