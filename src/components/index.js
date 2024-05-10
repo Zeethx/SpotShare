@@ -17,6 +17,7 @@ import Map from './Map/Map'
 import TextAreaInput from './Form/TextAreaInput'
 import NextButton from './Host/NextButton'
 import FormFooter from './Footer/FormFooter'
+import TimeSelector from './Form/TimeSelector'
 
 export { 
     HeroSection,
@@ -37,6 +38,7 @@ export {
     Map,
     TextAreaInput,
     NextButton,
-    FormFooter
+    FormFooter,
+    TimeSelector
  }
 

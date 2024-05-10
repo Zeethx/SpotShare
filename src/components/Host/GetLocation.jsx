@@ -33,7 +33,7 @@ function GetLocation() {
       <FormFooter
         text="Start Sharing Your Space: Step 1"
         to="/become-a-host/spot-details"
-        disabledCondition={!address}
+        // disabledCondition={!address}
       />
     </div>
   );

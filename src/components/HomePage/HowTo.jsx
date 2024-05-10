@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Card } from "../"; // Ensure the Card component is properly imported
 
 const HowTo = () => {
-  const [isHostView, setIsHostView] = useState(true); // State to track toggle position
+  const [isHostView, setIsHostView] = useState(false); // State to track toggle position
 
   const content = {
     hosts: [
@@ -72,7 +72,7 @@ const HowTo = () => {
           </div>
         </div>
         <div className="flex justify-around flex-wrap">
-          {content[isHostView ? "hosts" : "drivers"].map((item, index) => (
+          {content[isHostView ? "hosts":"drivers" ].map((item, index) => (
             <Card
               key={index}
               title={item.title}
