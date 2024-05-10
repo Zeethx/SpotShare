@@ -17,8 +17,13 @@ code {
     monospace;
 }
 
-@media screen and (max-width: 768px){
-  body {
-    /* padding-top: 20vw; */
-  }
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
+
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+

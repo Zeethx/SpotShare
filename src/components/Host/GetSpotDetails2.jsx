@@ -47,7 +47,7 @@ function GetSpotDetails2({setStep}) {
                         </div>
                     </div>
                 </div>
-                <FormFooter text="Start Sharing Your Space: Step 2" to="/become-a-host/spot-details" disabledCondition={ !title || description.length < 20 } onNextClick={()=> setStep(3)} />
+                { <FormFooter text="Start Sharing Your Space: Step 2" to="/become-a-host/spot-details" /*disabledCondition={ !title || description.length < 20 }*/ onNextClick={()=> setStep(3)} /> }
             </div>
   )
 }
