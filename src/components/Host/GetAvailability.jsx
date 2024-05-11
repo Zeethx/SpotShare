@@ -26,7 +26,7 @@ function GetAvailability() {
   });
   const [dateSelected, setDateSelected] = useState(false);
   const CustomInput = React.forwardRef(({ value, onClick }, ref) => (
-    <div className="border-2 border-gray-500 rounded-lg pt-2 text-lg text-center w-64 h-12 " onClick={onClick} ref={ref}>
+    <div className="py-2 px-6 rounded border hover:border-2 hover:border-black font-bold text-xl w-full " onClick={onClick} ref={ref}>
       {dateSelected ? value : 'Set date'}
     </div>
   ));
@@ -57,7 +57,7 @@ function GetAvailability() {
   };
 
   return (
-    <div className="lg:pt-[7vw] pb-[10vw]">
+    <div className="lg:pt-[7vw] pb-[10vw] h:screen py-20">
       <form
         onSubmit={handleSubmit}
         className="flex flex-col items-center justify-center"
@@ -73,7 +73,7 @@ function GetAvailability() {
           </div>
         </div>
         <div className="flex flex-col w-1/2 space-y-4 items-center mt-10">
-          <div className="flex flex-col lg:flex-row  justify-between w-full">
+          <div className="flex flex-col lg:flex-row justify-between w-full my-5">
             <div>
 
               <DatePicker
@@ -83,7 +83,7 @@ function GetAvailability() {
                 customInput={<CustomInput />}
               />
             </div>
-            <div className="text-lg font-medium bold">
+            <div className="text-lg font-medium bold mt-5 lg:mt-0">
             <Button
               text={
                 editingDays.length === daysOfWeek.length

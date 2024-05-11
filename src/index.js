@@ -16,6 +16,7 @@ import Location from './pages/host/Location';
 import SpotDetails from './pages/host/SpotDetails';
 import Availability from './pages/host/Availability';
 import Pricing from './pages/host/Pricing';
+import NotFound from './pages/Error';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -34,6 +35,7 @@ root.render(
           <Route path="/become-a-host/spot-details" element={<SpotDetails />} />
           <Route path='/become-a-host/availability' element={<Availability />} />
           <Route path='/become-a-host/pricing' element={<Pricing />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
 
       </Routes>
