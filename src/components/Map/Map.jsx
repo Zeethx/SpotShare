@@ -4,22 +4,14 @@ import conf from "../../conf/conf";
 import "./Map.css";
 
 const libraries = ["places"];
-const containerStyle = {
-  width: "100%",
-  height: '27vw',
-  borderRadius: '2%'
-};
 
-const center = {
-  lat: 43.7,
-  lng: -79.42
-};
-const inputStyle = "absolute top-5 left-1/2 transform -translate-x-1/2 w-11/12 max-w-md px-4 py-2 text-lg bg-white shadow-md rounded-full box-border";
 
 function Map({ onAddressChange }) {
   const [markerPosition, setMarkerPosition] = useState(null);
   const [autocomplete, setAutocomplete] = useState(null);
   const [map, setMap] = useState(null);
+
+  const inputStyle = "absolute top-5 left-1/2 transform -translate-x-1/2 w-11/12 max-w-md px-4 py-2 text-lg bg-white shadow-md rounded-full box-border";
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: conf.googleMapsApiKey,
@@ -27,7 +19,6 @@ function Map({ onAddressChange }) {
   });
 
   const onMapLoad = useCallback((map) => {
-    // store the map object in state
     setMap(map);
   }, []);
 
@@ -51,23 +42,23 @@ function Map({ onAddressChange }) {
   }
 
   return (
-    <>
+    <div className='map-container'>
       <GoogleMap
-        mapContainerStyle={containerStyle}
-        center={center}
+        mapContainerStyle={{ width: '100%', height:"100%"}} // Height managed by CSS
+        center={{ lat: 43.7, lng: -79.42 }}
         zoom={12}
         onLoad={onMapLoad}
         options={{ mapTypeControl: false, streetViewControl: false, fullscreenControl: false }}
       >
-      <Autocomplete
-        onLoad={(autocomplete) => setAutocomplete(autocomplete)}
-        onPlaceChanged={onPlaceChanged}
-      >
+        <Autocomplete
+          onLoad={(autocomplete) => setAutocomplete(autocomplete)}
+          onPlaceChanged={onPlaceChanged}
+        >
           <input type="text" placeholder="Enter your Address" className={inputStyle} />
         </Autocomplete>
         {markerPosition && <Marker position={markerPosition} />}
       </GoogleMap>
-    </>
+    </div>
   );
 }
 

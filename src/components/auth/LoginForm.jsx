@@ -44,8 +44,7 @@ function LoginForm() {
 
   return (
     <div className="flex flex-col lg:flex-row h-screen justify-center">
-      {/* Big image on the left */}
-      <div className='flex justify-end items-center'>
+      <div className='lg:flex justify-center items-center hidden'>
         <div className="bg-center w-full bg-cover max-w-md lg:max-w-4xl lg:w-9/12 lg:pt-[7vw]">
           <img src="images/login_form.svg" alt="Login" className="w-1/2 lg:w-full lg:h-full lg:object-cover" />
         </div>
@@ -62,8 +61,13 @@ function LoginForm() {
             <InputField label="Password" type="password" placeholder="Enter your password" value={password} onChange={(e) => setPassword(e.target.value)}
             required />
             <Button type="submit" text="Log In" />
-            <Button text="Sign in with Google" onClick={handleGoogleSignIn}
-            className='p-2 bg-blue-500 text-white rounded shadow' />
+            <Button text={
+                <div className='flex gap-2 justify-center'>
+                <img src="/images/googleg.png" alt="google" className='max-w-7' />
+                <span className='text-black font-medium'>Sign in with Google</span>
+              </div>
+            } onClick={handleGoogleSignIn}
+            className='p-2 text-white rounded shadow w-fit' />
             <p className="text-center">Don't have an account? <Link to="/signup" className="text-primary-color">Sign up</Link></p>
           </form>
         </div>

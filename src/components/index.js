@@ -17,6 +17,7 @@ import TextAreaInput from './Form/TextAreaInput'
 import NextButton from './Host/NextButton'
 import FormFooter from './Footer/FormFooter'
 import TimeSelector from './Form/TimeSelector'
+import NotFound from './Misc/NotFound'
 
 export { 
     HeroSection,
@@ -37,6 +38,7 @@ export {
     TextAreaInput,
     NextButton,
     FormFooter,
-    TimeSelector
+    TimeSelector,
+    NotFound
  }
 

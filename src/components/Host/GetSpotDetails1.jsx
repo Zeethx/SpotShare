@@ -19,8 +19,8 @@ function GetSpotDetails1({setStep}) {
   
   return (
     
-    <div className="w-full lg:w-1/2">
-    <form className="w-full p-8 min-h-screen" onSubmit={handleSubmit}>
+    <div className="w-full lg:w-1/2 mb-20">
+    <form className="w-full p-8" onSubmit={handleSubmit}>
       <div className="mb-4 md:mb-10">
         <label className="text-xl lg:text-2xl font-bold">
           Type of Spot
