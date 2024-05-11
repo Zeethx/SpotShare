@@ -18,20 +18,20 @@ function GetSpotDetails3() {
   return (
     <div className="w-full lg:w-1/2">
       <div className="flex flex-col items-center justify-center h-full p-4 w-full">
-        <div className="flex flex-col items-center justify-center">
+        <div className="flex flex-col items-center justify-center mt-10">
           <label className="text-xl lg:text-2xl font-bold mb-5">
             Add Photos
           </label>
         </div>
         <div>
           {/* get images from the user in a grid*/}
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {Array(6)
               .fill()
               .map((_, index) => (
                 <div
                   key={index}
-                  className="bg-gray-200 h-40 w-40 flex items-center justify-center"
+                  className="bg-gray-200 h-24 md:h-40 w-24 md:w-40 flex items-center justify-center"
                 >
                   <input
                     type="file"
@@ -42,7 +42,7 @@ function GetSpotDetails3() {
                   />
                   <label
                     htmlFor={`upload-button-${index}`}
-                    className="text-2xl cursor-pointer"
+                    className="text-xl md:text-2xl cursor-pointer"
                   >
                     +
                   </label>

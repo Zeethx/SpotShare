@@ -45,7 +45,7 @@ function LoginForm() {
   return (
     <div className="flex flex-col lg:flex-row h-screen justify-center">
       {/* Big image on the left */}
-      <div className='flex justify-center items-center'>
+      <div className='flex justify-end items-center'>
         <div className="bg-center w-full bg-cover max-w-md lg:max-w-4xl lg:w-9/12 lg:pt-[7vw]">
           <img src="images/login_form.svg" alt="Login" className="w-1/2 lg:w-full lg:h-full lg:object-cover" />
         </div>

@@ -13,6 +13,7 @@ module.exports = {
     },
     fontFamily: {
       'outfit' : ['Outfit', 'sans-serif'],
+      'freeman' : ['Freeman', 'sans-serif'],
     },
   },
   },
