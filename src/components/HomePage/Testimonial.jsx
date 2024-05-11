@@ -4,7 +4,7 @@ function Testimonial() {
   return (
     <section className="px-5 lg:px-10 py-10 border rounded-lg shadow-lg my-16">
       <figure className="mx-auto max-w-7xl">
-        <h1 className="mb-4 text-4xl font-semibold text-black">
+        <h1 className="mb-4 text-4xl font-semibold font-freeman text-black">
           What drivers are saying?
         </h1>
         <blockquote className="mt-10 text-xl text-gray-900">

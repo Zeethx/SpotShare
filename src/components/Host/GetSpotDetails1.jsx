@@ -20,8 +20,8 @@ function GetSpotDetails1({setStep}) {
   return (
     
     <div className="w-full lg:w-1/2">
-    <form className="w-full p-8" onSubmit={handleSubmit}>
-      <div className="mb-10">
+    <form className="w-full p-8 min-h-screen" onSubmit={handleSubmit}>
+      <div className="mb-4 md:mb-10">
         <label className="text-xl lg:text-2xl font-bold">
           Type of Spot
         </label>
@@ -44,7 +44,7 @@ function GetSpotDetails1({setStep}) {
           ))}
         </div>
       </div>
-      <div className="mb-10">
+      <div className="mb-4 md:mb-10">
         <label className="text-xl lg:text-2xl font-bold">
           What size vehicle can your space accommodate?
         </label>
@@ -64,7 +64,7 @@ function GetSpotDetails1({setStep}) {
           ))}
         </div>
       </div>
-      <div className="mb-6">
+      <div className="mb-4 md:mb-10">
         <label className="text-xl lg:text-2xl font-bold">
           How many spaces are available to rent out?
         </label>

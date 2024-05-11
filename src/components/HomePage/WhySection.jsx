@@ -13,7 +13,7 @@ function WhySection() {
           />
         </div>
         <div className="p-5 flex flex-col flex-wrap">
-          <h2 className="text-4xl font-bold text-primary-black text-center">
+          <h2 className="text-4xl font-bold font-freeman text-primary-black text-center">
             Why SpotSharing?
           </h2>
           <HorizontalCard
