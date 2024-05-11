@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Map, FormFooter } from "../";
 
+
 function GetLocation() {
   const [address, setAddress] = useState("");
 
@@ -9,8 +10,8 @@ function GetLocation() {
   };
 
   return (
-    <div className="h-screen">
-      <div className="h-screen text-center lg:pt-[7vw] pt-[20vw]">
+    <div className="lg:h-screen">
+      <div className="text-center lg:pt-[7vw] pt-[20vw]">
         <div className="flex flex-col items-center justify-center">
           <div className="w-full lg:w-1/2 pr-2">
             <div className="flex flex-col items-center justify-center ">
@@ -18,14 +19,14 @@ function GetLocation() {
                 Location
               </h2>
               <p className="text-xl text-gray-700">
-                Enter the exact address or drag the pin on the map to your
+                Enter the exact address on the map to your
                 spot's location.
               </p>
             </div>
           </div>
-          <div className="w-full lg:w-1/2">
-            <div className="flex flex-col items-center justify-center h-full p-4">
-              <Map onAddressChange={handleAddressChange} />
+          <div className="w-full lg:w-1/2 h-full">
+            <div className="w-full h-full relative ">
+              <Map onAddressChange={handleAddressChange} className="absolute top-0 left-0 w-full h-full" />
             </div>
           </div>
         </div>

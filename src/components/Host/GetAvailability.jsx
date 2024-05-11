@@ -26,8 +26,8 @@ function GetAvailability() {
   });
   const [dateSelected, setDateSelected] = useState(false);
   const CustomInput = React.forwardRef(({ value, onClick }, ref) => (
-    <div className="py-2 px-6 rounded border hover:border-2 hover:border-black font-bold text-xl w-full " onClick={onClick} ref={ref}>
-      {dateSelected ? value : 'Set date'}
+    <div className="py-1 px-6 rounded border hover:border-2 hover:border-black font-bold text-xl w-full cursor-pointer" onClick={onClick} ref={ref}>
+      {dateSelected ? value : 'Set Date'}
     </div>
   ));
 
@@ -57,7 +57,7 @@ function GetAvailability() {
   };
 
   return (
-    <div className="lg:pt-[7vw] pb-[10vw] h:screen py-20">
+    <div className="lg:pt-[7vw] pb-[10vw] h:screen my-20 lg:my-0">
       <form
         onSubmit={handleSubmit}
         className="flex flex-col items-center justify-center"
@@ -67,19 +67,19 @@ function GetAvailability() {
             <h2 className="text-3xl lg:text-4xl font-semibold text-primary-black p-2">
               Set Availability
             </h2>
-            <p className="text-xl text-gray-700">
-              Set the availability schedule and start date.
+            <p className="lg:text-xl text-gray-700">
+            Select a start date and specify your active days. Click "Set Date" to pick your start date.
             </p>
           </div>
         </div>
-        <div className="flex flex-col w-1/2 space-y-4 items-center mt-10">
-          <div className="flex flex-col lg:flex-row justify-between w-full my-5">
+        <div className="flex flex-col w-1/2 space-y-4 items-center mt-2">
+          <div className="flex flex-col lg:flex-row justify-between w-full my-2">
             <div>
 
               <DatePicker
                 selected={startDate}
                 onChange={(date) => {setStartDate(date); setDateSelected(true);}}
-                placeholderText="Select date"
+                placeholderText="Select Start Date"
                 customInput={<CustomInput />}
               />
             </div>
@@ -87,11 +87,11 @@ function GetAvailability() {
             <Button
               text={
                 editingDays.length === daysOfWeek.length
-                  ? "Deselect All Days"
-                  : "Select All Days"
+                  ? "Deselect All"
+                  : "Select All"
               }
               onClick={handleToggleAllDays}
-              className="py-2 px-6 rounded border hover:border-2 hover:border-black font-bold text-xl"
+              className="py-1 px-6 rounded border hover:border-2 hover:border-black font-bold text-xl"
             />
             </div>
           </div>
@@ -134,6 +134,7 @@ function GetAvailability() {
       <FormFooter
         text="Set Availability and Pricing: Step 2"
         to="/become-a-host/pricing"
+        disabledCondition={!dateSelected || editingDays.length === 0}
       />
     </div>
   );
