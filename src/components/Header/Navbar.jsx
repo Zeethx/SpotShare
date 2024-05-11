@@ -9,13 +9,17 @@ function Navbar() {
 
     const navigate = useNavigate();
 
-    const buttonClass = "block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:px-4 md:py-2 md:dark:hover:bg-gray-200  md:dark:hover:rounded-full dark:border-gray-700"
-
+    const buttonClass = "block py-2 px-3 font-semibold rounded hover:bg-gray-100 md:hover:bg-transparent md:px-4 md:py-2 md:dark:hover:bg-gray-200  md:dark:hover:rounded-full dark:border-gray-700"
 
     return (
-        <nav className="bg-primary-white text-primary-black  fixed w-full z-20 top-0 start-0 border-b border-gray-200 shadow-md px-5">
+        <nav className="bg-primary-white text-primary-black fixed w-full z-20 top-0 start-0 border-b border-gray-200 shadow-md px-5">
             <div className="flex flex-wrap items-center justify-between mx-auto p-4">
                 <Logo />
+                <button onClick={() => setIsOpen(!isOpen)} className="md:hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
                 {isUserLoggedIn ? (
                 <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
                     <LogoutBtn />

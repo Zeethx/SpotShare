@@ -49,8 +49,8 @@ const HowTo = () => {
     <div className="py-8">
       <div className="max-w-[80vw] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8">
-          <h2 className="text-5xl font-bold">How it Works</h2>
-          <div className="flex justify-center items-center mt-4">
+          <h2 className="text-5xl font-bold font-freeman">How it Works?</h2>
+          <div className="flex justify-center items-center mt-6">
             <div className="flex items-center justify-center bg-gray-200 p-1 rounded-lg w-max">
               <button
                 className={`px-4 py-2 rounded-lg text-lg font-medium transition ease-in-out duration-200 ${
