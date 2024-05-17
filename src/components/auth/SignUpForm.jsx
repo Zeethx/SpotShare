@@ -4,36 +4,54 @@ import { login } from "../../store/authSlice";
 import { signUp } from "../../firebase/auth";
 import { InputField, Button } from "../"
 import { useDispatch } from "react-redux";
-
+import api from "../../conf/axiosConfig";
 
 function SignUpForm() {
-  const [username, setUsername] = useState('');
+  const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isSignedUp, setIsSignedUp] = useState(false); // State to track sign up status
+  const [isSignedUp, setIsSignedUp] = useState(false); 
   const [errorMessage, setErrorMessage] = useState(''); 
 
   const dispatch = useDispatch(); // Get the dispatch function
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    const user = {
-      username,
-      email,
-      password,
-    };
-    const response = await signUp(user.email, user.password);
-    if (response === "auth/email-already-in-use") {
-      setErrorMessage('Email already in use');
-    } else if (response && response.user) {
-      dispatch(login(user));
-      setIsSignedUp(true);
-    } else {
+    try {
+
+      if (!fullName || !email || !password) {
+        setErrorMessage('Please fill in all fields');
+        return;
+      }
+
+      const response = await signUp(email, password);
+      if (response === "auth/email-already-in-use") {
+        setErrorMessage('Email already in use');
+      } else if (response && response.user) {
+        const idToken = await response.user.getIdToken();
+        localStorage.setItem('token', idToken);
+
+        // Create user on the backend
+        const user = {
+          fullName: fullName,
+          email,
+          uid: response.user.uid  
+        };
+
+        // Send user data to the backend
+        await api.post('/users/register', user);
+
+        dispatch(login({ email, uid: response.user.uid }));
+        setIsSignedUp(true);
+      } else {
+        setErrorMessage('Sign up failed');
+      }
+    } catch (error) {
       setErrorMessage('Sign up failed. Please try again.');
     }
   };
 
-  // If the user is signed up, redirect them
+  
   if (isSignedUp) {
     return <Navigate to="/" />;
   }
@@ -56,8 +74,8 @@ function SignUpForm() {
                 {errorMessage && <p className="text-red-500 text-center">{errorMessage}</p>}
                 <div className="relative">
                   <p className="bg-white pt-0 pr-2 pb-0 pl-2 -mt-3 mr-0 mb-0 ml-2 font-medium text-gray-600
-                  absolute">Username</p>
-                  <InputField label="Username" type="text" placeholder="John" value={username} onChange={(e) => setUsername(e.target.value)}
+                  absolute">Full Name</p>
+                  <InputField label="FullName" type="text" placeholder="John Walker" value={fullName} onChange={(e) => setFullName(e.target.value)}
                   required/>
                 </div>
                 
