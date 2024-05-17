@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { login } from '../../store/authSlice';
 import { signIn, googleSignIn } from '../../firebase/auth';
 import { InputField, Button } from '../';
+import api from '../../conf/axiosConfig';
 
 function LoginForm() {
   const [email, setEmail] = useState('');
@@ -14,11 +15,14 @@ function LoginForm() {
   const dispatch = useDispatch();
 
   const handleGoogleSignIn = async () => {
-    const response = await googleSignIn();
-    if (response && response.user) {
-      console.log('Signed in with Google:', response.user);
-      dispatch(login({ email: response.user.email, uid: response.user.uid }));
+    const userCredential = await googleSignIn();
+    if (userCredential && userCredential.user) {
+      dispatch(login({ email: userCredential.user.email, uid: userCredential.user.uid }));
       setIsLoggedIn(true);
+
+      const idToken = await userCredential.user.getIdToken();
+      localStorage.setItem('token', idToken);
+
     } else {
       console.error('Google Sign-In failed');
       setErrorMessage('Failed to sign in with Google.');
@@ -27,11 +31,17 @@ function LoginForm() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    const response = await signIn(email, password);
-    if (response && response.user) {
-      console.log('Signed in:', response.user);
-      dispatch(login({ email, uid: response.user.uid }));
+    const userCredential = await signIn(email, password);
+    if (userCredential && userCredential.user) {
+      dispatch(login({ email, uid: userCredential.user.uid }));
       setIsLoggedIn(true);
+
+      const idToken = await userCredential.user.getIdToken();
+      localStorage.setItem('token', idToken);
+
+      const userDetails = await api.get('/users/me');
+      localStorage.setItem('user', JSON.stringify(userDetails.data)); // Store user details in local storage
+
     } else {
       setErrorMessage('Invalid email or password');
     }
