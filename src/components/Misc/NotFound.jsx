@@ -1,13 +1,16 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom'; // assuming you're using react-router for navigation
+import { useSelector } from 'react-redux';
 
 function NotFound() {
     const navigate = useNavigate(); // Hook for navigation
-
+    const formData = useSelector((state) => state.form);
     const handleGoHome = () => {
         // go to https://forms.gle/dSCcRJK13dA8fk5i7 without using navigate on a new page
         window.open('https://forms.gle/dSCcRJK13dA8fk5i7', '_blank');
     };
+
+    console.log(formData); // log the form data to the console
 
     return (
         <div className="h-screen lg:px-24 lg:py-24 md:py-20 md:px-44 px-4 py-24 flex justify-center items-center flex-col-reverse lg:flex-row md:gap-28 gap-16">

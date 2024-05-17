@@ -1,12 +1,23 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { updateForm } from "../../store/formReducer";
+import { useNavigate } from "react-router-dom";
 import { Map, FormFooter } from "../";
 
-
 function GetLocation() {
-  const [address, setAddress] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const formData = useSelector((state) => state.form);
+  const [address, setAddress] = useState(formData.address || "");
 
-  const handleAddressChange = (address) => {
-    setAddress(address);
+  const handleAddressChange = (newAddress) => {
+    setAddress(newAddress);
+    dispatch(updateForm({ name: 'address', value: newAddress }));
+  };
+
+  const handleSubmit = () => {
+    dispatch(updateForm({ name: 'address', value: address }));
+    navigate("/become-a-host/spot-details");
   };
 
   return (
@@ -25,7 +36,7 @@ function GetLocation() {
             </div>
           </div>
           <div className="w-full lg:w-1/2 h-full">
-            <div className="w-full h-full relative ">
+            <div className="w-full h-full relative">
               <Map onAddressChange={handleAddressChange} className="absolute top-0 left-0 w-full h-full" />
             </div>
           </div>
@@ -34,7 +45,8 @@ function GetLocation() {
       <FormFooter
         text="Start Sharing Your Space: Step 1"
         to="/become-a-host/spot-details"
-        // disabledCondition={!address}
+        disabledCondition={!address}
+        onNextClick={handleSubmit}
       />
     </div>
   );

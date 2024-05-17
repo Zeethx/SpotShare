@@ -1,22 +1,26 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { Button, InputField, FormFooter } from '../'
+import { useSelector, useDispatch } from 'react-redux';
+import { updateForm } from '../../store/formReducer';
 
 function GetSpotDetails1({setStep}) {
-    const [spotType, setSpotType] = useState("");
-    const [vehicleSize, setVehicleSize] = useState("");
-    const [numberOfSpaces, setNumberOfSpaces] = useState(1);
+    const formData = useSelector((state) => state.form);
+    const dispatch = useDispatch();
+
+    const [spotType, setSpotType] = useState(formData.typeOfSpot || '');
+    const [vehicleSize, setVehicleSize] = useState(formData.vehicleSize || '');
+    const [spacesToRent, setSpacesToRent] = useState(formData.spacesToRent || 1);
   
     const handleSubmit = (e) => {
       e.preventDefault();
-      const spotDetails = {
-        spotType,
-        vehicleSize,
-        numberOfSpaces,
-      };
-      console.log(spotDetails);
-      // Integrate your API request logic here
     };
-  
+
+    useEffect(() => {
+      dispatch(updateForm({ name: 'typeOfSpot', value: spotType }));
+      dispatch(updateForm({ name: 'vehicleSize', value: vehicleSize }));
+      dispatch(updateForm({ name: 'spacesToRent', value: spacesToRent }));
+    }, [spotType, vehicleSize, spacesToRent, dispatch]);
+
   return (
     
     <div className="w-full lg:w-1/2 mb-20">
@@ -73,7 +77,7 @@ function GetSpotDetails1({setStep}) {
             type="button"
             text="-"
             onClick={() =>
-              setNumberOfSpaces(Math.max(1, numberOfSpaces - 1))
+              setSpacesToRent(Math.max(1, spacesToRent - 1))
             }
             className="px-4 lg:px-6 py-2 lg:py-4 border rounded bg-gray-200 text-xl font-bold"
           />
@@ -81,12 +85,12 @@ function GetSpotDetails1({setStep}) {
             type="text"
             className="w-12 py-2 lg:py-4 px-4 text-center text-xl font-bold border-0 shadow-none"
             readOnly
-            value={numberOfSpaces}
+            value={spacesToRent}
           />
           <Button
             type="button"
             text="+"
-            onClick={() => setNumberOfSpaces(numberOfSpaces + 1)}
+            onClick={() => setSpacesToRent(spacesToRent + 1)}
             className="px-4 lg:px-6 py-2 lg:py-4 border rounded bg-gray-200 text-xl font-bold"
           />
         </div>
