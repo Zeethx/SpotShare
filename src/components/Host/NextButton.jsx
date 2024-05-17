@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom'
 function NextButton({ to='/become-a-host', disabledCondition=false, onNextClick}) {
   const navigate = useNavigate()
 
-  // navigate to "to" path if no onNextClick is provided
   const handleClick = () => {
     navigate(to)
   }
