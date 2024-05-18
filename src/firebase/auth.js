@@ -1,4 +1,3 @@
-// write the firebase authentication code here
 import { auth } from "./firebase";
 import { 
     createUserWithEmailAndPassword, 
@@ -7,7 +6,8 @@ import {
     GoogleAuthProvider,
     updatePassword,
     sendPasswordResetEmail,
-    signOut, 
+    signOut,
+    sendEmailVerification
 } 
 from "firebase/auth";
 
@@ -68,3 +68,12 @@ export const userUpdatePassword = async (password) => {
     }
 }
 
+export const sendEmailVerificationToUser = async (user) => {
+    try {
+        await sendEmailVerification(user);
+        return ("Email verification sent");
+    } catch (error) {
+      throw new Error('Email verification failed.');
+    }
+  };
+  

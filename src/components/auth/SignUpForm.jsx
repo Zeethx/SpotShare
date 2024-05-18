@@ -1,25 +1,26 @@
 import React, { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
-import { login } from "../../store/authSlice";
 import { signUp } from "../../firebase/auth";
-import { InputField, Button } from "../"
+import { login } from "../../store/authSlice";
+import { InputField, Button } from "../";
 import { useDispatch } from "react-redux";
 import api from "../../conf/axiosConfig";
+import PhoneInput from "react-phone-number-input/input";
 
 function SignUpForm() {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isSignedUp, setIsSignedUp] = useState(false); 
-  const [errorMessage, setErrorMessage] = useState(''); 
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [isSignedUp, setIsSignedUp] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const dispatch = useDispatch(); // Get the dispatch function
-
+  const dispatch = useDispatch();
+  console.log(phoneNumber)
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-
-      if (!fullName || !email || !password) {
+      if (!fullName || !email || !password || !phoneNumber) {
         setErrorMessage('Please fill in all fields');
         return;
       }
@@ -31,27 +32,26 @@ function SignUpForm() {
         const idToken = await response.user.getIdToken();
         localStorage.setItem('token', idToken);
 
-        // Create user on the backend
         const user = {
-          fullName: fullName,
+          fullName,
           email,
+          phoneNumber,
           uid: response.user.uid  
         };
 
-        // Send user data to the backend
         await api.post('/users/register', user);
 
         dispatch(login({ email, uid: response.user.uid }));
+
         setIsSignedUp(true);
       } else {
         setErrorMessage('Sign up failed');
       }
     } catch (error) {
-      setErrorMessage('Sign up failed. Please try again.');
+      setErrorMessage("Sign up failed. Please try again.");
     }
   };
 
-  
   if (isSignedUp) {
     return <Navigate to="/" />;
   }
@@ -73,33 +73,36 @@ function SignUpForm() {
               <div className="w-full mt-6 mr-0 mb-0 ml-0 relative space-y-8">
                 {errorMessage && <p className="text-red-500 text-center">{errorMessage}</p>}
                 <div className="relative">
-                  <p className="bg-white pt-0 pr-2 pb-0 pl-2 -mt-3 mr-0 mb-0 ml-2 font-medium text-gray-600
-                  absolute">Full Name</p>
-                  <InputField label="FullName" type="text" placeholder="John Walker" value={fullName} onChange={(e) => setFullName(e.target.value)}
-                  required/>
-                </div>
-                
-                <div className="relative">
-                  <p className="bg-white pt-0 pr-2 pb-0 pl-2 -mt-3 mr-0 mb-0 ml-2 font-medium text-gray-600
-                  absolute">Email</p>
-                  <InputField label="Email" type="text" placeholder="123@ex.com" value={email} onChange={(e) => setEmail(e.target.value)}
-                  required/>
-                </div>
-
-                <div className="relative">
-                  <p className="bg-white pt-0 pr-2 pb-0 pl-2 -mt-3 mr-0 mb-0 ml-2 font-medium text-gray-600
-                  absolute">Password</p>
-                  <InputField label="Password" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}
-                  required/>
+                  <p className="bg-white pt-0 pr-2 pb-0 pl-2 -mt-3 mr-0 mb-0 ml-2 font-medium text-gray-600 absolute">Full Name</p>
+                  <InputField label="FullName" type="text" placeholder="John Walker" value={fullName} onChange={(e) => setFullName(e.target.value)} required />
                 </div>
                 <div className="relative">
-                  <Button type="submit" text="Sign Up" 
-                  onClick={onSubmit}
+                  <p className="bg-white pt-0 pr-2 pb-0 pl-2 -mt-3 mr-0 mb-0 ml-2 font-medium text-gray-600 absolute">Email</p>
+                  <InputField label="Email" type="text" placeholder="123@ex.com" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                </div>
+                <div className="relative">
+                  <p className="bg-white pt-0 pr-2 pb-0 pl-2 -mt-3 mr-0 mb-0 ml-2 font-medium text-gray-600 absolute">Password</p>
+                  <InputField label="Password" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                </div>
+                <div className="relative">
+                  <p className="bg-white pt-0 pr-2 pb-0 pl-2 -mt-3 mr-0 mb-0 ml-2 font-medium text-gray-600 absolute">Phone Number</p>
+                  <PhoneInput
+                    value={phoneNumber}
+                    onChange={setPhoneNumber}
+                    placeholder="Enter phone number"
+                    defaultCountry="CA"
+                    required
+                    className="mt-1 w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-color focus:border-primary-color"
+                    rules={{ onlyNumbers: true }}
                   />
                 </div>
-                <div className="relative text-center">
-                  <p>Already Have an account? <Link to="/login" className="text-primary-color">Log in</Link> </p>
+                <div className="relative">
+                  <Button type="submit" text="Sign Up" onClick={onSubmit} />
                 </div>
+                <div className="relative text-center">
+                  <p>Already Have an account? <Link to="/login" className="text-primary-color">Log in</Link></p>
+                </div>
+                <div id="recaptcha-container"></div>
               </div>
             </div>
           </div>
