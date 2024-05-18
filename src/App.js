@@ -1,10 +1,26 @@
 import './App.css';
-import React from 'react';
-import { Outlet, useLocation } from 'react-router-dom';
+import React, {useEffect} from 'react';
+import { Outlet } from 'react-router-dom';
 import Header from './components/Header/Header';
+import { useDispatch } from 'react-redux';
+import { login } from './store/authSlice';
 
 function App() {
-  const location = useLocation();
+  const dispatch = useDispatch();
+  const [loading, setLoading] = React.useState(true);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (token && user) {
+      dispatch(login({ email: user.email, uid: user.uid }));
+    }
+    setLoading(false);
+  }, [dispatch]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
 
   return (

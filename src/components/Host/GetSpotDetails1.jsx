@@ -7,7 +7,7 @@ function GetSpotDetails1({setStep}) {
     const formData = useSelector((state) => state.form);
     const dispatch = useDispatch();
 
-    const [spotType, setSpotType] = useState(formData.typeOfSpot || '');
+    const [spotType, setSpotType] = useState(formData.spotType || '');
     const [vehicleSize, setVehicleSize] = useState(formData.vehicleSize || '');
     const [spacesToRent, setSpacesToRent] = useState(formData.spacesToRent || 1);
   
@@ -16,7 +16,7 @@ function GetSpotDetails1({setStep}) {
     };
 
     useEffect(() => {
-      dispatch(updateForm({ name: 'typeOfSpot', value: spotType }));
+      dispatch(updateForm({ name: 'spotType', value: spotType }));
       dispatch(updateForm({ name: 'vehicleSize', value: vehicleSize }));
       dispatch(updateForm({ name: 'spacesToRent', value: spacesToRent }));
     }, [spotType, vehicleSize, spacesToRent, dispatch]);

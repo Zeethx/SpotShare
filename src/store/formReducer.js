@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   address: '',
-  typeOfSpot: '',
+  spotType: '',
   vehicleSize: '',
   spacesToRent: 1,
   title: '',
@@ -35,9 +35,10 @@ const formSlice = createSlice({
     removeImage: (state, action) => {
       state.spotImages = state.spotImages.filter((_, index) => index !== action.payload);
     },
+    clearForm: () => initialState,
   },
 });
 
-export const { updateForm, addImage, removeImage } = formSlice.actions;
+export const { updateForm, addImage, removeImage, clearForm } = formSlice.actions;
 
 export default formSlice.reducer;

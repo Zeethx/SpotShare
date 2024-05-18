@@ -64,7 +64,6 @@ function GetSpotDetails3({ setStep }) {
         text="Start Sharing Your Space: Step 3"
         to="/become-a-host/availability"
         disabledCondition={photos.length === 0}
-        onNextClick={() => setStep(3)}
       />
     </div>
   );
