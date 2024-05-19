@@ -81,7 +81,7 @@ const Review = () => {
           </p>
           <p>
             <span className="font-semibold">Type of Spot:</span>{" "}
-            {formData.typeOfSpot}
+            {formData.spotType}
           </p>
           <p>
             <span className="font-semibold">Vehicle Size:</span>{" "}

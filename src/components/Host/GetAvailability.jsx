@@ -46,8 +46,8 @@ function GetAvailability() {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(updateForm({ name: "availableFrom", value: startDate.toISOString() }));
+    dispatch(updateForm({ name: "customTimes", value: customTimes }));
     dispatch(updateForm({ name: "daysAvailable", value: editingDays }));
-    dispatch(updateForm({ name: "customTimes", value: JSON.stringify(customTimes) }));
     navigate("/become-a-host/pricing");
   };
 
