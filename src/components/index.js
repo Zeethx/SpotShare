@@ -18,6 +18,8 @@ import NextButton from './Host/NextButton'
 import FormFooter from './Footer/FormFooter'
 import TimeSelector from './Form/TimeSelector'
 import NotFound from './Misc/NotFound'
+import ProfilePage from './Profile/ProfilePage'
+import FindASpot from './FindSpot/FindASpot'
 
 export { 
     HeroSection,
@@ -39,6 +41,8 @@ export {
     NextButton,
     FormFooter,
     TimeSelector,
-    NotFound
+    NotFound,
+    ProfilePage,
+    FindASpot
  }
 
