@@ -38,7 +38,7 @@ root.render(
             <Route path="signup" element={<SignUpPage />} />
             
             <Route path="about" element={<AboutPage />} />
-            <Route path="reserve" element={<ConfirmReservationPage />} />
+            
             <Route path="become-a-host" element={<Protected><BecomeHost /></Protected>}>
               <Route index element={<GetStartedPage />} />
               <Route path="location" element={<Location />} />
@@ -48,7 +48,8 @@ root.render(
               <Route path="review" element={<ReviewDetails />} />
               
             </Route>
-            
+            <Route path="/find" element={<Find />} />
+            <Route path="/reserve/:spotId" element={<ConfirmReservationPage />} />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>

@@ -6,7 +6,7 @@ const CustomMarker = ({ position, label, spotId }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/parking-spot/${spotId}`);
+    navigate(`/reserve/${spotId}`);
   };
 
   const getPixelPositionOffset = (width, height) => ({

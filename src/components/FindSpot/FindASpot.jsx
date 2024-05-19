@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from "react";
 import { GoogleMap, Marker, Autocomplete, useJsApiLoader } from "@react-google-maps/api";
 import conf from "../../conf/conf";
 import "../Map/Map.css";
-import { ParkingForm  } from "../";
 import api from "../../conf/axiosConfig";
 import CustomMarker from "./CustomMarker";
 import './Marker.css'
@@ -28,7 +27,6 @@ function Map({ address, onAddressChange }) {
       const response = await api.get(`/parking-space/nearby`, {
         params: { location: `${lat},${lng}` }
       });
-      console.log('Fetched parking spots:', response.data);
       setParkingSpots(response.data);
     } catch (error) {
       console.error("Error fetching parking spots:", error);
@@ -61,33 +59,30 @@ function Map({ address, onAddressChange }) {
     }
   };
 
-  useEffect(() => {
-    if (address && map) {
-      const geocoder = new window.google.maps.Geocoder();
-      geocoder.geocode({ address }, (results, status) => {
-        if (status === 'OK' && results[0].geometry.location) {
-          const location = results[0].geometry.location;
-          const lat = location.lat();
-          const lng = location.lng();
-          setMarkerPosition({ lat, lng });
-          map.panTo({ lat, lng });
-          map.setZoom(15);
-          fetchParkingSpots(lat, lng);
-          console.log('Address geocoded:', address, { lat, lng });
-        } else {
-          console.error('Geocode was not successful for the following reason: ' + status);
-        }
-      });
-    }
-  }, [address, map]);
+useEffect(() => {
+  if (address && map) {
+    const geocoder = new window.google.maps.Geocoder();
+    geocoder.geocode({ address: address }, (results, status) => {
+      if (status === "OK") {
+        const { lat, lng } = results[0].geometry.location;
+        map.setCenter({ lat, lng });
+        map.setZoom(15);
+        fetchParkingSpots(lat, lng);
+        console.log('Address geocoded:', address, { lat, lng });
+      } else {
+        console.error('Geocode was not successful for the following reason: ' + status);
+      }
+    });
+  }
+}, [address, map]);
 
-  useEffect(() => {
-    if (markerPosition && map) {
-      map.panTo(markerPosition);
-      map.setZoom(15);
-      console.log('Map panned to:', markerPosition);
-    }
-  }, [markerPosition, map]);
+useEffect(() => {
+  if (markerPosition && map) {
+    map.panTo(markerPosition);
+    map.setZoom(15);
+    console.log('Map panned to:', markerPosition);
+  }
+}, [markerPosition, map]);
 
   if (loadError) {
     return <div>Error loading maps</div>;
