@@ -26,13 +26,13 @@ function Footer() {
                             </ul>
                         </div>
                          <div>
-                            <h2 className="mb-6 text-sm font-semibold  uppercase ">Follow us</h2>
+                            <h2 className="mb-6 text-sm font-semibold  uppercase ">About us</h2>
                             <ul className=" font-medium">
                                 <li className="mb-4">
-                                    <Link to="https://www.linkedin.com/in/raghav-anand-zeethx/" target="_blank" className="hover:underline ">Raghav Anand</Link>
+                                    <Link to="/about" className="hover:underline ">About</Link>
                                 </li>
                                 <li>
-                                    <Link to="https://www.linkedin.com/in/harshit-bedi07/" target="_blank" className="hover:underline">Harshit Bedi</Link>
+                                    <Link to="/contact" className="hover:underline">Contact</Link>
                                 </li>
                             </ul>
                         </div>

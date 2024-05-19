@@ -14,6 +14,8 @@ function LogoutBtn() {
         const auth = getAuth()
         await signOut(auth)
         dispatch(logout())
+        localStorage.removeItem('token')
+        localStorage.removeItem('user')
     }
   return (
     <Button type="submit "text="Logout" className='font-bold rounded-lg text-sm px-4 py-2 text-center  dark:hover:text-primary-color' 

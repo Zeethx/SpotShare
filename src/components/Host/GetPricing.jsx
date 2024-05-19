@@ -14,7 +14,9 @@ function SetPricing() {
 
   const handlePriceChange = (setter) => (e) => {
     const value = e.target.value === '' ? 0 : parseFloat(e.target.value);
-    setter(isNaN(value) ? 0 : value);
+    if (value <= 999) {
+      setter(isNaN(value) ? 0 : value);
+    }
   };
 
   const handleSubmit = () => {

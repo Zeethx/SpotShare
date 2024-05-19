@@ -57,6 +57,7 @@ function GetAvailability() {
       ? editingDays.filter((d) => d !== day)
       : [...editingDays, day];
     setEditingDays(newEditingDays);
+    console.log("Editing Days:", newEditingDays);
     if (!customTimes[day]) {
       setCustomTimes((prevTimes) => ({
         ...prevTimes,
