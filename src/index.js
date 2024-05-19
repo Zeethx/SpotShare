@@ -21,6 +21,8 @@ import GetStartedPage from './pages/host/GetStartedPage';
 import AboutPage from './pages/AboutPage';
 import ConfirmReservationPage from './pages/ConfirmReservationPage';
 import NotFound from './pages/Error';
+import Find from './pages/Find';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -34,8 +36,9 @@ root.render(
             <Route path="profile" element={<Protected><Profile /></Protected>} />
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<SignUpPage />} />
+            
             <Route path="about" element={<AboutPage />} />
-            <Route path="reserve" element={<ConfirmReservationPage />} />
+            
             <Route path="become-a-host" element={<Protected><BecomeHost /></Protected>}>
               <Route index element={<GetStartedPage />} />
               <Route path="location" element={<Location />} />
@@ -43,7 +46,10 @@ root.render(
               <Route path="availability" element={<Availability />} />
               <Route path="pricing" element={<Pricing />} />
               <Route path="review" element={<ReviewDetails />} />
+              
             </Route>
+            <Route path="/find" element={<Find />} />
+            <Route path="/reserve/:spotId" element={<ConfirmReservationPage />} />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>

@@ -23,6 +23,8 @@ function Navbar() {
                 {isUserLoggedIn ? (
                 <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
                     <LogoutBtn />
+                    <Button text="Profile" className={`${buttonClass} text-primary-color`}
+                    onClick={() => navigate('/Profile')} />
                 </div>
                 )
                 : (
@@ -35,7 +37,7 @@ function Navbar() {
                 <div className={`${isOpen ? 'flex' : 'hidden'} items-center justify-between w-full md:flex md:w-auto md:order-1`} id="navbar-sticky">
                     <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg  md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0  dark:border-gray-700">
                     <li>
-                            <Link to="/become-a-host" className={buttonClass}>Find a Spot</Link>
+                            <Link to="/find" className={buttonClass}>Find a Spot</Link>
                         </li>
                         <li>
                             {isUserLoggedIn ? (
