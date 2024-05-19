@@ -1,0 +1,21 @@
+.custom-marker {
+    background-color: rgb(138, 139, 239);
+    border: 1px solid #888;
+    border-radius: 20px;
+    padding: 8px 12px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease-in-out;
+    width: 50px;
+  }
+  
+  .custom-marker:hover {
+    transform: scale(1.1);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.4);
+  }
+  

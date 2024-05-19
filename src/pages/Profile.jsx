@@ -1,13 +1,11 @@
 import React from 'react'
-import { Container } from '../components'
+import { Container, ProfilePage } from '../components'
 
 export default function Profile() {
 
   return (
 	<Container>
-		<div>
-			<h1>Profile</h1>
-		</div>
+		<ProfilePage />
 	</Container>
   )
 }
