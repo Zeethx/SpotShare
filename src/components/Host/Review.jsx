@@ -12,7 +12,6 @@ const Review = () => {
   const formData = useSelector((state) => state.form);
   // get the owner information from the local storage
   const owner = JSON.parse(localStorage.getItem("user"));
-  console.log(formData.customTimes);
   const handleSubmit = async () => {
     try {
       const payload = { ...formData, owner: owner.data.email };
@@ -55,20 +54,24 @@ const Review = () => {
         </div>
         <div className="col-span-1 lg:col-span-3 row-span-2">
           <h3 className="text-2xl font-semibold mb-2">Photos</h3>
-          <Carousel
-            responsive={responsive}
-            className="rounded-lg overflow-hidden"
-          >
-            {formData.spotImages.map((image, index) => (
-              <div key={index} className="p-2">
-                <img
-                  src={image.url}
-                  alt={`Spot ${index}`}
-                  className="w-full h-40 object-cover rounded-lg"
-                />
-              </div>
-            ))}
-          </Carousel>
+          <div className="relative">
+            <div className="absolute w-full">
+            <Carousel
+              responsive={responsive}
+              className="rounded-lg overflow-hidden"
+            >
+              {formData.spotImages.map((image, index) => (
+                <div key={index} className="p-2">
+                  <img
+                    src={image.url}
+                    alt={`Spot ${index}`}
+                    className="h-40 object-contain rounded-lg"
+                  />
+                </div>
+              ))}
+            </Carousel>
+            </div>
+          </div>
         </div>
         <div className="col-span-1 lg:col-span-6">
           <h3 className="text-2xl font-semibold mb-2">Description</h3>

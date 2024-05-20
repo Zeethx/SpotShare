@@ -1,12 +1,17 @@
 import React from "react";
 import { OverlayView } from "@react-google-maps/api";
-import { useNavigate } from "react-router-dom"; // Import useNavigate from React Router
+import { useNavigate } from "react-router-dom";
 
-const CustomMarker = ({ position, label, spotId }) => {
+const CustomMarker = ({ position, label, spotId, dateTimeIn, dateTimeOut }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/reserve/${spotId}`);
+    const queryParams = new URLSearchParams({
+      dateTimeIn: dateTimeIn.toISOString(),
+      dateTimeOut: dateTimeOut.toISOString(),
+    }).toString();
+
+    navigate(`/reserve/${spotId}?${queryParams}`);
   };
 
   const getPixelPositionOffset = (width, height) => ({

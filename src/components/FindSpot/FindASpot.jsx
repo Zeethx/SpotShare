@@ -215,6 +215,8 @@ function Map({ address, onAddressChange }) {
               position={{ lat: spot.coordinates[1], lng: spot.coordinates[0] }}
               label={`$${spot.pricePerMonth}`}
               spotId={spot._id} // Ensure spotId is passed here
+              dateTimeIn={getValues("dateTimeIn")}
+              dateTimeOut={getValues("dateTimeOut")}
             />
           ))}
         </GoogleMap>
