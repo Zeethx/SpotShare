@@ -38,9 +38,12 @@ function LoginForm() {
 
       const idToken = await userCredential.user.getIdToken();
       localStorage.setItem('token', idToken);
-
-      const userDetails = await api.get('/users/me');
-      localStorage.setItem('user', JSON.stringify(userDetails.data)); // Store user details in local storage
+      try {
+        const userDetails = await api.get('/users/me');
+        localStorage.setItem('user', JSON.stringify(userDetails.data)); // Store user details in local storage
+      } catch (error) {
+        console.error('Failed to fetch user details');
+      }
 
     } else {
       setErrorMessage('Invalid email or password');

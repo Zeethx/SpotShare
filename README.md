@@ -1,70 +1,61 @@
-# Getting Started with Create React App
+![Horizontal SpotShare Logo](/public/images/spotshare_horizontal.png)
+SpotShare is a platform that connects people with available parking spaces to drivers in need of a spot. It allows individuals to rent out their parking spaces and for drivers to book these spaces for a specific duration. This project aims to address the parking scarcity in urban areas, starting with Toronto, ON.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Table of Contents
+- [Features](#features)
+- [Usage](#usage)
+- [Tech Stack](#tech-stack)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
 
-## Available Scripts
+## Features
+- **User Authentication**: Secure authentication using Firebase.
+- **List Parking Spaces**: Users can list their available parking spaces with details.
+- **Book Parking Spaces**: Drivers can search and book available parking spaces.
+- **Payment Integration**: Handle payments securely (future implementation).
+- **Notifications**: Real-time notifications for bookings and availability.
+- **Map Integration**: Display available parking spaces on a map using Google Maps API.
 
-In the project directory, you can run:
+## Usage
 
-### `npm start`
+1. **Sign Up / Login**
+   - Users can sign up or log in using their email and password.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+2. **List a Parking Space**
+   - Navigate to the 'Become a Host' section.
+   - Provide details about your parking space, including location, availability, and pricing.
+   - Upload images of the parking space.
+   - Submit the listing for approval.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+3. **Search and Book a Parking Space**
+   - Enter the desired location, radius, and time period for parking.
+   - Browse available listings on the map.
+   - Select a space, review the details, and book the space.
 
-### `npm test`
+## Tech Stack
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Frontend**: React, Redux, TailwindCSS, Google Maps API
+- **Backend**: Node.js, Express, MongoDB, Mongoose
+- **Authentication**: Firebase
+- **Cloud Storage**: Cloudinary for image uploads
 
-### `npm run build`
+## Contributing
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+We welcome contributions from the community! To contribute:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. Fork the repository.
+2. Create a new branch.
+3. Make your changes.
+4. Submit a pull request.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Please ensure your code follows the project's coding conventions and includes appropriate tests.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Contact
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+For any inquiries or support, please contact us at:
+- **Email**: spotshare3@gmail.com
+- **GitHub Issues**: [https://github.com/Zeethx/SpotShare/issues](https://github.com/Zeethx/SpotShare/issues)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Thank you for using SpotShare! Together, we can solve the parking challenges in our cities.
