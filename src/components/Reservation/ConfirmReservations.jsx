@@ -44,7 +44,7 @@ const ConfirmReservation = () => {
   return (
     <div className="min-h-screen flex-col justify-center items-center mt-[7vw]">
       <h2 className="text-2xl font-semibold mb-4 text-center">
-        Confirm Your Reservation for Spot
+        Confirm Your Reservation
       </h2>
       <div className="flex items-center justify-center">
         <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-6xl">
@@ -53,7 +53,7 @@ const ConfirmReservation = () => {
             <div className="w-2/3 pr-4">
               <div className="mb-6">
                 <h3 className="text-xl font-semibold">Booking Details</h3>
-                <p>Parking at {spotDetails.address}</p>
+                <p>Parking at {spotDetails.address.split(',').slice(0, 2).join(',')}</p>
                 <div className="mt-2">
                   <p>
                     <span className="font-semibold">Arriving on: </span>
@@ -70,9 +70,9 @@ const ConfirmReservation = () => {
               </div>
               <div>
                 <h3 className="text-xl font-semibold">Vehicle Information</h3>
-                <p>
-                  Your vehicle registration number will be shared with the
-                  parking space owner/operator
+                <p className="text-gray-600">
+                  Your vehicle license plate number will be shared with the
+                  parking space owner.
                 </p>
                 <input
                   type="text"
@@ -100,8 +100,8 @@ const ConfirmReservation = () => {
                         <div key={index} className="p-2">
                           <img
                             src={imageLink}
-                            alt={`Spot Image ${index}`}
-                            className="w-full h-40 object-cover rounded-lg"
+                            alt={`Spot ${index}`}
+                            className="w-full h-48 object-cover rounded-lg"
                           />
                         </div>
                       ))
