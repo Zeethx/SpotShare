@@ -6,57 +6,41 @@ import {
   useJsApiLoader,
 } from "@react-google-maps/api";
 import conf from "../../conf/conf";
-import "../Map/Map.css";
 import api from "../../conf/axiosConfig";
 import CustomMarker from "./CustomMarker";
-import "./Marker.css";
 import { Controller, useForm } from "react-hook-form";
 import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { useLocation } from "react-router-dom";
+import "./Marker.css";
 
 const libraries = ["places"];
 
-function Map({ address, onAddressChange }) {
+function FindASpot() {
+  const location = useLocation();
   const [markerPosition, setMarkerPosition] = useState(null);
   const [autocomplete, setAutocomplete] = useState(null);
   const [map, setMap] = useState(null);
   const [parkingSpots, setParkingSpots] = useState([]);
-
-  // Set the default time to the current time and 3 hours later
-  const now = new Date();
-  const threeHoursLater = new Date(now.getTime());
-  threeHoursLater.setHours(now.getHours() + 3);
+  const [address, setAddress] = useState(location.state?.address || "");
+  const [dateTimeIn, setDateTimeIn] = useState(location.state?.dateTimeIn ? new Date(location.state.dateTimeIn) : new Date());
+  const [dateTimeOut, setDateTimeOut] = useState(location.state?.dateTimeOut ? new Date(location.state.dateTimeOut) : new Date(new Date().getTime() + 3600000));
 
   const { control, handleSubmit, getValues, setValue } = useForm({
     defaultValues: {
       location: address,
-      dateTimeIn: now,
-      dateTimeOut: threeHoursLater,
+      dateTimeIn: dateTimeIn,
+      dateTimeOut: dateTimeOut,
     },
   });
 
   const inputStyle =
-    "absolute top-5 left-1/2 transform -translate-x-1/2 w-11/12 max-w-md px-4 py-2 text-lg bg-white shadow-md rounded-full box-border";
+    "w-full px-4 py-2  text-lg bg-white shadow-md rounded-md box-border focus:ring-2 focus:ring-primary-color transition-all duration-300";
 
   const { isLoaded, loadError } = useJsApiLoader({
     googleMapsApiKey: conf.googleMapsApiKey,
     libraries,
   });
-
-  const fetchParkingSpots = async (lat, lng, timeIn, timeOut) => {
-    try {
-      const response = await api.get(`/parking-space/nearby`, {
-        params: {
-          location: `${lat},${lng}`,
-          timeIn: timeIn.toISOString(),
-          timeOut: timeOut.toISOString(),
-        },
-      });
-      setParkingSpots(response.data);
-      console.log("Parking spots fetched:", response.data);
-    } catch (error) {
-      console.error("Error fetching parking spots:", error);
-    }
-  };
 
   const onMapLoad = useCallback((map) => {
     setMap(map);
@@ -72,12 +56,8 @@ function Map({ address, onAddressChange }) {
 
         if (!isNaN(lat) && !isNaN(lng)) {
           setMarkerPosition({ lat, lng });
-          onAddressChange(address);
+          setAddress(address);
           setValue("location", address); // Update the form value for location
-          if (map) {
-            map.panTo({ lat, lng });
-            map.setZoom(15);
-          }
         } else {
           console.error("Invalid coordinates:", { lat, lng });
         }
@@ -90,19 +70,17 @@ function Map({ address, onAddressChange }) {
       const geocoder = new window.google.maps.Geocoder();
       geocoder.geocode({ address: address }, (results, status) => {
         if (status === "OK" && results[0].geometry) {
-          const { lat, lng } = results[0].geometry.location;
+          const lat = results[0].geometry.location.lat();
+          const lng = results[0].geometry.location.lng();
           if (!isNaN(lat) && !isNaN(lng)) {
             map.setCenter({ lat, lng });
             map.setZoom(15);
             setMarkerPosition({ lat, lng });
-            console.log("Address geocoded:", address, { lat, lng });
           } else {
             console.error("Invalid geocoded coordinates:", { lat, lng });
           }
         } else {
-          console.error(
-            "Geocode was not successful for the following reason: " + status
-          );
+          console.error("Geocode was not successful for the following reason: " + status);
         }
       });
     }
@@ -112,16 +90,20 @@ function Map({ address, onAddressChange }) {
     if (markerPosition && map) {
       map.panTo(markerPosition);
       map.setZoom(15);
-      console.log("Map panned to:", markerPosition);
     }
   }, [markerPosition, map]);
 
   const onSubmit = async (data) => {
-    const { dateTimeIn, dateTimeOut } = data;
     if (markerPosition && !isNaN(markerPosition.lat) && !isNaN(markerPosition.lng)) {
-      const { lat, lng } = markerPosition;
       try {
-        await fetchParkingSpots(lat, lng, dateTimeIn, dateTimeOut);
+        const response = await api.get(`/parking-space/nearby`, {
+          params: {
+            location: `${markerPosition.lat},${markerPosition.lng}`,
+            timeIn: data.dateTimeIn.toISOString(),
+            timeOut: data.dateTimeOut.toISOString(),
+          },
+        });
+        setParkingSpots(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -131,21 +113,32 @@ function Map({ address, onAddressChange }) {
   };
 
   if (loadError) {
-    return <div>Error loading maps</div>;
+    return <div className="text-center text-red-500 mt-4">Error loading maps</div>;
   }
 
   if (!isLoaded) {
-    return <div>Loading...</div>;
+    return <div className="text-center mt-4">Loading...</div>;
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex flex-col lg:flex-row justify-around">
-          <div className="mb-4 lg:mb-4">
-            <label className="block text-sm font-medium text-gray-700">
-              From
-            </label>
+    <div className="flex flex-col lg:flex-row min-h-screen pt-28 pb-12" >
+      <div className="flex flex-col p-6 w-full lg:w-1/3 shadow-lg rounded-xl">
+        <h1 className="text-4xl font-bold text-gray-900 mb-10 text-center">Find a Spot</h1>
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Address</label>
+            <Controller
+              name="location"
+              control={control}
+              render={({ field }) => (
+                <Autocomplete onLoad={(autocomplete) => setAutocomplete(autocomplete)} onPlaceChanged={onPlaceChanged}>
+                  <input type="text" placeholder="Enter the Address" {...field} className={inputStyle} />
+                </Autocomplete>
+              )}
+            />
+          </div>
+          <div className="flex flex-col">
+          <label className="block text-sm font-medium text-gray-700">From</label>
             <Controller
               control={control}
               name="dateTimeIn"
@@ -156,19 +149,16 @@ function Map({ address, onAddressChange }) {
                   showTimeSelect
                   timeFormat="HH:mm"
                   timeIntervals={15}
-                  dateFormat="MMMM d, yyyy h:mm aa"
-                  className="mt-1 w-full p-2 justify-center border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-color focus:border-primary-color"
+                  dateFormat="MMMM d, h:mm aa"
+                  minDate={new Date()}
+                  className={inputStyle}
                 />
               )}
             />
           </div>
-          <div>
-            <h1 className="text-4xl font-semibold">Find a Spot</h1>
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Until
-            </label>
+          
+          <div className="flex flex-col ">
+          <label className="block text-sm font-medium text-gray-700">Until</label>
             <Controller
               control={control}
               name="dateTimeOut"
@@ -179,16 +169,28 @@ function Map({ address, onAddressChange }) {
                   showTimeSelect
                   timeFormat="HH:mm"
                   timeIntervals={15}
-                  dateFormat="MMMM d, yyyy h:mm aa"
-                  className="mt-1 w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-color focus:border-primary-color"
+                  dateFormat="MMMM d, h:mm aa"
+                  minDate={getValues("dateTimeIn")}
+                  className={inputStyle}
                 />
               )}
             />
           </div>
-        </div>
-        <div className="map-container" style={{ width: "100%", height: "500px" }}>
+          <div className="flex justify-center">
+            <button
+              type="submit"
+              className="px-6 py-3 bg-blue-600 text-white rounded-md text-lg font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300 disabled:bg-gray-500 disabled:cursor-not-allowed"
+              disabled={!markerPosition}
+            >
+              Search For Spots Here
+            </button>
+          </div>
+        </form>
+      </div>
+      <div className="flex-1">
+        <div className="h-full">
           <GoogleMap
-            mapContainerStyle={{ width: "100%", height: "100%" }}
+            mapContainerStyle={{ width: "100%", height: "100%", borderRadius: "2%"}}
             center={markerPosition || { lat: 43.7, lng: -79.42 }}
             zoom={12}
             onLoad={onMapLoad}
@@ -198,49 +200,20 @@ function Map({ address, onAddressChange }) {
               fullscreenControl: false,
             }}
           >
-          <Autocomplete
-            onLoad={(autocomplete) => setAutocomplete(autocomplete)}
-            onPlaceChanged={onPlaceChanged}
-          >
-            <input
-              type="text"
-              placeholder="Enter the Address"
-              className={inputStyle}
-            />
-          </Autocomplete>
-          {markerPosition && <Marker position={markerPosition} />}
-          {parkingSpots.map((spot, index) => (
-            <CustomMarker
-              key={index}
-              position={{ lat: spot.coordinates[1], lng: spot.coordinates[0] }}
-              label={`$${spot.pricePerMonth}`}
-              spotId={spot._id} // Ensure spotId is passed here
-              dateTimeIn={getValues("dateTimeIn")}
-              dateTimeOut={getValues("dateTimeOut")}
-            />
-          ))}
-        </GoogleMap>
+            {markerPosition && <Marker position={markerPosition} />}
+            {parkingSpots.map((spot, index) => (
+              <CustomMarker
+                key={index}
+                position={{ lat: spot.coordinates[1], lng: spot.coordinates[0] }}
+                label={`$${spot.pricePerMonth}`}
+                spotId={spot._id}
+                dateTimeIn={getValues("dateTimeIn")}
+                dateTimeOut={getValues("dateTimeOut")}
+              />
+            ))}
+          </GoogleMap>
         </div>
-        <div className="flex justify-center">
-          <button type="submit" className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md text-center disabled:bg-gray-500 disabled:cursor-not-allowed" disabled={!markerPosition}>
-            Search For Spots Here
-          </button>
-        </div>
-      </form>
-    </div>
-  );
-}
-
-function FindASpot() {
-  const [address, setAddress] = useState("");
-
-  const handleAddressChange = (newAddress) => {
-    setAddress(newAddress);
-  };
-
-  return (
-    <div className="pt-[10vw] ">
-      <Map address={address} onAddressChange={setAddress} />
+      </div>
     </div>
   );
 }

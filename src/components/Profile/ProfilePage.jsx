@@ -14,6 +14,10 @@ const ProfilePage = () => {
       .catch(error => {
         console.error('Error fetching user data:', error);
       });
+    api.get('/users/parking-spaces')
+      .then(response => {
+        console.log('Parking spaces:', response.data.data);
+      })
   }, []);
 
   const handleProfilePictureSubmit = (event) => {
