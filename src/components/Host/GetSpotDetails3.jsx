@@ -4,7 +4,7 @@ import { addImage } from '../../store/formReducer';
 import { FormFooter } from "../";
 import api from "../../conf/axiosConfig";
 
-function GetSpotDetails3({ setStep }) {
+function GetSpotDetails3() {
   const dispatch = useDispatch();
   const photos = useSelector((state) => state.form.spotImages);
 
@@ -23,13 +23,13 @@ function GetSpotDetails3({ setStep }) {
   };
 
   return (
-    <div className="w-full lg:w-1/2">
+    <div className="w-full lg:w-1/2 mb-[20vw] lg:mb-0">
       <div className="flex flex-col items-center justify-center h-full p-4 w-full">
         <div className="flex flex-col items-center justify-center mt-10">
           <label className="text-xl lg:text-2xl font-bold mb-5">Add Photos</label>
         </div>
         <div>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-10 lg:gap-4">
             {Array.from({ length: 6 }).map((_, index) => (
               <div key={index} className="relative">
                 {photos[index] ? (
@@ -51,7 +51,7 @@ function GetSpotDetails3({ setStep }) {
                 <input
                   type="file"
                   accept="image/*"
-                  className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
+                  className="flex absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
                   id={`upload-button-${index}`}
                   onChange={(e) => handleImageUpload(e, index)}
                 />

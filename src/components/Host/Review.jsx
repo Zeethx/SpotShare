@@ -15,7 +15,7 @@ const Review = () => {
   //use firebase auth to get the owner email
   const owner = auth.currentUser.email;
   console.log("Owner:", owner);
-  
+
   useEffect(() => {
     window.onbeforeunload = () => true;
 
@@ -31,7 +31,7 @@ const Review = () => {
       const response = await api.post("/parking-space/create", payload);
       console.log("Submission successful:", response);
       dispatch(clearForm());
-      navigate("/");
+      navigate("/submission-confirmation");
     } catch (error) {
       console.error("Submission failed:", error);
     }
@@ -59,30 +59,25 @@ const Review = () => {
   return (
     <div className="flex flex-col items-center py-10 px-4 lg:px-20 mt-14">
       <h2 className="text-4xl font-bold mb-8 text-center">Review Your Details</h2>
-      <div className="bg-white shadow-md rounded-lg p-6 w-full lg:w-3/4 grid grid-cols-9 gap-4">
+      <div className="bg-white shadow-md rounded-lg p-6 w-full lg:w-3/4 grid grid-cols-1 lg:grid-cols-9 gap-4">
         <div className="col-span-1 lg:col-span-6">
           <h3 className="text-2xl font-semibold mb-2">Title</h3>
           <p className="border p-2 rounded mb-4">{formData.title}</p>
         </div>
         <div className="col-span-1 lg:col-span-3 row-span-2">
           <h3 className="text-2xl font-semibold mb-2">Photos</h3>
-          <div className="relative">
-            <div className="absolute w-full">
-            <Carousel
-              responsive={responsive}
-              className="rounded-lg overflow-hidden"
-            >
+          <div>
+            <Carousel responsive={responsive} className="rounded-lg overflow-hidden">
               {formData.spotImages.map((image, index) => (
                 <div key={index} className="p-2">
                   <img
                     src={image.url}
                     alt={`Spot ${index}`}
-                    className="h-40 object-contain rounded-lg"
+                    className="h-40 w-full object-contain rounded-lg"
                   />
                 </div>
               ))}
             </Carousel>
-            </div>
           </div>
         </div>
         <div className="col-span-1 lg:col-span-6">
@@ -95,44 +90,38 @@ const Review = () => {
             <span className="font-semibold">Address:</span> {formData.address}
           </p>
           <p>
-            <span className="font-semibold">Type of Spot:</span>{" "}
-            {formData.spotType}
+            <span className="font-semibold">Type of Spot:</span> {formData.spotType}
           </p>
           <p>
-            <span className="font-semibold">Vehicle Size:</span>{" "}
-            {formData.vehicleSize}
+            <span className="font-semibold">Vehicle Size:</span> {formData.vehicleSize}
           </p>
           <p>
-            <span className="font-semibold">Spaces to Rent:</span>{" "}
-            {formData.spacesToRent}
+            <span className="font-semibold">Spaces to Rent:</span> {formData.spacesToRent}
           </p>
         </div>
         <div className="col-span-1 lg:col-span-3 bg-gray-100 p-4 rounded-lg">
           <h3 className="text-xl font-semibold mb-2">Pricing</h3>
           <p>
-            <span className="font-semibold">Per Hour:</span> $
-            {formData.pricePerHour}
+            <span className="font-semibold">Per Hour:</span> ${formData.pricePerHour}
           </p>
           <p>
-            <span className="font-semibold">Per Day:</span> $
-            {formData.pricePerDay}
+            <span className="font-semibold">Per Day:</span> ${formData.pricePerDay}
           </p>
           <p>
-            <span className="font-semibold">Per Month:</span> $
-            {formData.pricePerMonth}
+            <span className="font-semibold">Per Month:</span> ${formData.pricePerMonth}
           </p>
         </div>
         <div className="col-span-1 lg:col-span-3 bg-gray-100 p-4 rounded-lg">
           <h3 className="text-xl font-semibold mb-2">Availability</h3>
           <p>
             <span className="font-semibold">Available From:</span>{" "}
-            {new Date(formData.availableFrom).toLocaleDateString()}
+            {new Date(formData.availableTill).toLocaleDateString()}
           </p>
-          <p className="max-w-min overflow-hidden text-overflow-ellipsis whitespace-nowrap">
-            <span className="font-semibold text-wrap">Days Available:</span>{" "}
+          <p className=" max-w-full overflow-auto">
+            <span className="font-semibold">Days Available:</span>{" "}
             {formData.daysAvailable.join(", ")}
           </p>
-          <p>
+          <p className=" max-w-full break-words">
             <span className="font-semibold">Access Information:</span>{" "}
             {formData.accessInstructions}
           </p>
