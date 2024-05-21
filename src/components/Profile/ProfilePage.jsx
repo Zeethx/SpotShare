@@ -65,7 +65,17 @@ const ProfilePage = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg max-w-7xl w-full">
+      <div className="bg-white p-8 rounded-lg shadow-lg max-w-7xl w-full relative">
+        {user.role === "admin" && (
+          <div className="absolute top-28 right-4">
+            <button
+              className="bg-blue-500 text-white px-4 py-2 rounded-lg"
+              onClick={handleAdminDashboardClick}
+            >
+              Admin Dashboard
+            </button>
+          </div>
+        )}
         <h1 className="text-3xl font-semibold mb-6 text-center">My Profile</h1>
         <div className="flex items-center space-x-6 mb-6">
           <div
@@ -87,21 +97,14 @@ const ProfilePage = () => {
             </h1>
             <p className="text-gray-600">{user.email}</p>
           </div>
-          {user.role === "admin" && (
-            <div>
-              <button
-                className="bg-blue-500 text-white px-4 py-2 rounded-lg"
-                onClick={handleAdminDashboardClick}
-              >
-                Admin Dashboard
-              </button>
-            </div>
-          )}
         </div>
         <div className="mb-6">
-          <h2 className="text-2xl font-semibold mb-2">My Listings</h2>
-          <p className="text-gray-600">
-            View and manage your parking listings.
+          <h2 className="text-2xl font-semibold mb">My Listings</h2>
+          <p className="text-gray-600 mb-4">
+            View and manage your parking listings.{" "}
+            <span className="text-yellow-500">(Pending </span>|
+            <span className="text-green-500">Approved</span>|
+            <span className="text-red-500">Rejected)</span>
           </p>
           <CurrentListings parkingSpots={parkingSpots} />
         </div>
