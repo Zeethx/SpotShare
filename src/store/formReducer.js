@@ -12,7 +12,7 @@ const initialState = {
   pricePerHour: '',
   pricePerDay: '',
   pricePerMonth: '',
-  availableFrom: '',
+  availableTo: '',
   daysAvailable: [],
   customTimes: {},
 };

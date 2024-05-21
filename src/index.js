@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store/store';
 import Protected from './components/Misc/ProtectedRoute';
+import AdminRoute from './components/Misc/AdminRoute';
 
 import Home from './pages/Home';
 import Profile from './pages/Profile';
@@ -22,6 +23,7 @@ import AboutPage from './pages/AboutPage';
 import ConfirmReservationPage from './pages/ConfirmReservationPage';
 import NotFound from './pages/Error';
 import Find from './pages/Find';
+import AdminDashboard from './components/Profile/AdminDashboard';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -34,6 +36,7 @@ root.render(
           <Route path="/" element={<App />}>
             <Route index element={<Home />} />
             <Route path="profile" element={<Protected><Profile /></Protected>} />
+            <Route path="admin" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<SignUpPage />} />
             

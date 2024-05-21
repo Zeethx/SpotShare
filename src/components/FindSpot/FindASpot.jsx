@@ -24,7 +24,7 @@ function FindASpot() {
   const [parkingSpots, setParkingSpots] = useState([]);
   const [address, setAddress] = useState(location.state?.address || "");
   const [dateTimeIn, setDateTimeIn] = useState(location.state?.dateTimeIn ? new Date(location.state.dateTimeIn) : new Date());
-  const [dateTimeOut, setDateTimeOut] = useState(location.state?.dateTimeOut ? new Date(location.state.dateTimeOut) : new Date(new Date().getTime() + 3600000));
+  const [dateTimeOut, setDateTimeOut] = useState(location.state?.dateTimeOut ? new Date(location.state.dateTimeOut) : new Date(new Date().getTime() + 7200000));
 
   const { control, handleSubmit, getValues, setValue } = useForm({
     defaultValues: {
@@ -121,7 +121,7 @@ function FindASpot() {
   }
 
   return (
-    <div className="flex flex-col lg:flex-row min-h-screen pt-28 pb-12" >
+    <div className="flex flex-col lg:flex-row min-h-screen pb-12" >
       <div className="flex flex-col p-6 w-full lg:w-1/3 shadow-lg rounded-xl">
         <h1 className="text-4xl font-bold text-gray-900 mb-10 text-center">Find a Spot</h1>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">

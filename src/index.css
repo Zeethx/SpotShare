@@ -9,7 +9,7 @@
 }
 body {
   background-color: var(--bg-color);
-  /* padding-top: 5vw; */
+  padding-top: 5rem;
 }
 
 code {

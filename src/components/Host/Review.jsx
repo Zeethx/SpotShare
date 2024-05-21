@@ -1,20 +1,32 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import api from "../../conf/axiosConfig";
 import { clearForm } from "../../store/formReducer";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import { auth } from "../../firebase/firebase";
 
 const Review = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const formData = useSelector((state) => state.form);
-  // get the owner information from the local storage
-  const owner = JSON.parse(localStorage.getItem("user"));
+
+  //use firebase auth to get the owner email
+  const owner = auth.currentUser.email;
+  console.log("Owner:", owner);
+  
+  useEffect(() => {
+    window.onbeforeunload = () => true;
+
+    return () => {
+      window.onbeforeunload = null;
+    };
+  }, []);
+
   const handleSubmit = async () => {
     try {
-      const payload = { ...formData, owner: owner.data.email };
+      const payload = { ...formData, owner: owner };
       console.log("Payload:", payload);
       const response = await api.post("/parking-space/create", payload);
       console.log("Submission successful:", response);
@@ -47,7 +59,7 @@ const Review = () => {
   return (
     <div className="flex flex-col items-center py-10 px-4 lg:px-20 mt-14">
       <h2 className="text-4xl font-bold mb-8 text-center">Review Your Details</h2>
-      <div className="bg-white shadow-md rounded-lg p-6 w-full lg:w-3/4 grid grid-cols-1 gap-4">
+      <div className="bg-white shadow-md rounded-lg p-6 w-full lg:w-3/4 grid grid-cols-9 gap-4">
         <div className="col-span-1 lg:col-span-6">
           <h3 className="text-2xl font-semibold mb-2">Title</h3>
           <p className="border p-2 rounded mb-4">{formData.title}</p>
@@ -116,8 +128,8 @@ const Review = () => {
             <span className="font-semibold">Available From:</span>{" "}
             {new Date(formData.availableFrom).toLocaleDateString()}
           </p>
-          <p>
-            <span className="font-semibold">Days Available:</span>{" "}
+          <p className="max-w-min overflow-hidden text-overflow-ellipsis whitespace-nowrap">
+            <span className="font-semibold text-wrap">Days Available:</span>{" "}
             {formData.daysAvailable.join(", ")}
           </p>
           <p>

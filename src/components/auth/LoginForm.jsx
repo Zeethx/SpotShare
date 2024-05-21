@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { login } from '../../store/authSlice';
 import { signIn, googleSignIn } from '../../firebase/auth';
 import { InputField, Button } from '../';
 import api from '../../conf/axiosConfig';
+import { auth } from '../../firebase/firebase';
 
 function LoginForm() {
   const [email, setEmail] = useState('');
@@ -50,11 +51,23 @@ function LoginForm() {
     }
   };
 
-  // Redirect after successful login
-  if (isLoggedIn) {
-    return <Navigate to="/" />;
-  }
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        dispatch(login({ email: user.email, uid: user.uid }));
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+      }
+    });
+    return () => unsubscribe();
+  } , [dispatch]);
 
+    // Redirect after successful login
+    if (isLoggedIn) {
+      return <Navigate to="/" />;
+    }
+    
   return (
     <div className="flex flex-col lg:flex-row h-screen justify-center">
       <div className='lg:flex justify-center items-center hidden'>

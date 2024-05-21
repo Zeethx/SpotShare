@@ -1,23 +1,28 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../../conf/axiosConfig";
+import CurrentListings from "./CurrentListings";
 
 const ProfilePage = () => {
   const [user, setUser] = useState({});
+  const [parkingSpots, setParkingSpots] = useState([]);
   const fileInput = useRef();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    api.get('/users/me')
-      .then(response => {
+    api
+      .get("/users/me")
+      .then((response) => {
         setUser(response.data.data);
-        console.log('User data:', response.data.data);
+        console.log("User data:", response.data.data);
       })
-      .catch(error => {
-        console.error('Error fetching user data:', error);
+      .catch((error) => {
+        console.error("Error fetching user data:", error);
       });
-    api.get('/users/parking-spaces')
-      .then(response => {
-        console.log('Parking spaces:', response.data.data);
-      })
+    api.get("/users/parking-spaces").then((response) => {
+      setParkingSpots(response.data.data);
+      console.log("Parking spaces:", response.data.data);
+    });
   }, []);
 
   const handleProfilePictureSubmit = (event) => {
@@ -25,24 +30,28 @@ const ProfilePage = () => {
     const file = fileInput.current.files[0];
     if (file) {
       const formData = new FormData();
-      formData.append('profilePhoto', file);
+      formData.append("profilePhoto", file);
 
-      console.log('Uploading file:', file);
+      console.log("Uploading file:", file);
 
-      api.post('/users/avatar', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      })
-        .then(response => {
-          setUser(response.data.data);
-          console.log('Updated user data:', response.data.data);
+      api
+        .post("/users/avatar", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         })
-        .catch(error => {
-          console.error('Error updating profile picture:', error.response ? error.response.data : error.message);
+        .then((response) => {
+          setUser(response.data.data);
+          console.log("Updated user data:", response.data.data);
+        })
+        .catch((error) => {
+          console.error(
+            "Error updating profile picture:",
+            error.response ? error.response.data : error.message
+          );
         });
     } else {
-      console.error('No file selected');
+      console.error("No file selected");
     }
   };
 
@@ -50,22 +59,51 @@ const ProfilePage = () => {
     fileInput.current.click();
   };
 
+  const handleAdminDashboardClick = () => {
+    navigate("/admin");
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center">
       <div className="bg-white p-8 rounded-lg shadow-lg max-w-7xl w-full">
+        <h1 className="text-3xl font-semibold mb-6 text-center">My Profile</h1>
         <div className="flex items-center space-x-6 mb-6">
-          <div className="w-32 h-32 bg-gray-300 rounded-full overflow-hidden cursor-pointer" onClick={handleProfilePictureClick}>
+          <div
+            className="w-32 h-32 bg-gray-300 rounded-full overflow-hidden cursor-pointer relative"
+            onClick={handleProfilePictureClick}
+          >
             <img
               src={user.profilePhoto}
               alt="Profile"
               className="w-full h-full object-cover rounded-full"
             />
+            <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-200 bg-black bg-opacity-50 text-white">
+              Change Avatar
+            </div>
           </div>
           <div>
-            <h1 className="text-2xl text-gray-600">Name: {user.fullName} </h1>
-            <p className="text-2xl text-gray-600">Email: {user.email}</p>
-            <p className="text-2xl text-gray-600">Phone Number: {user.phoneNumber}</p>
+            <h1 className="text-2xl text-slate-900 capitalize">
+              Hello, {user.fullName}{" "}
+            </h1>
+            <p className="text-gray-600">{user.email}</p>
           </div>
+          {user.role === "admin" && (
+            <div>
+              <button
+                className="bg-blue-500 text-white px-4 py-2 rounded-lg"
+                onClick={handleAdminDashboardClick}
+              >
+                Admin Dashboard
+              </button>
+            </div>
+          )}
+        </div>
+        <div className="mb-6">
+          <h2 className="text-2xl font-semibold mb-2">My Listings</h2>
+          <p className="text-gray-600">
+            View and manage your parking listings.
+          </p>
+          <CurrentListings parkingSpots={parkingSpots} />
         </div>
         <div>
           <h2 className="text-2xl font-semibold mb-4">Parking History</h2>
