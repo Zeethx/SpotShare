@@ -20,7 +20,7 @@ function GetAvailability() {
     "sunday",
   ];
   const [editingDays, setEditingDays] = useState(formData.daysAvailable || []);
-  const [startDate, setStartDate] = useState( formData.availableFrom ? new Date(formData.availableFrom) : null);
+  const [startDate, setStartDate] = useState( formData.availableTill ? new Date(formData.availableTill) : null);
   const [customTimes, setCustomTimes] = useState(
     formData.customTimes || {
       monday: { in: "00:00", out: "23:59" },
@@ -39,13 +39,13 @@ function GetAvailability() {
       onClick={onClick}
       ref={ref}
     >
-      {formData.availableFrom ? value : "Set Date"}
+      {formData.availableTill ? value : "Set Date"}
     </div>
   ));
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateForm({ name: "availableFrom", value: startDate.toISOString() }));
+    dispatch(updateForm({ name: "availableTill", value: startDate.toISOString() }));
     dispatch(updateForm({ name: "customTimes", value: customTimes }));
     dispatch(updateForm({ name: "daysAvailable", value: editingDays }));
     navigate("/become-a-host/pricing");
@@ -114,7 +114,7 @@ function GetAvailability() {
                 selected={startDate}
                 onChange={(date) => {
                   setStartDate(date);
-                  dispatch(updateForm({ name: "availableFrom", value: date.toISOString() }));
+                  dispatch(updateForm({ name: "availableTill", value: date.toISOString() }));
                 }}
                 placeholderText="Select Start Date"
                 customInput={<CustomInput />}

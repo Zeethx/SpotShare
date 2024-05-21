@@ -12,7 +12,7 @@ function Navbar() {
     const buttonClass = "block py-2 px-3 font-semibold rounded hover:bg-gray-100 md:hover:bg-transparent md:px-4 md:py-2 md:dark:hover:bg-gray-200  md:dark:hover:rounded-full dark:border-gray-700"
 
     return (
-        <nav className="bg-primary-white text-primary-black fixed w-full z-20 top-0 start-0 border-b border-gray-200 shadow-md px-5">
+        <nav className="bg-primary-white text-primary-black fixed w-full z-20 top-0 start-0 border-b border-gray-200 shadow-md px-5 h-18">
             <div className="flex flex-wrap items-center justify-between mx-auto p-4">
                 <Logo />
                 <button onClick={() => setIsOpen(!isOpen)} className="md:hidden">
@@ -24,7 +24,7 @@ function Navbar() {
                 <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
                     <LogoutBtn />
                     <Button text="Profile" className={`${buttonClass} text-primary-color`}
-                    onClick={() => navigate('/Profile')} />
+                    onClick={() => navigate('/profile')} />
                 </div>
                 )
                 : (

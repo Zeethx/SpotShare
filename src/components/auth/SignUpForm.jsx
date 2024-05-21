@@ -16,12 +16,20 @@ function SignUpForm() {
   const [errorMessage, setErrorMessage] = useState('');
 
   const dispatch = useDispatch();
-  console.log(phoneNumber)
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
       if (!fullName || !email || !password || !phoneNumber) {
         setErrorMessage('Please fill in all fields');
+        return;
+      }
+      if (password.length < 6) {
+        setErrorMessage('Password must be at least 6 characters');
+        return;
+      }
+      console.log(phoneNumber.length)
+      if (phoneNumber.length < 12 || phoneNumber.length > 15) {
+        setErrorMessage('Invalid phone number');
         return;
       }
 

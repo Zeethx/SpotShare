@@ -3,6 +3,7 @@ import { useParams, useLocation } from "react-router-dom";
 import api from "../../conf/axiosConfig"; // Ensure this is the correct path
 import Carousel from "react-multi-carousel";
 import { useNavigate } from "react-router-dom";
+import "react-multi-carousel/lib/styles.css";
 
 const ConfirmReservation = () => {
   const { spotId } = useParams();
@@ -75,7 +76,12 @@ const ConfirmReservation = () => {
   };
 
   const calculatePrice = (duration) => {
-    const { hours, total } = duration;
+    let  { hours, minutes, total } = duration;
+
+    if (minutes > 0) {
+      hours += 1;
+    }
+
     const days = Math.ceil(total / (1000 * 60 * 60 * 24));
     const months = Math.ceil(days / 30);
 
@@ -120,29 +126,29 @@ const ConfirmReservation = () => {
   };
 
   return (
-    <div className="min-h-screen flex-col justify-center items-center mt-[7vw]">
-      <h2 className="text-2xl font-semibold mb-4 text-center">
+    <div className="min-h-screen flex flex-col items-center py-5">
+      <h2 className="text-4xl font-bold mb-8 text-center text-slate-900">
         Confirm Your Reservation
       </h2>
-      <div className="flex items-center justify-center">
-        <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-6xl">
-          <div className="flex justify-between">
+      <div className="flex items-center justify-center w-full">
+        <div className="bg-white shadow-2xl rounded-lg p-8 w-full max-w-5xl">
+          <div className="flex flex-col md:flex-row justify-between">
             {/* Left Section */}
-            <div className="w-2/3 pr-4">
-              <div className="mb-6">
-                <h3 className="text-xl font-semibold">Booking Details</h3>
-                <p>
-                  Parking at{" "}
+            <div className="w-full md:w-2/3 md:pr-4">
+              <div className="mb-8">
+                <h3 className="text-2xl font-semibold mb-4 border-b border-black text-center">Booking Details</h3>
+                <p className="text-lg text-gray-700">
+                  <span className="font-bold">Parking at{": "}</span>
                   {spotDetails.address.split(",").slice(0, 2).join(",")}
                 </p>
-                <div className="mt-2">
-                  <p>
+                <div className="mt-4 text-lg text-gray-600">
+                  <p className="mb-2">
                     <span className="font-semibold">Arriving on: </span>
                     <span className="text-blue-600">
                       {formatDate(dateTimeIn)}
                     </span>
                   </p>
-                  <p>
+                  <p className="mb-2">
                     <span className="font-semibold">Leaving on: </span>
                     <span className="text-blue-600">
                       {formatDate(dateTimeOut)}
@@ -154,16 +160,16 @@ const ConfirmReservation = () => {
                   </p>
                 </div>
               </div>
-              <div>
-                <h3 className="text-xl font-semibold">Vehicle Information</h3>
-                <p className="text-gray-600">
+              <div className="mb-8">
+                <h3 className="text-2xl font-semibold mb-4">Vehicle Information</h3>
+                <p className="text-lg text-gray-600 mb-4">
                   Your vehicle license plate number will be shared with the
                   parking space owner.
                 </p>
                 <input
                   type="text"
                   placeholder="Enter your vehicle registration number"
-                  className="border border-gray-300 rounded w-full p-2 mt-2"
+                  className="border border-gray-300 rounded w-full p-3 text-lg"
                   value={vehicleReg}
                   onChange={(e) => setVehicleReg(e.target.value.toUpperCase())}
                 />
@@ -171,23 +177,26 @@ const ConfirmReservation = () => {
                   Your Reservation Cannot be Cancelled.
                 </p>
               </div>
-              <h3 className="text-xl font-semibold mt-4">Availability</h3>
-              <div className="flex flex-wrap">
-                {spotDetails.daysAvailable.map((day, index) => (
-                  <div key={index}>
-                    {day.day}
-                    {index < spotDetails.daysAvailable.length - 1 ? ", " : ""}
-                  </div>
-                ))}
+              <div>
+                <h3 className="text-2xl font-semibold mb-4">Availability</h3>
+                <div className="flex flex-wrap text-lg text-gray-600">
+                  {spotDetails.daysAvailable.map((day, index) => (
+                    <div key={index}>
+                      {day.day}
+                      {index < spotDetails.daysAvailable.length - 1 ? ", " : ""}
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
 
             {/* Right Section */}
-            <div className="w-1/3 pl-4">
-              <div className="mb-6">
+            <div className="w-full md:w-1/3 md:pl-4 mt-8 md:mt-0">
+              <div className="mb-8">
                 <Carousel
                   responsive={responsive}
-                  className="rounded-lg overflow-hidden"
+                  className="rounded-lg overflow-hidden shadow-lg"
+                  arrows
                 >
                   {spotDetails.spotImages &&
                   spotDetails.spotImages.length > 0 ? (
@@ -196,7 +205,7 @@ const ConfirmReservation = () => {
                         <img
                           src={imageLink}
                           alt={`Spot ${index}`}
-                          className="w-full h-48 object-cover rounded-lg"
+                          className="w-full h-64 object-cover rounded-lg"
                         />
                       </div>
                     ))
@@ -205,24 +214,24 @@ const ConfirmReservation = () => {
                   )}
                 </Carousel>
               </div>
-              <div className="bg-gray-50 p-4 rounded">
-                <p className="flex justify-between">
+              <div className="bg-gray-50 p-6 rounded shadow-lg">
+                <p className="flex justify-between text-lg text-gray-700 mb-2">
                   <span>Parking fee</span>
-                  <span>CA${spotDetails.pricePerHour}</span>
+                  <span>CA${finalPrice.toFixed(2)}</span>
                 </p>
-                <p className="flex justify-between">
+                <p className="flex justify-between text-lg text-gray-700 mb-2">
                   <span>
                     Transaction fee <span className="text-gray-500">(i)</span>
                   </span>
                   <span>CA${(finalPrice * 0.05).toFixed(2)}</span>
                 </p>
-                <hr className="my-2" />
-                <p className="flex justify-between font-semibold">
+                <hr className="my-4" />
+                <p className="flex justify-between text-xl font-semibold text-gray-800">
                   <span>Final price</span>
                   <span>CA${(finalPrice + finalPrice * 0.05).toFixed(2)}</span>
                 </p>
               </div>
-              <button className="mt-4 bg-blue-600 text-white py-2 px-4 rounded w-full"
+              <button className="mt-6 bg-blue-600 text-white py-3 px-6 rounded-lg w-full text-xl font-semibold shadow-md hover:bg-blue-700 transition duration-300"
               onClick={handleReservation}>
                 Reserve This Spot
               </button>

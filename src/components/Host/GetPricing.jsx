@@ -52,12 +52,13 @@ function SetPricing() {
                 type="text"
                 value={item.price}
                 onChange={handlePriceChange(item.setter)}
-                className="w-1/3 md:w-1/5 lg:w-1/2 appearance-none border-none bg-transparent outline-none"
+                className="w-1/3 md:w-1/5 lg:w-1/2 appearance-none border-none bg-transparent outline-none focus:ring-0"
                 style={{
                   WebkitAppearance: "none",
                   MozAppearance: "textfield",
                   appearance: "none",
                 }}
+                onFocus={(e) => e.target.style.outline = 'none'}
               />
             </div>
           </div>

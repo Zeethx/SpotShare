@@ -3,7 +3,7 @@ import React from "react";
 const About = () => {
   return (
     <div className="p-8 font-outfit">
-      <div className="max-w-7xl mx-auto text-center py-12 mt-[7vw]">
+      <div className="max-w-7xl mx-auto text-center py-12">
         <h2 className="text-base font-semibold tracking-wide uppercase">About us</h2>
         <h1 className="mt-2 text-3xl leading-9 font-extrabold sm:text-5xl sm:leading-12 text-center">
           Parking made easier and <span className="underline">accessible</span>!
