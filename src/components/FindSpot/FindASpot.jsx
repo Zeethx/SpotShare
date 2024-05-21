@@ -121,8 +121,8 @@ function FindASpot() {
   }
 
   return (
-    <div className="flex flex-col lg:flex-row min-h-screen pb-12" >
-      <div className="flex flex-col p-6 w-full lg:w-1/3 shadow-lg rounded-xl">
+    <div className="flex flex-col lg:flex-row lg:max-h-screen pb-12 pt-10 " >
+      <div className="flex flex-col p-6 w-full lg:w-1/3 shadow-lg rounded-xl lg:h-[80vh]">
         <h1 className="text-4xl font-bold text-gray-900 mb-10 text-center">Find a Spot</h1>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div>
@@ -188,7 +188,7 @@ function FindASpot() {
         </form>
       </div>
       <div className="flex-1">
-        <div className="h-full">
+        <div className="map-container">
           <GoogleMap
             mapContainerStyle={{ width: "100%", height: "100%", borderRadius: "2%"}}
             center={markerPosition || { lat: 43.7, lng: -79.42 }}

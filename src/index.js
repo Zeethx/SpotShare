@@ -24,6 +24,7 @@ import ConfirmReservationPage from './pages/ConfirmReservationPage';
 import NotFound from './pages/Error';
 import Find from './pages/Find';
 import AdminDashboard from './components/Profile/AdminDashboard';
+import ReviewConfirmPage from './pages/host/ConfirmationPage';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -54,6 +55,7 @@ root.render(
             <Route path="/find" element={<Find />} />
             <Route path="/reserve/:spotId" element={<ConfirmReservationPage />} />
             <Route path="*" element={<NotFound />} />
+            <Route path="/submission-confirmation" element={<ReviewConfirmPage />} />
           </Route>
         </Routes>
       </Router>

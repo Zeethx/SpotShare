@@ -20,6 +20,7 @@ import TimeSelector from './Form/TimeSelector'
 import NotFound from './Misc/NotFound'
 import ProfilePage from './Profile/ProfilePage'
 import FindASpot from './FindSpot/FindASpot'
+import ReviewConfirm from './Host/Confirmation'
 
 export { 
     HeroSection,
@@ -43,6 +44,7 @@ export {
     TimeSelector,
     NotFound,
     ProfilePage,
-    FindASpot
+    FindASpot,
+    ReviewConfirm,
  }
 
