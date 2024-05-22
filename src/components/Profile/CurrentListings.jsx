@@ -1,18 +1,21 @@
+// src/pages/CurrentListings.tsx
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 
-function CurrentListings({ parkingSpots }) {
+const CurrentListings = ({ parkingSpots }) => {
   const navigate = useNavigate();
+
   const handleParkingSpotClick = (id) => {
-    navigate("/view-listings:id");
+    navigate(`/parking-spot/${id}`);
   };
+
   return (
     <div className="flex flex-col md:flex-row flex-wrap">
       {parkingSpots.length > 0 ? (
         parkingSpots.map((spot) => (
           <div
             key={spot._id}
-            onClick={handleParkingSpotClick}
+            onClick={() => handleParkingSpotClick(spot._id)}
             className={`p-2 w-full sm:w-1/2 lg:w-1/3 ${
               spot.status === "Pending"
                 ? "bg-yellow-200"
@@ -44,12 +47,10 @@ function CurrentListings({ parkingSpots }) {
           </div>
         ))
       ) : (
-        <p className="text-gray-600 w-full">
-          No parking history available.
-        </p>
+        <p className="text-gray-600 w-full">No parking history available.</p>
       )}
     </div>
   );
-}
+};
 
 export default CurrentListings;

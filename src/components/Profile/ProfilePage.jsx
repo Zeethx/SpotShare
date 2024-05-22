@@ -1,3 +1,4 @@
+// src/pages/ProfilePage.tsx
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../conf/axiosConfig";
@@ -6,7 +7,7 @@ import CurrentListings from "./CurrentListings";
 const ProfilePage = () => {
   const [user, setUser] = useState({});
   const [parkingSpots, setParkingSpots] = useState([]);
-  const fileInput = useRef();
+  const fileInput = useRef(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,10 +20,15 @@ const ProfilePage = () => {
       .catch((error) => {
         console.error("Error fetching user data:", error);
       });
-    api.get("/users/parking-spaces").then((response) => {
-      setParkingSpots(response.data.data);
-      console.log("Parking spaces:", response.data.data);
-    });
+    api
+      .get("/users/parking-spaces")
+      .then((response) => {
+        setParkingSpots(response.data.data);
+        console.log("Parking spaces:", response.data.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching parking spaces:", error);
+      });
   }, []);
 
   const handleProfilePictureSubmit = (event) => {
