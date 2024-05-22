@@ -20,7 +20,7 @@ function GetAvailability() {
     "sunday",
   ];
   const [editingDays, setEditingDays] = useState(formData.daysAvailable || []);
-  const [startDate, setStartDate] = useState( formData.availableTill ? new Date(formData.availableTill) : null);
+  const [startDate, setStartDate] = useState(formData.availableTill ? new Date(formData.availableTill) : null);
   const [customTimes, setCustomTimes] = useState(
     formData.customTimes || {
       monday: { in: "00:00", out: "23:59" },
@@ -35,11 +35,11 @@ function GetAvailability() {
 
   const CustomInput = React.forwardRef(({ value, onClick }, ref) => (
     <div
-      className="py-1 px-6 rounded border hover:border-2 hover:border-black font-bold text-xl w-full cursor-pointer"
+      className="py-2 px-4 rounded border bg-white text-gray-700 font-semibold shadow-sm hover:shadow-md cursor-pointer text-center"
       onClick={onClick}
       ref={ref}
     >
-      {formData.availableTill ? value : "Set Date"}
+      {formData.availableTill ? value : "Select Date"}
     </div>
   ));
 
@@ -57,7 +57,6 @@ function GetAvailability() {
       ? editingDays.filter((d) => d !== day)
       : [...editingDays, day];
     setEditingDays(newEditingDays);
-    console.log("Editing Days:", newEditingDays);
     if (!customTimes[day]) {
       setCustomTimes((prevTimes) => ({
         ...prevTimes,
@@ -91,36 +90,64 @@ function GetAvailability() {
   };
 
   return (
-    <div className="lg:pt-[7vw] pb-[10vw] h:screen my-20 lg:my-0">
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col items-center justify-center"
-      >
-        <div className="w-full lg:w-1/2 pr-2 ">
-          <div className="flex flex-col items-center justify-center text-center">
-            <h2 className="text-3xl lg:text-4xl font-semibold text-primary-black p-2">
-              Set Availability
-            </h2>
-            <p className="lg:text-xl text-gray-700">
-              Select a start date and specify your active days. Click "Set Date"
-              to pick your start date.
-            </p>
+    <div className="min-h-screen pb-20 pt-6 flex flex-col items-center px-4 bg-gray-50">
+      <div className="w-full max-w-4xl bg-white p-8 rounded-lg shadow-md">
+        <h2 className="text-3xl lg:text-4xl font-semibold text-primary-black text-center mb-6">
+          Set Availability
+        </h2>
+        <p className="lg:text-xl text-gray-700 text-center mb-8">
+          Select a start date and specify your active days. Click "Select Date" to pick your start date.
+        </p>
+        <form onSubmit={handleSubmit} className="space-y-8">
+          <div className="flex flex-col items-center lg:flex-row lg:justify-center space-y-4 lg:space-y-0 lg:space-x-4">
+            <label className="text-lg lg:text-xl font-medium text-center">
+              Set the date till your listing will be available
+            </label>
+            <DatePicker
+              selected={startDate}
+              onChange={(date) => {
+                setStartDate(date);
+                dispatch(updateForm({ name: "availableTill", value: date.toISOString() }));
+              }}
+              placeholderText="Select Start Date"
+              customInput={<CustomInput />}
+            />
           </div>
-        </div>
-        <div className="flex flex-col w-1/2 space-y-4 items-center mt-2">
-          <div className="flex flex-col lg:flex-row justify-between w-full my-2">
-            <div>
-              <DatePicker
-                selected={startDate}
-                onChange={(date) => {
-                  setStartDate(date);
-                  dispatch(updateForm({ name: "availableTill", value: date.toISOString() }));
-                }}
-                placeholderText="Select Start Date"
-                customInput={<CustomInput />}
-              />
-            </div>
-            <div className="text-lg font-medium bold mt-5 lg:mt-0">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {daysOfWeek.map((day) => (
+              <div key={day} className="w-full">
+                <button
+                  onClick={(e) => handleDayClick(day, e)}
+                  className={`py-2 px-6 rounded border w-full text-center font-bold text-xl ${
+                    editingDays.includes(day)
+                      ? "border-primary-black bg-gray-100"
+                      : "border-gray-300"
+                  }`}
+                >
+                  {day.charAt(0).toUpperCase() + day.slice(1)}
+                </button>
+                {editingDays.includes(day) && (
+                  <div className="grid grid-cols-7 gap-2 mt-2">
+                    <div className="col-span-3">
+                      <TimeSelector
+                        value={customTimes[day].in}
+                        onChange={handleTimeChange(day, "in")}
+                      />
+                    </div>
+                    <span className="text-lg font-medium self-center text-center col-span-1">
+                      to
+                    </span>
+                    <div className="col-span-3">
+                      <TimeSelector
+                        value={customTimes[day].out}
+                        onChange={handleTimeChange(day, "out")}
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+            <div className="w-full flex justify-center items-center mt-4 lg:mt-0">
               <Button
                 text={
                   editingDays.length === daysOfWeek.length
@@ -128,49 +155,18 @@ function GetAvailability() {
                     : "Select All"
                 }
                 onClick={handleToggleAllDays}
-                className="py-1 px-6 rounded border hover:border-2 hover:border-black font-bold text-xl"
+                className="py-2 px-6 rounded bg-primary-black text-white font-bold text-xl w-full"
               />
             </div>
           </div>
-          {daysOfWeek.map((day) => (
-            <div key={day} className="w-full">
-              <Button
-                text={day.charAt(0).toUpperCase() + day.slice(1)}
-                onClick={(e) => handleDayClick(day, e)}
-                className={`py-2 px-6 rounded border hover:border-2 hover:border-black font-bold text-xl w-full ${
-                  editingDays.includes(day)
-                    ? "border-2 border-black bg-gray-100"
-                    : "border-gray-500"
-                }`}
-              />
-              {editingDays.includes(day) && (
-                <div className="grid grid-cols-7 gap-2 mt-2">
-                  <div className="col-span-3">
-                    <TimeSelector
-                      value={customTimes[day].in}
-                      onChange={handleTimeChange(day, "in")}
-                    />
-                  </div>
-                  <span className="text-lg font-medium self-center text-center col-span-1">
-                    to
-                  </span>
-                  <div className="col-span-3">
-                    <TimeSelector
-                      value={customTimes[day].out}
-                      onChange={handleTimeChange(day, "out")}
-                    />
-                  </div>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      </form>
+        </form>
+      </div>
       <FormFooter
         text="Set Availability and Pricing: Step 2"
         to="/become-a-host/pricing"
         disabledCondition={!startDate || editingDays.length === 0}
         onNextClick={handleSubmit}
+        className="mt-8"
       />
     </div>
   );

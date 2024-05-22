@@ -1,6 +1,5 @@
-import { Container } from 'lucide-react'
 import React from 'react'
-import { GetStarted } from '../../components'
+import { GetStarted, Container } from '../../components'
 
 function GetStartedPage() {
   return (

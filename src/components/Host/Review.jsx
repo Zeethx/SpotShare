@@ -57,7 +57,7 @@ const Review = () => {
   };
 
   return (
-    <div className="flex flex-col items-center py-10 px-4 lg:px-20 mt-14">
+    <div className="flex flex-col items-center py-10 px-4 lg:px-20">
       <h2 className="text-4xl font-bold mb-8 text-center">Review Your Details</h2>
       <div className="bg-white shadow-md rounded-lg p-6 w-full lg:w-3/4 grid grid-cols-1 lg:grid-cols-9 gap-4">
         <div className="col-span-1 lg:col-span-6">

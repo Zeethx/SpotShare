@@ -28,7 +28,7 @@ function GetLocation() {
 
   return (
     <div className="lg:h-screen">
-      <div className="text-center lg:pt-[7vw] pt-[20vw]">
+      <div className="text-center">
         <div className="flex flex-col items-center justify-center">
           <div className="w-full lg:w-1/2 pr-2">
             <div className="flex flex-col items-center justify-center">

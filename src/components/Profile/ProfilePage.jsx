@@ -64,22 +64,24 @@ const ProfilePage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg max-w-7xl w-full relative">
+    <div className="min-h-screen flex md:items-center justify-center p-4 md:p-8">
+      <div className="bg-white p-4 md:p-8 rounded-lg shadow-lg max-w-7xl w-full relative">
         {user.role === "admin" && (
-          <div className="absolute top-28 right-4">
+          <div className="absolute top-28 right-4 md:top-16 md:right-8">
             <button
-              className="bg-blue-500 text-white px-4 py-2 rounded-lg"
+              className="bg-blue-500 text-white px-4 py-2 rounded-lg text-sm sm:text-base md:text-lg lg:text-xl"
               onClick={handleAdminDashboardClick}
             >
               Admin Dashboard
             </button>
           </div>
         )}
-        <h1 className="text-3xl font-semibold mb-6 text-center">My Profile</h1>
-        <div className="flex items-center space-x-6 mb-6">
+        <h1 className="text-2xl md:text-3xl font-semibold mb-6 text-center">
+          My Profile
+        </h1>
+        <div className="flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-6 mb-6">
           <div
-            className="w-32 h-32 bg-gray-300 rounded-full overflow-hidden cursor-pointer relative"
+            className="w-24 h-24 md:w-32 md:h-32 bg-gray-300 rounded-full overflow-hidden cursor-pointer relative"
             onClick={handleProfilePictureClick}
           >
             <img
@@ -91,26 +93,32 @@ const ProfilePage = () => {
               Change Avatar
             </div>
           </div>
-          <div>
-            <h1 className="text-2xl text-slate-900 capitalize">
-              Hello, {user.fullName}{" "}
+          <div className="text-center md:text-left">
+            <h1 className="text-xl md:text-2xl text-slate-900 capitalize">
+              Hello, {user.fullName}
             </h1>
             <p className="text-gray-600">{user.email}</p>
           </div>
         </div>
-        <div className="mb-6">
-          <h2 className="text-2xl font-semibold mb">My Listings</h2>
-          <p className="text-gray-600 mb-4">
-            View and manage your parking listings.{" "}
-            <span className="text-yellow-500">(Pending </span>|
-            <span className="text-green-500">Approved</span>|
-            <span className="text-red-500">Rejected)</span>
-          </p>
-          <CurrentListings parkingSpots={parkingSpots} />
-        </div>
+        {parkingSpots.length > 0 && (
+          <div className="mb-6">
+            <h2 className="text-xl md:text-2xl font-semibold mb-2">
+              My Listings
+            </h2>
+            <p className="text-gray-600 mb-4">
+              View and manage your parking listings.{" "}
+              <span className="text-yellow-500">(Pending</span>|
+              <span className="text-green-500">Approved</span>|
+              <span className="text-red-500">Rejected)</span>
+            </p>
+            <CurrentListings parkingSpots={parkingSpots} />
+          </div>
+        )}
         <div>
-          <h2 className="text-2xl font-semibold mb-4">Parking History</h2>
-          <div className="bg-gray-100 p-6 rounded-lg h-64 overflow-y-auto">
+          <h2 className="text-xl md:text-2xl font-semibold mb-4">
+            Parking History
+          </h2>
+          <div className="bg-gray-100 p-4 md:p-6 rounded-lg h-64 overflow-y-auto">
             <p className="text-gray-600">No parking history available.</p>
           </div>
         </div>

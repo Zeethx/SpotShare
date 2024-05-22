@@ -7,7 +7,7 @@ function GetSpotDetails() {
   const [step, setStep] = useState(1);
 
   return (
-    <div className="h-screen lg:pt-[7vw] pt-[20vw]">
+    <div className="h-screen">
 
       <div className="flex flex-col items-center justify-center">
         <div className="w-full lg:w-1/2 pr-2">

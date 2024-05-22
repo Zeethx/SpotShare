@@ -7,7 +7,7 @@ const AdminDashboard = () => {
     const [filteredSpaces, setFilteredSpaces] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(10);
-    const [filter, setFilter] = useState('All');
+    const [filter, setFilter] = useState('Pending');
     const [searchTerm, setSearchTerm] = useState('');
     const [rejectReason, setRejectReason] = useState('');
     const [showRejectModal, setShowRejectModal] = useState(false);
@@ -18,6 +18,7 @@ const AdminDashboard = () => {
         api.get('/parking-space/all').then((response) => {
             setParkingSpaces(response.data.data);
             setFilteredSpaces(response.data.data);
+            console.log('Fetched parking spaces:', response.data.data);
         }).catch((error) => {
             console.error('Failed to fetch parking spaces:', error);
         });
@@ -59,14 +60,10 @@ const AdminDashboard = () => {
         setShowRejectModal(true);
     };
 
-    const handleRejectReasonChange = (event) => {
-        setRejectReason(event.target.value);
-    };
-
     const handleRejectSubmit = async (event) => {
         event.preventDefault();
         if (selectedSpaceId) {
-            api.patch(`/parking-space/${selectedSpaceId}/reject`, { status: 'Rejected', reason: rejectReason }).then(() => {
+            api.patch(`/parking-space/${selectedSpaceId}/reject`, { rejectionReason: rejectReason }).then(() => {
                 setParkingSpaces(parkingSpaces.map(space => space._id === selectedSpaceId ? { ...space, status: 'Rejected', reason: rejectReason } : space));
                 setShowRejectModal(false);
                 setRejectReason('');
@@ -84,8 +81,8 @@ const AdminDashboard = () => {
     const paginate = pageNumber => setCurrentPage(pageNumber);
 
     return (
-        <div className="container mx-auto p-4">
-            <h1 className="text-2xl font-bold text-center mb-6">Admin Dashboard</h1>
+        <div className="container mx-auto p-4 font-outfit">
+            <h1 className="text-3xl font-bold text-center mb-6 border-b-1 border-black">Admin Dashboard</h1>
             <SearchFilterBar
                 searchTerm={searchTerm}
                 setSearchTerm={setSearchTerm}

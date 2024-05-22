@@ -22,7 +22,7 @@ const ParkingTable = ({ currentSpaces, approveListing, openRejectModal }) => {
                                     space.status === 'Pending' ? 'bg-yellow-200 text-yellow-800' :
                                     space.status === 'Approved' ? 'bg-green-200 text-green-800' :
                                     'bg-red-200 text-red-800'
-                                }`}>
+                                }`} title={space.rejectionReason}>
                                     {space.status}
                                 </span>
                             </td>
@@ -43,6 +43,23 @@ const ParkingTable = ({ currentSpaces, approveListing, openRejectModal }) => {
                                         </button>
                                     </div>
                                 )}
+                                {space.status === 'Approved' && (
+                                    <button
+                                        className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+                                        onClick={() => openRejectModal(space._id)}
+                                    >
+                                        Reject
+                                    </button>
+                                )}
+                                {space.status === 'Rejected' && (
+                                    <button
+                                        className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600"
+                                        onClick={() => approveListing(space._id)}
+                                    >
+                                        Approve
+                                    </button>
+                                )
+                                }
                             </td>
                         </tr>
                     ))}
