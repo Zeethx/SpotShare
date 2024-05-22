@@ -23,9 +23,9 @@ function GetSpotDetails3() {
   };
 
   return (
-    <div className="w-full lg:w-1/2 mb-[20vw] lg:mb-0">
-      <div className="flex flex-col items-center justify-center h-full p-4 w-full">
-        <div className="flex flex-col items-center justify-center mt-10">
+    <div className="w-full lg:w-1/2">
+      <div className="flex flex-col items-center justify-center p-4 w-full">
+        <div className="flex flex-col items-center justify-center mt-4">
           <label className="text-xl lg:text-2xl font-bold mb-5">Add Photos</label>
         </div>
         <div>

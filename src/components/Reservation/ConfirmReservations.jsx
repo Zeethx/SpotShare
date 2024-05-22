@@ -76,7 +76,7 @@ const ConfirmReservation = () => {
   };
 
   const calculatePrice = (duration) => {
-    let  { hours, minutes, total } = duration;
+    let { hours, minutes, total } = duration;
 
     if (minutes > 0) {
       hours += 1;
@@ -119,7 +119,6 @@ const ConfirmReservation = () => {
       console.log("Reservation successful:", response.data);
       // Redirect to the user's reservations page
       navigate("/");
-
     } catch (error) {
       console.error("Error making reservation:", error);
     }
@@ -136,7 +135,9 @@ const ConfirmReservation = () => {
             {/* Left Section */}
             <div className="w-full md:w-2/3 md:pr-4">
               <div className="mb-8">
-                <h3 className="text-2xl font-semibold mb-4 border-b border-black text-center">Booking Details</h3>
+                <h3 className="text-2xl font-semibold mb-4 border-b border-black text-center">
+                  Booking Details
+                </h3>
                 <p className="text-lg text-gray-700">
                   <span className="font-bold">Parking at{": "}</span>
                   {spotDetails.address.split(",").slice(0, 2).join(",")}
@@ -161,7 +162,9 @@ const ConfirmReservation = () => {
                 </div>
               </div>
               <div className="mb-8">
-                <h3 className="text-2xl font-semibold mb-4">Vehicle Information</h3>
+                <h3 className="text-2xl font-semibold mb-4">
+                  Vehicle Information
+                </h3>
                 <p className="text-lg text-gray-600 mb-4">
                   Your vehicle license plate number will be shared with the
                   parking space owner.
@@ -178,15 +181,27 @@ const ConfirmReservation = () => {
                 </p>
               </div>
               <div>
-                <h3 className="text-2xl font-semibold mb-4">Availability</h3>
-                <div className="flex flex-wrap text-lg text-gray-600">
-                  {spotDetails.daysAvailable.map((day, index) => (
-                    <div key={index}>
-                      {day.day}
-                      {index < spotDetails.daysAvailable.length - 1 ? ", " : ""}
-                    </div>
-                  ))}
-                </div>
+                <h3 className="text-2xl font-semibold mb-4">Pricing Scheme</h3>
+                <ul className="list-disc list-inside text-lg text-gray-600 mt-4">
+                  {spotDetails.pricePerHour !== 0 && (
+                    <li>
+                      <span className="font-semibold">Hourly: </span>
+                      CA${spotDetails.pricePerHour}
+                    </li>
+                  )}
+                  {spotDetails.pricePerDay !== 0 && (
+                    <li>
+                      <span className="font-semibold">Daily: </span>
+                      CA${spotDetails.pricePerDay}
+                    </li>
+                  )}
+                  {spotDetails.pricePerMonth !== 0 && (
+                    <li>
+                      <span className="font-semibold">Monthly: </span>
+                      CA${spotDetails.pricePerMonth}
+                    </li>
+                  )}
+                </ul>
               </div>
             </div>
 
@@ -231,8 +246,10 @@ const ConfirmReservation = () => {
                   <span>CA${(finalPrice + finalPrice * 0.05).toFixed(2)}</span>
                 </p>
               </div>
-              <button className="mt-6 bg-blue-600 text-white py-3 px-6 rounded-lg w-full text-xl font-semibold shadow-md hover:bg-blue-700 transition duration-300"
-              onClick={handleReservation}>
+              <button
+                className="mt-6 bg-blue-600 text-white py-3 px-6 rounded-lg w-full text-xl font-semibold shadow-md hover:bg-blue-700 transition duration-300"
+                onClick={handleReservation}
+              >
                 Reserve This Spot
               </button>
             </div>

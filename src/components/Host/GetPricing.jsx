@@ -27,12 +27,12 @@ function SetPricing() {
   };
 
   return (
-    <div className="lg:pt-[7vw] pb-[10vw] h:screen py-20">
+    <div className="pb-[10vw]">
       <div className="flex flex-col items-center">
         <h2 className="text-3xl lg:text-4xl font-semibold text-primary-black p-2 text-center">
           Set Pricing
         </h2>
-        <p className="text-center pb-20 lg:text-xl text-wrap">
+        <p className="text-center sm:pb-20 lg:text-xl text-wrap">
           Set hourly, daily, or monthly rates to suit various needs. For unavailable options, simply set the price to $0 to exclude them.
         </p>
       </div>
