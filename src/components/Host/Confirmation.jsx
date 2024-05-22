@@ -12,7 +12,7 @@ function Confirmation() {
         Thank you for submitting your parking spot. We will review your submission and get back to you within <span className='font-bold'>24 hours</span>.
       </p>
       <p className="text-gray-600 text-xl">
-        If you have any questions, feel free to <span className="text-primary-color marker:cursor-pointer" onClick={() => navigate('/contact')}>contact our support team</span>.
+        If you have any questions, feel free to <span className="text-primary-color cursor-pointer" onClick={() => navigate('/contact')}>contact our support team</span>.
       </p>
     </div>
   </div>

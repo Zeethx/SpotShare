@@ -25,6 +25,8 @@ import NotFound from './pages/Error';
 import Find from './pages/Find';
 import AdminDashboard from './pages/AdminDashboard';
 import ReviewConfirmPage from './pages/host/ConfirmationPage';
+import ParkingSpotDetailsPage from './pages/ParkingSpotDetailsPage';
+import ContactPage from './pages/ContactPage';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -56,6 +58,8 @@ root.render(
             <Route path="/reserve/:spotId" element={<ConfirmReservationPage />} />
             <Route path="*" element={<NotFound />} />
             <Route path="/submission-confirmation" element={<ReviewConfirmPage />} />
+            <Route path="/parking-spot/:id" element={<ParkingSpotDetailsPage />} />
+            <Route path="/contact-us" element={<ContactPage />} />
           </Route>
         </Routes>
       </Router>
