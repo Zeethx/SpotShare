@@ -23,7 +23,7 @@ import AboutPage from './pages/AboutPage';
 import ConfirmReservationPage from './pages/ConfirmReservationPage';
 import NotFound from './pages/Error';
 import Find from './pages/Find';
-import AdminDashboard from './components/Profile/AdminDashboard';
+import AdminDashboard from './pages/AdminDashboard';
 import ReviewConfirmPage from './pages/host/ConfirmationPage';
 import ParkingSpotDetailsPage from './pages/ParkingSpotDetailsPage';
 import ContactPage from './pages/ContactPage';
