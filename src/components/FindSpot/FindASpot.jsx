@@ -159,7 +159,7 @@ function FindASpot() {
                 />
                 <label
                   htmlFor="hourly"
-                  className="inline-flex items-center justify-between w-full p-2 text-slate-900 bg-white border-1 border-gray-200 rounded-lg shadow-lg cursor-pointer peer-checked:border-primary-color peer-checked:border peer-checked:text-primary-color hover:bg-gray-100 "
+                  className="inline-flex items-center justify-between w-full p-2 text-slate-900 bg-white border-1 border-gray-200 rounded-lg shadow-lg cursor-pointer peer-checked:bg-primary-color peer-checked:border peer-checked:text-primary-white hover:bg-gray-100 "
                 >
                   <div className="block">
                     <div className="w-full text-lg">Hourly</div>
@@ -177,7 +177,7 @@ function FindASpot() {
                 />
                 <label
                   htmlFor="daily"
-                  className="inline-flex items-center justify-between w-full p-2 text-slate-900 bg-white border-1 border-gray-200 rounded-lg shadow-lg cursor-pointer peer-checked:border-primary-color peer-checked:border peer-checked:text-primary-color hover:bg-gray-100 "
+                  className="inline-flex items-center justify-between w-full p-2 text-slate-900 bg-white border-1 border-gray-200 rounded-lg shadow-lg cursor-pointer peer-checked:bg-primary-color peer-checked:border peer-checked:text-primary-white hover:bg-gray-100 "
                 >
                   <div className="block">
                     <div className="w-full text-lg">Daily</div>
@@ -194,7 +194,7 @@ function FindASpot() {
                 />
                 <label
                   htmlFor="monthly"
-                  className="inline-flex items-center justify-between w-full p-2 text-slate-900 bg-white border-1 border-gray-200 rounded-lg shadow-lg cursor-pointer peer-checked:border-primary-color peer-checked:border peer-checked:text-primary-color hover:bg-gray-100 "
+                  className="inline-flex items-center justify-between w-full p-2 text-slate-900 bg-white border-1 border-gray-200 rounded-lg shadow-lg cursor-pointer peer-checked:bg-primary-color peer-checked:border peer-checked:text-primary-white hover:bg-gray-100 "
                 >
                   <div className="block">
                     <div className="w-full text-lg">Monthly</div>
