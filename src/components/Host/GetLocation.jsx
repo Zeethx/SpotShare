@@ -27,7 +27,7 @@ function GetLocation() {
   }, [formData.address]);
 
   return (
-    <div className="lg:h-screen">
+    <div className="lg:h-screen 3xl:pt-[2.5vw]">
       <div className="text-center">
         <div className="flex flex-col items-center justify-center">
           <div className="w-full lg:w-1/2 pr-2">

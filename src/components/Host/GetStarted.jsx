@@ -12,7 +12,7 @@ function GetStarted() {
     navigate("/become-a-host/location");
   }
   return (
-    <div className="flex flex-col lg:flex-row justify-center items-center">
+    <div className="flex flex-col lg:flex-row 3xl:pt-[3.5vw] justify-center items-center ">
       <div className="lg:w-1/2 text-center">
         <h1 className="text-4xl md:text-7xl font-bold text-primary-color font-freeman">
           Turn Your <span className="text-[#32deaa]" >Empty</span> Space <br />into <span className="text-[#32deaa]" > Earning</span> Space

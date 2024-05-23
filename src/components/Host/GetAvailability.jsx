@@ -20,7 +20,9 @@ function GetAvailability() {
     "sunday",
   ];
   const [editingDays, setEditingDays] = useState(formData.daysAvailable || []);
-  const [startDate, setStartDate] = useState(formData.availableTill ? new Date(formData.availableTill) : null);
+  const [startDate, setStartDate] = useState(
+    formData.availableTill ? new Date(formData.availableTill) : null
+  );
   const [customTimes, setCustomTimes] = useState(
     formData.customTimes || {
       monday: { in: "00:00", out: "23:59" },
@@ -45,7 +47,9 @@ function GetAvailability() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateForm({ name: "availableTill", value: startDate.toISOString() }));
+    dispatch(
+      updateForm({ name: "availableTill", value: startDate.toISOString() })
+    );
     dispatch(updateForm({ name: "customTimes", value: customTimes }));
     dispatch(updateForm({ name: "daysAvailable", value: editingDays }));
     navigate("/become-a-host/pricing");
@@ -78,7 +82,7 @@ function GetAvailability() {
       setEditingDays([]);
     } else {
       setEditingDays(daysOfWeek);
-      daysOfWeek.forEach(day => {
+      daysOfWeek.forEach((day) => {
         if (!customTimes[day]) {
           setCustomTimes((prevTimes) => ({
             ...prevTimes,
@@ -96,7 +100,8 @@ function GetAvailability() {
           Set Availability
         </h2>
         <p className="lg:text-xl text-gray-700 text-center mb-8">
-          Select an end date and specify your active days. Click on "Select Date" to set your duration.
+          Select an end date and specify your active days. Click on "Select
+          Date" to set your duration.
         </p>
         <form onSubmit={handleSubmit} className="space-y-8">
           <div className="flex flex-col items-center lg:flex-row lg:justify-center space-y-4 lg:space-y-0 lg:space-x-4">
@@ -107,14 +112,19 @@ function GetAvailability() {
               selected={startDate}
               onChange={(date) => {
                 setStartDate(date);
-                dispatch(updateForm({ name: "availableTill", value: date.toISOString() }));
+                dispatch(
+                  updateForm({
+                    name: "availableTill",
+                    value: date.toISOString(),
+                  })
+                );
               }}
               placeholderText="Select Start Date"
               customInput={<CustomInput />}
             />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {daysOfWeek.map((day) => (
+            {daysOfWeek.slice(0, 6).map((day) => (
               <div key={day} className="w-full">
                 <button
                   onClick={(e) => handleDayClick(day, e)}
@@ -147,17 +157,51 @@ function GetAvailability() {
                 )}
               </div>
             ))}
-            <div className="w-full flex justify-center items-center mt-4 lg:mt-0">
-              <Button
-                text={
-                  editingDays.length === daysOfWeek.length
-                    ? "Deselect All"
-                    : "Select All"
-                }
-                onClick={handleToggleAllDays}
-                className="py-2 px-6 rounded bg-primary-black text-white font-bold text-xl w-full"
-              />
+            <div className="w-full lg:col-span-3 flex justify-center">
+              <div className="w-full sm:w-1/2 lg:w-1/3">
+                <button
+                  onClick={(e) => handleDayClick("sunday", e)}
+                  className={`py-2 px-6 rounded border w-full text-center font-bold text-xl ${
+                    editingDays.includes("sunday")
+                      ? "border-primary-black bg-gray-100"
+                      : "border-gray-300"
+                  }`}
+                >
+                  Sunday
+                </button>
+                {editingDays.includes("sunday") && (
+                  <div className="grid grid-cols-7 gap-2 mt-2">
+                    <div className="col-span-3">
+                      <TimeSelector
+                        value={customTimes["sunday"].in}
+                        onChange={handleTimeChange("sunday", "in")}
+                      />
+                    </div>
+                    <span className="text-lg font-medium self-center text-center col-span-1">
+                      to
+                    </span>
+                    <div className="col-span-3">
+                      <TimeSelector
+                        value={customTimes["sunday"].out}
+                        onChange={handleTimeChange("sunday", "out")}
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
+          </div>
+
+          <div className="w-full flex justify-center items-center mt-4 lg:mt-0 ">
+            <Button
+              text={
+                editingDays.length === daysOfWeek.length
+                  ? "Deselect All"
+                  : "Select All"
+              }
+              onClick={handleToggleAllDays}
+              className="py-2 px-6 rounded bg-primary-black text-white font-bold text-xl w-full"
+            />
           </div>
         </form>
       </div>
