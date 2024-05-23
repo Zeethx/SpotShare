@@ -18,7 +18,6 @@ const ReservationsPage = () => {
       try {
         const response = await api.get(`/reservation/all?parkingSpotId=${id}`);
         setReservations(response.data.data);
-        console.log("Fetched reservations:", response.data.data);
         setLoading(false);
       } catch (err) {
         setError("Failed to fetch reservations");

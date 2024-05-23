@@ -18,7 +18,6 @@ const AdminDashboard = () => {
         api.get('/parking-space/all').then((response) => {
             setParkingSpaces(response.data.data);
             setFilteredSpaces(response.data.data);
-            console.log('Fetched parking spaces:', response.data.data);
         }).catch((error) => {
             console.error('Failed to fetch parking spaces:', error);
         });
