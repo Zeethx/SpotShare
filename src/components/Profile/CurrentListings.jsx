@@ -1,6 +1,13 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const CurrentListings = ({ parkingSpots, handleParkingSpotClick }) => {
+const CurrentListings = ({ parkingSpots }) => {
+    const navigate = useNavigate();
+
+    const handleParkingSpotClick = (id) => {
+        navigate(`/parking-space/${id}`);
+    };
+    
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {parkingSpots.length > 0 ? (

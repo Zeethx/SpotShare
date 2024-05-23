@@ -27,7 +27,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import ReviewConfirmPage from './pages/host/ConfirmationPage';
 import ParkingSpotDetailsPage from './pages/ParkingSpotDetailsPage';
 import ContactPage from './pages/ContactPage';
-
+import ReservationsPage from './pages/ReservationsPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -58,8 +58,9 @@ root.render(
             <Route path="/reserve/:spotId" element={<ConfirmReservationPage />} />
             <Route path="*" element={<NotFound />} />
             <Route path="/submission-confirmation" element={<ReviewConfirmPage />} />
-            <Route path="/parking-spot/:id" element={<ParkingSpotDetailsPage />} />
-            <Route path="/contact-us" element={<ContactPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/parking-space/:id" element={<ParkingSpotDetailsPage />} />
+            <Route path="reservations/:id" element={<ReservationsPage />} />
           </Route>
         </Routes>
       </Router>

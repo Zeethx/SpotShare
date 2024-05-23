@@ -26,7 +26,6 @@ const ConfirmReservation = () => {
       try {
         const response = await api.get(`/parking-space/${spotId}`);
         setSpotDetails(response.data.data);
-        console.log("Parking spot details fetched:", response.data.data);
       } catch (error) {
         console.error("Error fetching parking spot details:", error);
       }
@@ -157,7 +156,11 @@ const ConfirmReservation = () => {
                   </p>
                   <p>
                     <span className="font-semibold">Duration: </span>
-                    {`${duration.hours} hours ${duration.minutes} minutes`}
+                    {duration.hours > 24
+                      ? `${Math.floor(duration.hours / 24)} days ${
+                          duration.hours % 24
+                        } hours ${duration.minutes} minutes`
+                      : `${duration.hours} hours ${duration.minutes} minutes`}
                   </p>
                 </div>
               </div>
@@ -165,7 +168,7 @@ const ConfirmReservation = () => {
                 <h3 className="text-2xl font-semibold mb-4">
                   Vehicle Information
                 </h3>
-                <p className="text-lg text-gray-600 mb-4">
+                <p className="text-md text-gray-600 mb-4">
                   Your vehicle license plate number will be shared with the
                   parking space owner.
                 </p>
@@ -176,9 +179,6 @@ const ConfirmReservation = () => {
                   value={vehicleReg}
                   onChange={(e) => setVehicleReg(e.target.value.toUpperCase())}
                 />
-                <p className="mt-2 text-red-600">
-                  Your Reservation Cannot be Cancelled.
-                </p>
               </div>
               <div>
                 <h3 className="text-2xl font-semibold mb-4">Pricing Scheme</h3>
@@ -203,6 +203,9 @@ const ConfirmReservation = () => {
                   )}
                 </ul>
               </div>
+              <p className="mt-2 text-red-600 text-sm">
+                Your Reservation Cannot be Cancelled.
+              </p>
             </div>
 
             {/* Right Section */}
@@ -247,8 +250,12 @@ const ConfirmReservation = () => {
                 </p>
               </div>
               <button
-                className="mt-6 bg-blue-600 text-white py-3 px-6 rounded-lg w-full text-xl font-semibold shadow-md hover:bg-blue-700 transition duration-300"
+                className="mt-6 bg-blue-600 text-white py-3 px-6 rounded-lg w-full text-xl font-semibold shadow-md hover:bg-blue-700 transition duration-300 disabled:bg-gray-500 disabled:cursor-not-allowed"
                 onClick={handleReservation}
+                disabled={!vehicleReg.length}
+                {...(!vehicleReg
+                  ? { title: "Please enter your vehicle registration number" }
+                  : {})}
               >
                 Reserve This Spot
               </button>
