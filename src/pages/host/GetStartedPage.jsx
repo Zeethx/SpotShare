@@ -1,11 +1,9 @@
 import React from 'react'
-import { GetStarted, Container } from '../../components'
+import { GetStarted} from '../../components'
 
 function GetStartedPage() {
   return (
-    <Container>
         <GetStarted />
-    </Container>
   )
 }
 
