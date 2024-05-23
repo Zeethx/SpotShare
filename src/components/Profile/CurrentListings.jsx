@@ -39,7 +39,7 @@ const CurrentListings = ({ parkingSpots }) => {
                                     {spot.address.split(",").slice(0, 2).join(", ")}
                                 </p>
                                 <p className="text-sm text-gray-600">
-                                    Confirmed Reservations: {spot.reservations.length}
+                                    Reservations: {spot.reservations.length}
                                 </p>
                             </div>
                         </div>

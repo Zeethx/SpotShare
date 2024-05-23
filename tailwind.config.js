@@ -12,7 +12,8 @@ module.exports = {
         'primary-black': '#000000',
       },
       fontFamily: {
-        // your fontFamily configuration
+        'outfit' : ['Outfit', 'sans-serif'],
+        'freeman' : ['Freeman', 'sans-serif'],
       },
       screens: {
         '3xl': '1920px',

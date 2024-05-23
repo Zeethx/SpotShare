@@ -34,9 +34,12 @@ const ParkingSpotDetails = () => {
         });
       })
       .catch((error) => {
+        if(error.response.status === 403) {
+          navigate("/404");
+        }
         console.error("Error fetching listing details:", error);
       });
-  }, [id]);
+  }, [id, navigate]);
 
   const handleDeleteParkingSpot = async () => {
     try {

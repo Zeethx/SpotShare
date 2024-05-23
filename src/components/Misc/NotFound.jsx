@@ -1,18 +1,14 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom'; // assuming you're using react-router for navigation
-import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom'; 
 
 function NotFound() {
     const navigate = useNavigate(); // Hook for navigation
-    const formData = useSelector((state) => state.form);
     const handleGoHome = () => {
         navigate('/'); 
     };
 
-    console.log(formData); // log the form data to the console
-
     return (
-        <div className="h-screen lg:px-24 lg:py-24 md:py-20 md:px-44 px-4 py-24 flex justify-center items-center flex-col-reverse lg:flex-row md:gap-28 gap-16">
+        <div className="max-h-screen lg:px-24 lg:py-24 md:py-20 md:px-44 px-4 py-24 flex justify-center items-center flex-col-reverse lg:flex-row md:gap-28 gap-16">
             <div className="xl:pt-24 w-full xl:w-1/2 relative pb-12 lg:pb-0">
                 <div className="relative">
                     <div className="absolute">

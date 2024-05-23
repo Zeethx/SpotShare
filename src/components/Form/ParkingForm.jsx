@@ -28,7 +28,6 @@ function ParkingForm({ onAddressChange }) {
 
   const autocompleteRef = useRef(null);
   const navigate = useNavigate();
-  const location = watch("location");
   const [isAddressValid, setIsAddressValid] = useState(false);
   const dateTimeIn = watch("dateTimeIn");
   const dateTimeOut = watch("dateTimeOut");

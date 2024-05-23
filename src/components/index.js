@@ -23,6 +23,7 @@ import FindASpot from './FindSpot/FindASpot'
 import ReviewConfirm from './Host/Confirmation'
 import Contact from './Contact/Contact'
 import ImageCarousel from './Misc/ImageCarousel'
+import Loader from './Misc/Loader'
 
 export { 
     HeroSection,
@@ -49,6 +50,7 @@ export {
     FindASpot,
     ReviewConfirm,
     Contact,
-    ImageCarousel
+    ImageCarousel,
+    Loader
  }
 
