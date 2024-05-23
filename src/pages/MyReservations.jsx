@@ -1,36 +1,28 @@
-// src/pages/ReservationsPage.js
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 import api from "../conf/axiosConfig";
 import { Container, Loader } from "../components";
 
-const ReservationsPage = () => {
-  const { id } = useParams(); // id of the parking spot
+const MyReservations = () => {
   const [reservations, setReservations] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [filter, setFilter] = useState("all");
-
-  const navigate = useNavigate();
+  const [filter, setFilter] = useState("upcoming");
 
   useEffect(() => {
     const fetchReservations = async () => {
       setLoading(true);
       setError(null);
       try {
-        const response = await api.get(`/reservation/all?parkingSpaceId=${id}`);
+        const response = await api.get("/users/reservations");
         setReservations(response.data.data);
         setLoading(false);
       } catch (err) {
-        if (err.response.status === 403) {
-            navigate('/404');
-        }
         setError("Failed to fetch reservations");
         setLoading(false);
       }
     };
     fetchReservations();
-  }, [id, navigate]);
+  }, []);
 
   const currentReservations = reservations.filter(
     (reservation) =>
@@ -58,13 +50,13 @@ const ReservationsPage = () => {
     }
   };
 
-  if (loading) return <Loader />;
   if (error) return <p className="text-red-500">{error}</p>;
 
+  if (loading) return <Container><Loader /></Container>;
   return (
     <Container>
       <div className="container mx-auto p-4">
-        <h1 className="text-3xl font-bold mb-4 text-center">Reservations</h1>
+        <h1 className="text-3xl font-bold mb-4 text-center">My Reservations</h1>
         <div className="mb-6">
           <div className="flex justify-center space-x-2 mb-4">
             <button
@@ -109,13 +101,13 @@ const ReservationsPage = () => {
                 className="border-b py-4 flex flex-col sm:flex-row gap-4 items-center"
               >
                 <img
-                  src={reservation.user.profilePhoto}
-                  alt="profile"
-                  className="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover"
+                  src={reservation.parkingSpace.spotImages[0] || "default-image.jpg"}
+                  alt="parking spot"
+                  className="w-24 h-24 sm:w-28 sm:h-28 rounded-lg object-cover"
                 />
                 <div className="flex-1">
-                  <p className="text-lg font-medium">
-                    <strong>Name:</strong> {reservation.user.fullName}
+                  <p className="text-gray-600">
+                    <strong>Parking at:</strong> {reservation.parkingSpace.address}
                   </p>
                   <p className="text-gray-600">
                     <strong>Start Time:</strong>{" "}
@@ -148,10 +140,10 @@ const ReservationsPage = () => {
                     )}
                   </p>
                   <p className="text-gray-600">
-                    <strong>License Plate:</strong> {reservation.vehicleReg}
+                    <strong>Cost:</strong> ${reservation.totalPrice}
                   </p>
-                  <p className="text-green-700 font-bold">
-                    <strong>Total Revenue:</strong> ${reservation.totalPrice}
+                  <p className="text-gray-600">
+                    <strong>Payment Status:</strong> {reservation.paymentStatus}
                   </p>
                 </div>
               </div>
@@ -169,4 +161,4 @@ const ReservationsPage = () => {
   );
 };
 
-export default ReservationsPage;
+export default MyReservations;

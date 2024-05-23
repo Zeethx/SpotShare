@@ -4,6 +4,7 @@ import { Outlet } from 'react-router-dom';
 import Header from './components/Header/Header';
 import { useDispatch } from 'react-redux';
 import { login } from './store/authSlice';
+import { Loader } from './components';
 
 function App() {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ function App() {
   }, [dispatch]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
 

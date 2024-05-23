@@ -134,21 +134,28 @@ const ConfirmReservation = () => {
             {/* Left Section */}
             <div className="w-full md:w-2/3 md:pr-4">
               <div className="mb-8">
-                <h3 className="text-2xl font-semibold mb-4 border-b border-black text-center">
-                  Booking Details
+                <h3 className="text-2xl font-semibold text-center mb-2">
+                  Reservation for {spotDetails.title}
                 </h3>
+                <p className="text-lg text-gray-700 border-b border-black mb-4">
+                  {spotDetails.description}
+                </p>
                 <p className="text-lg text-gray-700">
-                  <span className="font-bold">Parking at{": "}</span>
+                  <span className="font-bold">{spotDetails.spotType} Parking at{": "}</span>
                   {spotDetails.address.split(",").slice(0, 2).join(",")}
                 </p>
-                <div className="mt-4 text-lg text-gray-600">
-                  <p className="mb-2">
+                <p className="text-lg text-gray-600">
+                  <span className="font-semibold">Accomodation: </span> {spotDetails.spacesToRent}
+                  {spotDetails.spacesToRent > 1 ? " Spaces" : " Space"} available for a {spotDetails.vehicleSize === "Van/Minibus" ? "Van/Minibus" : `${spotDetails.vehicleSize} vehicle.` } 
+                </p>
+                <div className="mt-1 text-lg text-gray-600">
+                  <p className="mb-1">
                     <span className="font-semibold">Arriving on: </span>
                     <span className="text-blue-600">
                       {formatDate(dateTimeIn)}
                     </span>
                   </p>
-                  <p className="mb-2">
+                  <p className="mb-1">
                     <span className="font-semibold">Leaving on: </span>
                     <span className="text-blue-600">
                       {formatDate(dateTimeOut)}

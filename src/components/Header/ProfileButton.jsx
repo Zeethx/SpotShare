@@ -17,6 +17,11 @@ function ProfileButton() {
     setShowDropdown(false);
   };
 
+  const handleMyReservationsClick = () => {
+    navigate('/myreservations');
+    setShowDropdown(false);
+  };
+
   const handleFindSpotClick = () => {
     navigate('/find');
     setShowDropdown(false);
@@ -68,6 +73,9 @@ function ProfileButton() {
         <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-1 z-20">
           <button onClick={handleProfileClick} className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary-color">
             Profile
+          </button>
+          <button onClick={handleMyReservationsClick} className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary-color">
+            My Reservations
           </button>
           <div className="block md:hidden">
             <button onClick={handleFindSpotClick} className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary-color">
