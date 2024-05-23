@@ -15,7 +15,6 @@ const ProfilePage = () => {
       .get("/users/me")
       .then((response) => {
         setUser(response.data.data);
-        console.log("User data:", response.data.data);
       })
       .catch((error) => {
         console.error("Error fetching user data:", error);
@@ -24,7 +23,6 @@ const ProfilePage = () => {
       .get("/users/parking-spaces")
       .then((response) => {
         setParkingSpots(response.data.data);
-        console.log("Parking spaces:", response.data.data);
       })
       .catch((error) => {
         console.error("Error fetching parking spaces:", error);

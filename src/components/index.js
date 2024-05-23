@@ -21,7 +21,8 @@ import NotFound from './Misc/NotFound'
 import ProfilePage from './Profile/ProfilePage'
 import FindASpot from './FindSpot/FindASpot'
 import ReviewConfirm from './Host/Confirmation'
-import Contact from './Misc/Contact'
+import Contact from './Contact/Contact'
+import ImageCarousel from './Misc/ImageCarousel'
 
 export { 
     HeroSection,
@@ -47,6 +48,7 @@ export {
     ProfilePage,
     FindASpot,
     ReviewConfirm,
-    Contact
+    Contact,
+    ImageCarousel
  }
 

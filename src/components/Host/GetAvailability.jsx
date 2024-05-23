@@ -96,7 +96,7 @@ function GetAvailability() {
           Set Availability
         </h2>
         <p className="lg:text-xl text-gray-700 text-center mb-8">
-          Select a start date and specify your active days. Click "Select Date" to pick your start date.
+          Select an end date and specify your active days. Click on "Select Date" to set your duration.
         </p>
         <form onSubmit={handleSubmit} className="space-y-8">
           <div className="flex flex-col items-center lg:flex-row lg:justify-center space-y-4 lg:space-y-0 lg:space-x-4">

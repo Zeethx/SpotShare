@@ -9,7 +9,7 @@ function GetSpotDetails() {
   return (
     <div className="h-screen">
 
-      <div className="flex flex-col items-center justify-center">
+      <div className="flex flex-col items-center justify-center lg:pt-[2vw]">
         <div className="w-full lg:w-1/2 pr-2">
           <div className="flex flex-col items-center justify-center mb-1">
             <h2 className="text-3xl lg:text-4xl font-bold text-primary-black p-2">
