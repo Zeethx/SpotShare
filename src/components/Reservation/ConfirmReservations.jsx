@@ -141,7 +141,7 @@ const ConfirmReservation = () => {
                   {spotDetails.description}
                 </p>
                 <p className="text-lg text-gray-700">
-                  <span className="font-bold">{spotDetails.spotType} Parking at{": "}</span>
+                  <span className="font-bold">{spotDetails.spotType === "Other"? " " : spotDetails.spotType} Parking at{": "}</span>
                   {spotDetails.address.split(",").slice(0, 2).join(",")}
                 </p>
                 <p className="text-lg text-gray-600">

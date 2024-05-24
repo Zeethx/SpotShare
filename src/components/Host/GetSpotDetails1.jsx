@@ -30,7 +30,7 @@ function GetSpotDetails1({setStep}) {
           Type of Spot
         </label>
         <div className="flex justify-between mt-2 flex-wrap lg:flex-nowrap">
-          {["Driveway", "Garage", "Street"].map((type) => (
+          {["Driveway", "Garage", "Other"].map((type) => (
             <Button
               key={type}
               type="button"
