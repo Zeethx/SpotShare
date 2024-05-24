@@ -4,6 +4,7 @@ import api from "../../conf/axiosConfig"; // Ensure this is the correct path
 import Carousel from "react-multi-carousel";
 import { useNavigate } from "react-router-dom";
 import "react-multi-carousel/lib/styles.css";
+import Reviews from "./Reviews";
 
 const ConfirmReservation = () => {
   const { spotId } = useParams();
@@ -124,6 +125,7 @@ const ConfirmReservation = () => {
   };
 
   return (
+    <div>
     <div className="min-h-screen flex flex-col items-center py-5">
       <h2 className="text-4xl font-bold mb-8 text-center text-slate-900">
         Confirm Your Reservation
@@ -270,6 +272,8 @@ const ConfirmReservation = () => {
           </div>
         </div>
       </div>
+    </div>
+    <Reviews spotId={spotId} />
     </div>
   );
 };
