@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../conf/axiosConfig";
 import CurrentListings from "./CurrentListings";
+import ParkingHistory from "./ParkingHistory";
 
 const ProfilePage = () => {
   const [user, setUser] = useState({});
@@ -27,7 +28,7 @@ const ProfilePage = () => {
       .catch((error) => {
         console.error("Error fetching parking spaces:", error);
       });
-  }, []);
+    }, []);
 
   const handleProfilePictureSubmit = (event) => {
     event.preventDefault();
@@ -46,7 +47,6 @@ const ProfilePage = () => {
         })
         .then((response) => {
           setUser(response.data.data);
-          console.log("Updated user data:", response.data.data);
         })
         .catch((error) => {
           console.error(
@@ -68,8 +68,8 @@ const ProfilePage = () => {
   };
 
   return (
-    <div className="min-h-screen flex md:items-center justify-center p-4 md:p-8">
-      <div className="bg-white p-4 md:p-8 rounded-lg shadow-lg max-w-7xl w-full relative">
+    <div className="min-h-screen flex md:items-center 3xl:items-start justify-center p-4">
+      <div className="p-4 md:p-8 rounded-lg shadow-md max-w-[80vw] w-full relative">
         {user.role === "admin" && (
           <div className="absolute top-28 right-4 md:top-16 md:right-8">
             <button
@@ -80,9 +80,6 @@ const ProfilePage = () => {
             </button>
           </div>
         )}
-        <h1 className="text-2xl md:text-3xl font-semibold mb-6 text-center">
-          My Profile
-        </h1>
         <div className="flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-6 mb-6">
           <div
             className="w-24 h-24 md:w-32 md:h-32 bg-gray-300 rounded-full overflow-hidden cursor-pointer relative"
@@ -118,14 +115,7 @@ const ProfilePage = () => {
             <CurrentListings parkingSpots={parkingSpots} />
           </div>
         )}
-        <div>
-          <h2 className="text-xl md:text-2xl font-semibold mb-4">
-            Parking History
-          </h2>
-          <div className="bg-gray-100 p-4 md:p-6 rounded-lg h-64 overflow-y-auto">
-            <p className="text-gray-600">No parking history available.</p>
-          </div>
-        </div>
+        <ParkingHistory />
         <form onSubmit={handleProfilePictureSubmit} className="hidden">
           <input
             type="file"

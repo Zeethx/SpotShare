@@ -44,6 +44,7 @@ function GetSpotDetails2({ setStep }) {
               value={title}
               className="py-2 lg:py-4 px-6 rounded border hover:border-2 hover:border-black font-bold text-xl w-full mr-2 my-1 lg:my-0"
               onChange={(e) => setTitle(e.target.value)}
+              maxLength={50}
               required
             />
           </div>
