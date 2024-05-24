@@ -95,8 +95,8 @@ const ProfilePage = () => {
             </div>
           </div>
           <div className="text-center md:text-left">
-            <h1 className="text-xl md:text-2xl text-slate-900 capitalize">
-              Hello, {user.fullName}
+            <h1 className="text-xl md:text-2xl text-slate-900 capitalize font-semibold">
+              {user.fullName}
             </h1>
             <p className="text-gray-600">{user.email}</p>
           </div>

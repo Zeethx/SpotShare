@@ -83,7 +83,7 @@ function FindASpot() {
           const lng = results[0].geometry.location.lng();
           if (!isNaN(lat) && !isNaN(lng)) {
             map.setCenter({ lat, lng });
-            map.setZoom(15);
+            map.setZoom(13);
             setMarkerPosition({ lat, lng });
           } else {
             console.error("Invalid geocoded coordinates:", { lat, lng });
@@ -100,7 +100,7 @@ function FindASpot() {
   useEffect(() => {
     if (markerPosition && map) {
       map.panTo(markerPosition);
-      map.setZoom(15);
+      map.setZoom(13);
     }
   }, [markerPosition, map]);
 

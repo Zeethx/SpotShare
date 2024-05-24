@@ -1,9 +1,12 @@
 import React, {useState, useEffect} from 'react'
 import api from '../../conf/axiosConfig'
+import { useNavigate } from 'react-router-dom'
 
 export default function ParkingHistory() {
     const [parkingHistory, setParkingHistory] = useState([]);
     const [error, setError] = useState(null);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         api
@@ -12,6 +15,7 @@ export default function ParkingHistory() {
             //filter by endTime
             const filteredReservations = response.data.data.filter( reservation => new Date(reservation.endTime) < Date.now());
             setParkingHistory(filteredReservations);
+            console.log("User reservations:", filteredReservations)
         })
         .catch((error) => {
             setError("Failed to fetch reservations");
@@ -67,8 +71,12 @@ export default function ParkingHistory() {
               </p>
             </div>
             <div>
-              <p className="text-gray-600 capitalize">
-                <strong>Payment Status:</strong> {history.paymentStatus}
+              <p className="text-primary-color capitalize">
+                {history.review ? (
+                  <span>Reviewed</span> ) : (
+                <button className='hover:underline' onClick={() => navigate(`/review/${history.parkingSpace._id}/${history._id}`)}
+                >Write a Review</button>) 
+                } 
               </p>
               <p className="text-gray-600">
                 <strong>Spendings:</strong> ${history.totalPrice}
