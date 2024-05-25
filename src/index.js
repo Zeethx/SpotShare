@@ -29,6 +29,7 @@ import ParkingSpotDetailsPage from './pages/ParkingSpotDetailsPage';
 import ContactPage from './pages/ContactPage';
 import ReservationsPage from './pages/ReservationsPage';
 import MyReservations from './pages/MyReservations';
+import WriteAReview from './pages/WriteAReview';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -53,7 +54,6 @@ root.render(
               <Route path="availability" element={<Availability />} />
               <Route path="pricing" element={<Pricing />} />
               <Route path="review" element={<ReviewDetails />} />
-              
             </Route>
             <Route path="/find" element={<Find />} />
             <Route path="/reserve/:spotId" element={<ConfirmReservationPage />} />
@@ -62,7 +62,8 @@ root.render(
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/parking-space/:id" element={<Protected><ParkingSpotDetailsPage /></Protected>} />
             <Route path="/reservations/:id" element={<ReservationsPage />} />
-            <Route path="myreservations" element={<Protected><MyReservations /></Protected>} />
+            <Route path="/myreservations" element={<Protected><MyReservations /></Protected>} />
+            <Route path="/write-a-review/:parkingId/:reservationId" element={<Protected><WriteAReview /></Protected>} />
           </Route>
         </Routes>
       </Router>
