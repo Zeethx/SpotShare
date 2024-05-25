@@ -71,10 +71,10 @@ export default function ParkingHistory() {
               </p>
             </div>
             <div>
-              <p className="text-primary-color capitalize">
+              <p className="capitalize">
                 {history.review ? (
-                  <span>Reviewed</span> ) : (
-                <button className='hover:underline' onClick={() => navigate(`/review/${history.parkingSpace._id}/${history._id}`)}
+                  <span className='text-gray-500'>Reviewed</span> ) : (
+                <button className='hover:underline text-primary-color' onClick={() => navigate(`/write-a-review/${history.parkingSpace._id}/${history._id}`)}
                 >Write a Review</button>) 
                 } 
               </p>
