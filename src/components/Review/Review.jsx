@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import api from '../../conf/axiosConfig';
 import { useParams, useNavigate } from 'react-router-dom';
-import ReactStars from 'react-stars';
+import StarRating from './StarRating';
 
 function Review() {
     const { parkingId, reservationId } = useParams();
@@ -14,30 +14,34 @@ function Review() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await api.post(`/reviews/${parkingId}/${reservationId}`, { rating, comment});
-            setSuccess(response.data.message);
-            navigate(`/profile`)
+            const response = await api.post(`/review/${parkingId}/${reservationId}/create`, {
+                rating,
+                comment
+            });
+            if (response.status === 201) {
+                setSuccess('Review submitted successfully');
+                setTimeout(() => {
+                    navigate(`/profile`);
+                }, 2000);
+            }
         } catch (error) {
-            setError("Failed to submit review");
-            console.error("Error submitting review:", error);
+            setError('Failed to submit review');
+            console.error('Error submitting review:', error);
         }
-    
     }
 
   return (
-<div className="max-w-4xl mx-auto p-6 mt-12 bg-white rounded-lg shadow-md">
-            <h2 className="text-2xl font-bold mb-4 text-gray-800 text-center">Write a Review</h2>
+<div>
+<h2 className="text-4xl font-bold mb-4 mt-12 text-gray-800 text-center font-freeman">Write a Review</h2>
+<div className="max-w-[70vw] mx-auto p-6 bg-white rounded-lg shadow-md font-outfit">
             <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="flex flex-col items-center">
-                    <ReactStars
-                        count={5}
-                        onChange={(newRating) => setRating(newRating)}
-                        size={50}
-                        half={false}
-                        value={rating}
-                        color2={'#ffd700'}
-                    />
+                <div className='flex flex-row justify-around items-center'>
+                    <div className="flex flex-col items-center">
+                        <StarRating rating={rating} setRating={setRating} />
+                    </div>
+                    <img src="/images/write_a_review.svg" alt="write a review" className="w-1/4 h-1/4" />
                 </div>
+
                 <div className="flex flex-col">
                     <label htmlFor="comment" className="mb-2 text-lg font-medium text-gray-700">Comment:</label>
                     <textarea
@@ -55,6 +59,7 @@ function Review() {
                 {error && <p className="mt-4 text-red-600">{error}</p>}
                 {success && <p className="mt-4 text-green-600">{success}</p>}
             </form>
+        </div>
         </div>
   )
 }
