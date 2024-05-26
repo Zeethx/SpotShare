@@ -81,7 +81,7 @@ const AdminDashboard = () => {
 
     return (
         <div className="container mx-auto p-4 font-outfit">
-            <h1 className="text-3xl font-bold text-center mb-6 border-b-1 border-black">Admin Dashboard</h1>
+            <h1 className="text-3xl font-bold text-center mb-6 border-b-1 border-black font-freeman">Admin Dashboard</h1>
             <SearchFilterBar
                 searchTerm={searchTerm}
                 setSearchTerm={setSearchTerm}

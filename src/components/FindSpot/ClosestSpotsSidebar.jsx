@@ -104,7 +104,7 @@ useEffect(() => {
           .map((spot, index) => (
             <li
               key={index}
-              className="border p-4 rounded-lg shadow-md hover:scale-105 relative overflow-visible"
+              className="border p-4 rounded-lg shadow-md hover:scale-105 relative overflow-visible transition-transform duration-300"
             >
               <span className="absolute top-2 right-2 bg-gray-100 rounded-full px-2 py-1 sm:text-sm font-semibold text-xs">
                 {spot.averageRating
