@@ -12,6 +12,7 @@ function ClosestSpotsSidebar({
   onBackClick,
 }) {
   const navigate = useNavigate();
+  const [updatedSpots, setUpdatedSpots] = useState(closestSpots);
 
   const calculateDistance = (lat1, lon1, lat2, lon2) => {
     const toRad = (value) => (value * Math.PI) / 180;
@@ -44,22 +45,38 @@ function ClosestSpotsSidebar({
     navigate(`/reserve/${spotId}?${queryParams}`);
   };
 
-  useEffect(() => {
+useEffect(() => {
+  const getRatingsForSpots = async () => {
     try {
-      const getRatingsForSpots = async () => {
-        const ratings = await Promise.all(
-          closestSpots.map(async (spot) => {
-            const response = await api.get(`/review/${spot._id}/ratings`);
-            closestSpots[closestSpots.indexOf(spot)].ratings =
-              response.data.data;
-          })
-        );
-      };
-      getRatingsForSpots();
+      const spotIds = closestSpots.map((spot) => spot._id);
+      const response = await api.get('/review/ratings', { params: { spotIds } });
+
+      if (!response.data.data || !Array.isArray(response.data.data)) {
+        throw new Error("Unexpected response data format");
+      }
+
+      const ratingsLookup = response.data.data.reduce((lookup, rating) => {
+        lookup[rating.spotId] = rating;
+        return lookup;
+      }, {});
+
+      const updatedSpots = closestSpots.map((spot) => {
+        const ratingInfo = ratingsLookup[spot._id];
+        return {
+          ...spot,
+          averageRating: ratingInfo ? ratingInfo.averageRating : 0,
+          totalRatings: ratingInfo ? ratingInfo.totalRatings : 0,
+        };
+      });
+
+      setUpdatedSpots(updatedSpots);
     } catch (error) {
       console.error("Error fetching ratings:", error);
     }
-  }, [closestSpots]);
+  };
+
+  getRatingsForSpots();
+}, [closestSpots]);
 
   return (
     <div className="flex flex-col lg:w-1/3 p-6 shadow-lg rounded-xl lg:h-[80vh]">
@@ -83,15 +100,15 @@ function ClosestSpotsSidebar({
         Closest Spots
       </h2>
       <ul className="space-y-4">
-        {closestSpots
+        {updatedSpots
           .map((spot, index) => (
             <li
               key={index}
               className="border p-4 rounded-lg shadow-md hover:scale-105 relative overflow-visible"
             >
               <span className="absolute top-2 right-2 bg-gray-100 rounded-full px-2 py-1 sm:text-sm font-semibold text-xs">
-                {spot.ratings && spot.ratings.averageRating
-                  ? spot.ratings.averageRating.toFixed(1)
+                {spot.averageRating
+                  ? spot.averageRating.toFixed(1)
                   : "No ratings yet"}
               </span>
               <button className="w-full" onClick={handleSpotClick(spot._id)}>
