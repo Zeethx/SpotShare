@@ -13,6 +13,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useLocation } from "react-router-dom";
 import "./Marker.css";
+import ClosestSpotsSidebar from "./ClosestSpotsSidebar";
 
 const libraries = ["places"];
 
@@ -22,6 +23,7 @@ function FindASpot() {
   const [autocomplete, setAutocomplete] = useState(null);
   const [map, setMap] = useState(null);
   const [parkingSpots, setParkingSpots] = useState([]);
+  const [closestSpots, setClosestSpots] = useState([]);
   const [address, setAddress] = useState(location.state?.address || "");
   const [dateTimeIn, setDateTimeIn] = useState(
     location.state?.dateTimeIn
@@ -50,6 +52,13 @@ function FindASpot() {
     googleMapsApiKey: conf.googleMapsApiKey,
     libraries,
   });
+
+  const onBackClick = () => {
+    setClosestSpots([]);
+    //Reset the map
+    setMarkerPosition(null);
+    setAddress("");
+  };
 
   const onMapLoad = useCallback((map) => {
     setMap(map);
@@ -118,7 +127,20 @@ function FindASpot() {
             timeOut: data.dateTimeOut.toISOString(),
           },
         });
+        const sortedSpots = response.data.sort((a, b) => {
+          // Calculate distance or use a specific criterion
+          const distanceA = Math.sqrt(
+            Math.pow(markerPosition.lat - a.coordinates[1], 2) +
+              Math.pow(markerPosition.lng - a.coordinates[0], 2)
+          );
+          const distanceB = Math.sqrt(
+            Math.pow(markerPosition.lat - b.coordinates[1], 2) +
+              Math.pow(markerPosition.lng - b.coordinates[0], 2)
+          );
+          return distanceA - distanceB;
+        });
         setParkingSpots(response.data);
+        setClosestSpots(sortedSpots.slice(0, 5)); // Get top 5 closest spots
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -139,6 +161,7 @@ function FindASpot() {
 
   return (
     <div className="flex flex-col lg:flex-row lg:max-h-screen pb-12 pt-10 ">
+      {closestSpots.length === 0 ? (
       <div className="flex flex-col p-6 w-full lg:w-1/3 shadow-lg rounded-xl lg:h-[80vh]">
         <h1 className="text-4xl font-bold text-gray-900 mb-10 text-center">
           Find a Spot
@@ -279,7 +302,9 @@ function FindASpot() {
             </button>
           </div>
         </form>
-      </div>
+      </div> ) : (
+      <ClosestSpotsSidebar closestSpots={closestSpots}  lat={markerPosition.lat} lng={markerPosition.lng} price={price} dateTimeIn={getValues("dateTimeIn")} dateTimeOut={getValues("dateTimeOut")} onBackClick={onBackClick}/>
+      )}
       <div className="flex-1">
         <div className="map-container">
           <GoogleMap
