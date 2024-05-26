@@ -271,9 +271,9 @@ const ConfirmReservation = () => {
           </div>
         </div>
       </div>
-      <div className="bg-white shadow-2xl rounded-lg w-full max-w-5xl mt-10">
+      {/* <div className="bg-white shadow-2xl rounded-lg w-full max-w-5xl mt-10"> */}
       <Reviews spotId={spotId} />
-      </div>
+      {/* </div> */}
     </div>
     
     
