@@ -95,7 +95,7 @@ const ProfilePage = () => {
             </div>
           </div>
           <div className="text-center md:text-left">
-            <h1 className="text-xl md:text-2xl text-slate-900 capitalize font-semibold">
+            <h1 className="text-xl md:text-2xl text-slate-900 capitalize font-semibold font-freeman">
               {user.fullName}
             </h1>
             <p className="text-gray-600">{user.email}</p>
@@ -107,10 +107,7 @@ const ProfilePage = () => {
               My Listings
             </h2>
             <p className="text-gray-600 mb-4">
-              View and manage your parking listings.{" "}
-              <span className="text-yellow-500">(Pending</span>|
-              <span className="text-green-500">Approved</span>|
-              <span className="text-red-500">Rejected)</span>
+              View and manage your parking listings.
             </p>
             <CurrentListings parkingSpots={parkingSpots} />
           </div>
