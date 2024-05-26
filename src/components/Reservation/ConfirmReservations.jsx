@@ -125,7 +125,6 @@ const ConfirmReservation = () => {
   };
 
   return (
-    <div>
     <div className="min-h-screen flex flex-col items-center py-5">
       <h2 className="text-4xl font-bold mb-8 text-center text-slate-900">
         Confirm Your Reservation
@@ -272,9 +271,12 @@ const ConfirmReservation = () => {
           </div>
         </div>
       </div>
+      <div className="bg-white shadow-2xl rounded-lg w-full max-w-5xl mt-10">
+      <Reviews spotId={spotId} />
+      </div>
     </div>
-    <Reviews spotId={spotId} />
-    </div>
+    
+    
   );
 };
 

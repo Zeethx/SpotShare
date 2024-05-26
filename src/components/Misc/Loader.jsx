@@ -1,5 +1,5 @@
 import React from "react";
-import "ldrs/pinwheel";
+import "ldrs";
 
 function Loader() {
   return (
