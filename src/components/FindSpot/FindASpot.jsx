@@ -39,7 +39,7 @@ function FindASpot() {
   const watchedDateTimeOut = useWatch({ control, name: "dateTimeOut" });
 
   const inputStyle =
-    "w-full px-4 py-2  text-lg bg-white shadow-md rounded-md box-border focus:ring-2 focus:ring-primary-color transition-all duration-300";
+    "w-full px-4 py-2 text-lg bg-white shadow-md rounded-md box-border focus:ring-2 focus:ring-primary-color transition-all duration-300";
 
   const { isLoaded, loadError } = useJsApiLoader({
     googleMapsApiKey: conf.googleMapsApiKey,
@@ -159,7 +159,7 @@ function FindASpot() {
   }
 
   return (
-    <div className="flex flex-col lg:flex-row lg:max-h-screen pb-12 pt-10 ">
+    <div className="flex flex-col lg:flex-row lg:max-h-screen pb-12 pt-10">
       {closestSpots.length === 0 ? (
         <div className="flex flex-col p-6 w-full lg:w-1/3 shadow-lg rounded-xl lg:h-[80vh]">
           <h1 className="text-4xl font-bold text-gray-900 mb-10 text-center">
@@ -172,83 +172,6 @@ function FindASpot() {
               </label>
               <ul className="grid w-full gap-6 md:grid-cols-3">
                 <li>
-      <div className="flex flex-col p-6 w-full lg:w-1/3 shadow-lg rounded-xl lg:h-[80vh]">
-        <h1 className="text-4xl font-bold text-gray-900 mb-10 text-center font-freeman">
-          Find a Spot
-        </h1>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Filter Options
-            </label>
-            <ul className="grid w-full gap-6 md:grid-cols-3">
-              <li>
-                <input
-                  type="radio"
-                  id="hourly"
-                  name="price"
-                  className="hidden peer"
-                  onChange={() => setPrice("hour")}
-                />
-                <label
-                  htmlFor="hourly"
-                  className="inline-flex items-center justify-between w-full p-2 text-slate-900 bg-white border-1 border-gray-200 rounded-lg shadow-lg cursor-pointer peer-checked:bg-primary-color peer-checked:border peer-checked:text-primary-white hover:bg-gray-100 "
-                >
-                  <div className="block">
-                    <div className="w-full text-lg">Hourly</div>
-                  </div>
-                </label>
-              </li>
-              <li>
-                <input
-                  type="radio"
-                  id="daily"
-                  name="price"
-                  className="hidden peer"
-                  checked={price === "day"}
-                  onChange={() => setPrice("day")}
-                />
-                <label
-                  htmlFor="daily"
-                  className="inline-flex items-center justify-between w-full p-2 text-slate-900 bg-white border-1 border-gray-200 rounded-lg shadow-lg cursor-pointer peer-checked:bg-primary-color peer-checked:border peer-checked:text-primary-white hover:bg-gray-100 "
-                >
-                  <div className="block">
-                    <div className="w-full text-lg">Daily</div>
-                  </div>
-                </label>
-              </li>
-              <li>
-                <input
-                  type="radio"
-                  id="monthly"
-                  name="price"
-                  className="hidden peer"
-                  onChange={() => setPrice("month")}
-                />
-                <label
-                  htmlFor="monthly"
-                  className="inline-flex items-center justify-between w-full p-2 text-slate-900 bg-white border-1 border-gray-200 rounded-lg shadow-lg cursor-pointer peer-checked:bg-primary-color peer-checked:border peer-checked:text-primary-white hover:bg-gray-100 "
-                >
-                  <div className="block">
-                    <div className="w-full text-lg">Monthly</div>
-                  </div>
-                </label>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Address
-            </label>
-            <Controller
-              name="location"
-              control={control}
-              render={({ field }) => (
-                <Autocomplete
-                  onLoad={(autocomplete) => setAutocomplete(autocomplete)}
-                  onPlaceChanged={onPlaceChanged}
-                >
                   <input
                     type="radio"
                     id="hourly"
