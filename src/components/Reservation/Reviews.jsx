@@ -28,19 +28,19 @@ function Reviews({ spotId }) {
         return (totalRating / totalReviews).toFixed(1);
     };
 
-    const renderStars = (rating) => {
+    const renderStars = (rating, size = 36) => {
         const fullStars = Math.floor(rating);
         const halfStar = rating % 1 !== 0;
         const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
         return (
             <>
                 {Array.from({ length: fullStars }, (_, i) => (
-                    <svg key={i} xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none">
+                    <svg key={i} xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 36 36" fill="none">
                         <path d="M17.1033 2.71738C17.4701 1.97413 18.5299 1.97413 18.8967 2.71738L23.0574 11.1478C23.2031 11.4429 23.4846 11.6475 23.8103 11.6948L33.1139 13.0467C33.9341 13.1659 34.2616 14.1739 33.6681 14.7524L26.936 21.3146C26.7003 21.5443 26.5927 21.8753 26.6484 22.1997L28.2376 31.4656C28.3777 32.2825 27.5203 32.9055 26.7867 32.5198L18.4653 28.145C18.174 27.9919 17.826 27.9919 17.5347 28.145L9.21334 32.5198C8.47971 32.9055 7.62228 32.2825 7.76239 31.4656L9.35162 22.1997C9.40726 21.8753 9.29971 21.5443 9.06402 21.3146L2.33193 14.7524C1.73841 14.1739 2.06593 13.1659 2.88615 13.0467L12.1897 11.6948C12.5154 11.6475 12.7969 11.4429 12.9426 11.1478L17.1033 2.71738Z" fill="#FBBF24" />
                     </svg>
                 ))}
                 {halfStar && (
-                    <svg key="half" xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none">
+                    <svg key="half" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 36 36" fill="none">
                         <path d="M17.1033 2.71738C17.4701 1.97413 18.5299 1.97413 18.8967 2.71738L23.0574 11.1478C23.2031 11.4429 23.4846 11.6475 23.8103 11.6948L33.1139 13.0467C33.9341 13.1659 34.2616 14.1739 33.6681 14.7524L26.936 21.3146C26.7003 21.5443 26.5927 21.8753 26.6484 22.1997L28.2376 31.4656C28.3777 32.2825 27.5203 32.9055 26.7867 32.5198L18.4653 28.145C18.174 27.9919 17.826 27.9919 17.5347 28.145L9.21334 32.5198C8.47971 32.9055 7.62228 32.2825 7.76239 31.4656L9.35162 22.1997C9.40726 21.8753 9.29971 21.5443 9.06402 21.3146L2.33193 14.7524C1.73841 14.1739 2.06593 13.1659 2.88615 13.0467L12.1897 11.6948C12.5154 11.6475 12.7969 11.4429 12.9426 11.1478L17.1033 2.71738Z" fill="url(#halfGradient)" />
                         <defs>
                             <linearGradient id="halfGradient" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -51,7 +51,7 @@ function Reviews({ spotId }) {
                     </svg>
                 )}
                 {Array.from({ length: emptyStars }, (_, i) => (
-                    <svg key={i + 'empty'} xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none">
+                    <svg key={i + 'empty'} xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 36 36" fill="none">
                         <path d="M17.1033 2.71738C17.4701 1.97413 18.5299 1.97413 18.8967 2.71738L23.0574 11.1478C23.2031 11.4429 23.4846 11.6475 23.8103 11.6948L33.1139 13.0467C33.9341 13.1659 34.2616 14.1739 33.6681 14.7524L26.936 21.3146C26.7003 21.5443 26.5927 21.8753 26.6484 22.1997L28.2376 31.4656C28.3777 32.2825 27.5203 32.9055 26.7867 32.5198L18.4653 28.145C18.174 27.9919 17.826 27.9919 17.5347 28.145L9.21334 32.5198C8.47971 32.9055 7.62228 32.2825 7.76239 31.4656L9.35162 22.1997C9.40726 21.8753 9.29971 21.5443 9.06402 21.3146L2.33193 14.7524C1.73841 14.1739 2.06593 13.1659 2.88615 13.0467L12.1897 11.6948C12.5154 11.6475 12.7969 11.4429 12.9426 11.1478L17.1033 2.71738Z" fill="#E5E7EB" />
                     </svg>
                 ))}
@@ -71,7 +71,7 @@ function Reviews({ spotId }) {
                             <div className="flex flex-col items-center">
                                 <h2 className="font-bold text-5xl text-black text-center mb-4">{overallRating()}</h2>
                                 <div className="flex items-center gap-1">
-                                    {renderStars(overallRating())}
+                                    {renderStars(overallRating(), 36)} {/* Average rating stars size */}
                                 </div>
                                 <p className="font-normal text-lg leading-8 text-gray-400">{reviews.length} Ratings</p>
                             </div>
@@ -79,9 +79,9 @@ function Reviews({ spotId }) {
                     </div>
 
                     <div className={`mx-auto bg-white rounded-lg w-full max-w-5xl px-7 py-5 ${showReviews ? 'shadow-2xl' : ''}`}>
-                        <div className="">
+                        <div className="flex justify-center">
                             <button
-                                className="mt-4 text-lg  font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-full px-4 py-2 focus:outline-none transition duration-300 ease-in-out"
+                                className="mt-4 text-lg font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-full px-4 py-2 focus:outline-none transition duration-300 ease-in-out"
                                 onClick={() => setShowReviews(!showReviews)}
                             >
                                 {showReviews ? 'Hide Reviews' : 'Show Reviews'}
@@ -94,9 +94,12 @@ function Reviews({ spotId }) {
                                         <div key={index} className="pb-8 border-b border-gray-200">
                                             <div className="flex sm:items-center flex-col sm:flex-row justify-between mb-4">
                                                 <div className="flex items-center gap-3">
-                                                    <img src={review.user.profilePhoto} alt={`${review.user.fullName}`} className="w-10 h-10 rounded-full" />
+                                                    <img src={review.user.profilePhoto} alt={review.user.fullName} className="w-10 h-10 rounded-full" />
                                                     <h6 className="font-semibold text-lg leading-8 text-black">@{review.user.fullName}</h6>
                                                     <p className="font-medium text-base leading-7 text-gray-400">{new Date(review.createdAt).toLocaleDateString()}</p>
+                                                </div>
+                                                <div className="flex items-center gap-1">
+                                                    {renderStars(review.rating, 25)} {/* Individual review stars size */}
                                                 </div>
                                             </div>
                                             <p className="font-normal text-lg leading-8 text-gray-500">
