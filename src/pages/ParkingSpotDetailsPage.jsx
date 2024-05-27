@@ -34,7 +34,7 @@ const ParkingSpotDetails = () => {
         });
       })
       .catch((error) => {
-        if(error.response.status === 403) {
+        if (error.response.status === 403) {
           navigate("/404");
         }
         console.error("Error fetching listing details:", error);
@@ -226,7 +226,7 @@ const ParkingSpotDetails = () => {
             <button
               type="button"
               onClick={() => setShowDeleteModal(true)}
-              className="bg-red-500 text-white p-2 rounded mt-4 w-full"
+              className="bg-red-500 text-white p-2 rounded mt-4 w-full hover:bg-red-700 transition duration-300"
             >
               Delete Parking Spot
             </button>
@@ -234,7 +234,7 @@ const ParkingSpotDetails = () => {
               <button
                 type="button"
                 onClick={() => navigate(`/reservations/${id}`)}
-                className="bg-green-500 text-white p-2 rounded mt-4 w-full"
+                className="bg-green-500 text-white p-2 rounded mt-4 w-full hover:bg-green-700 transition duration-300"
               >
                 View Reservations
               </button>

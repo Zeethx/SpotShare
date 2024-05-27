@@ -21,7 +21,7 @@ function Testimonial() {
         <figcaption className="mt-10 flex items-center gap-x-6">
           <div className="isolate flex -space-x-2">
             <img
-              className="relative z-30 inline-block h-20 w-20 rounded-full ring-2 ring-white"
+              className="relative z-30 inline-block h-20 w-20 rounded-full ring-2 ring-white object-cover"
               src="/images/driver_profile.png"
               alt="Dan_Abromov"
             />

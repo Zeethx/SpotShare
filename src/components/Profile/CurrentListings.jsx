@@ -23,7 +23,12 @@ const CurrentListings = ({ parkingSpots }) => {
                                 : "bg-red-200"
                         }`}
                     >
-                        <div className="p-4 bg-gray-100 hover:bg-gray-400 cursor-pointer shadow rounded flex flex-col lg:flex-row">
+                        <div className="p-4 bg-gray-100 hover:bg-gray-400 cursor-pointer shadow rounded flex flex-col lg:flex-row relative">
+                        <span className='top-1 right-2 absolute overflow-visible text-xs italic'>
+                            {spot.status === "Pending" && <span className="text-yellow-500">Pending</span>}
+                            {spot.status === "Approved" && <span className="text-green-500">Approved</span>}
+                            {spot.status === "Rejected" && <span className="text-red-500">Rejected</span>}
+                        </span>
                             <div className="rounded overflow-hidden max-h-40 w-auto flex justify-center">
                                 <img
                                     src={spot.spotImages}

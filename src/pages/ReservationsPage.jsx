@@ -64,7 +64,7 @@ const ReservationsPage = () => {
   return (
     <Container>
       <div className="container mx-auto p-4">
-        <h1 className="text-3xl font-bold mb-4 text-center">Reservations</h1>
+        <h1 className="text-3xl font-bold mb-4 text-center font-freeman">Reservations</h1>
         <div className="mb-6">
           <div className="flex justify-center space-x-2 mb-4">
             <button
@@ -101,7 +101,10 @@ const ReservationsPage = () => {
             </button>
           </div>
           {getFilteredReservations().length === 0 ? (
-            <p className="text-center text-gray-600">No reservations found</p>
+            <div className="mt-12">
+              <img src="/images/nothing_there.svg" alt="No reservations" className="mx-auto w-52" />
+              <p className="text-center text-gray-600 mt-2">&nbsp;There's nothing here.</p>
+            </div>
           ) : (
             getFilteredReservations().map((reservation, index) => (
               <div
