@@ -1,23 +1,30 @@
 import './App.css';
-import React, {useEffect} from 'react';
+import React, {useEffect, useCallback} from 'react';
 import { Outlet } from 'react-router-dom';
 import Header from './components/Header/Header';
 import { useDispatch } from 'react-redux';
 import { login } from './store/authSlice';
 import { Loader } from './components';
+import { useUser } from './hooks/useUser';
 
 function App() {
   const dispatch = useDispatch();
   const [loading, setLoading] = React.useState(true);
+  const { user } = useUser();
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (token && user) {
+  const checkUser = useCallback(async () => {
+    if (user) {
+      const idToken = await user.getIdToken();
+      localStorage.setItem('token', idToken);
       dispatch(login({ email: user.email, uid: user.uid }));
     }
+  }, [user, dispatch]);
+  
+  useEffect(() => {
+    checkUser();
+    console.log(user);
     setLoading(false);
-  }, [dispatch]);
+  }, [user, checkUser]); 
 
   if (loading) {
     return <Loader />;

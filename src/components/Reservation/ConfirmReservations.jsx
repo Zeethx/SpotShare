@@ -126,7 +126,7 @@ const ConfirmReservation = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center py-5">
-      <h2 className="text-4xl font-bold mb-8 text-center text-slate-900">
+      <h2 className="text-4xl font-bold mb-8 text-center text-slate-900 font-freeman">
         Confirm Your Reservation
       </h2>
       <div className="flex items-center justify-center w-full">

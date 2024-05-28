@@ -162,7 +162,7 @@ function FindASpot() {
     <div className="flex flex-col lg:flex-row lg:max-h-screen pb-12 pt-10">
       {closestSpots.length === 0 ? (
         <div className="flex flex-col p-6 w-full lg:w-1/3 shadow-lg rounded-xl lg:h-[80vh]">
-          <h1 className="text-4xl font-bold text-gray-900 mb-10 text-center">
+          <h1 className="text-4xl font-bold text-gray-900 mb-10 text-center font-freeman">
             Find a Spot
           </h1>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
