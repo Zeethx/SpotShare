@@ -88,7 +88,7 @@ const Contact = () => {
         </div>
         <div className="bg-white p-8 rounded-lg shadow-lg flex flex-col items-center">
           <span className="text-purple-600 text-3xl mb-4">✉️</span>
-          <p>spotshare3@gmail.com</p>
+          <p><a href="mailto:spotshare3@gmail.com">spotshare3@gmail.com</a></p>
         </div>
         <div className="bg-white p-8 rounded-lg shadow-lg flex flex-col items-center">
           <span className="text-yellow-600 text-3xl mb-4">📍</span>
