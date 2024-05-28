@@ -22,7 +22,7 @@ const ParkingSpotDetails = () => {
 
   useEffect(() => {
     api
-      .get(`/parking-space/${id}`)
+      .get(`/parking-space/${id}/user`)
       .then((response) => {
         const data = response.data.data;
         setListing(data);
