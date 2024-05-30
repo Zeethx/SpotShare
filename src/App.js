@@ -22,7 +22,6 @@ function App() {
   
   useEffect(() => {
     checkUser();
-    console.log(user);
     setLoading(false);
   }, [user, checkUser]); 
 

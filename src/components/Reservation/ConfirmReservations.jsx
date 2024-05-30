@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import api from "../../conf/axiosConfig"; // Ensure this is the correct path
 import Carousel from "react-multi-carousel";
-import { useNavigate } from "react-router-dom";
 import "react-multi-carousel/lib/styles.css";
 import Reviews from "./Reviews";
 
@@ -12,7 +11,6 @@ const ConfirmReservation = () => {
   const [spotDetails, setSpotDetails] = useState(null);
   const [vehicleReg, setVehicleReg] = useState("");
 
-  const navigate = useNavigate();
   // Get dateTimeIn and dateTimeOut from query parameters
   const getQueryParams = (search) => {
     return new URLSearchParams(search);
@@ -104,25 +102,38 @@ const ConfirmReservation = () => {
 
   const duration = calculateDuration(dateTimeIn, dateTimeOut);
   const finalPrice = calculatePrice(duration);
+  const stripePrice = (finalPrice + (finalPrice*0.04 + 0.30));
+  console.log(stripePrice)
 
   const handleReservation = async () => {
     try {
-      const userEmail = await api.get(`/users/me`);
       const response = await api.post("/reservation/create", {
-        userEmail: userEmail.data.data.email,
         parkingSpaceId: spotId,
         vehicleReg: vehicleReg,
         startTime: dateTimeIn.toISOString(),
         endTime: dateTimeOut.toISOString(),
         totalPrice: finalPrice,
       });
-      console.log("Reservation successful:", response.data);
-      // Redirect to the user's reservations page
-      navigate("/");
+  
+      if (response.data && response.data.data) {
+        const payment = await api.post("/pay/create-checkout-session", {
+          reservationId: response.data.data._id,
+          amount: stripePrice,
+        });
+  
+        if (payment.data && payment.data.data) {
+          window.location.href = payment.data.data.url;
+        } else {
+          console.error("Error creating payment session:", payment.data);
+        }
+      } else {
+        console.error("Error creating reservation:", response.data);
+      }
     } catch (error) {
       console.error("Error making reservation:", error);
     }
   };
+  
 
   return (
     <div className="min-h-screen flex flex-col items-center py-5">
