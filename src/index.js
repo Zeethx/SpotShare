@@ -30,6 +30,8 @@ import ContactPage from './pages/ContactPage';
 import ReservationsPage from './pages/ReservationsPage';
 import MyReservations from './pages/MyReservations';
 import WriteAReview from './pages/WriteAReview';
+import PaymentSuccess from './pages/payment/PaymentSuccess';
+import PaymentFailure from './pages/payment/PaymentFailure';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -57,13 +59,15 @@ root.render(
             </Route>
             <Route path="/find" element={<Find />} />
             <Route path="/reserve/:spotId" element={<ConfirmReservationPage />} />
-            <Route path="*" element={<NotFound />} />
             <Route path="/submission-confirmation" element={<ReviewConfirmPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/parking-space/:id" element={<Protected><ParkingSpotDetailsPage /></Protected>} />
             <Route path="/reservations/:id" element={<ReservationsPage />} />
             <Route path="/myreservations" element={<Protected><MyReservations /></Protected>} />
             <Route path="/write-a-review/:parkingId/:reservationId" element={<Protected><WriteAReview /></Protected>} />
+            <Route path="/payment-success" element={<PaymentSuccess />} />
+            <Route path="/payment-failed" element={<PaymentFailure />} />
+            <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
       </Router>

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import api from "../../conf/axiosConfig"; // Ensure this is the correct path
 import Carousel from "react-multi-carousel";
-import { useNavigate } from "react-router-dom";
 import "react-multi-carousel/lib/styles.css";
 import Reviews from "./Reviews";
 
@@ -12,7 +11,6 @@ const ConfirmReservation = () => {
   const [spotDetails, setSpotDetails] = useState(null);
   const [vehicleReg, setVehicleReg] = useState("");
 
-  const navigate = useNavigate();
   // Get dateTimeIn and dateTimeOut from query parameters
   const getQueryParams = (search) => {
     return new URLSearchParams(search);
