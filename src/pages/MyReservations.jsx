@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import api from "../conf/axiosConfig";
 import { Container, Loader } from "../components";
 
@@ -53,6 +54,7 @@ const MyReservations = () => {
   if (error) return <p className="text-red-500">{error}</p>;
 
   if (loading) return <Container><Loader /></Container>;
+
   return (
     <Container>
       <div className="container mx-auto p-4">
@@ -93,30 +95,26 @@ const MyReservations = () => {
             </button>
           </div>
           {getFilteredReservations().length === 0 ? (
-          <div className="mt-12">
-            <img src="/images/nothing_there.svg" alt="No reservations" className="mx-auto w-52" />
-            <p className="text-center text-gray-600 mt-2">&nbsp;There's nothing here.</p>
-          </div>
+            <div className="mt-12">
+              <img src="/images/nothing_there.svg" alt="No reservations" className="mx-auto w-52" />
+              <p className="text-center text-gray-600 mt-2">&nbsp;There's nothing here.</p>
+            </div>
           ) : (
             getFilteredReservations().map((reservation, index) => (
-              <div
-                key={index}
-                className="border-b py-4 flex flex-col sm:flex-row gap-4 items-center"
-              >
-                <img
-                  src={reservation.parkingSpace.spotImages[0] || "default-image.jpg"}
-                  alt="parking spot"
-                  className="w-24 h-24 sm:w-28 sm:h-28 rounded-lg object-cover"
-                />
-                <div className="flex-1">
-                  <p className="text-gray-600">
-                    <strong>Parking at:</strong> {reservation.parkingSpace.address}
-                  </p>
-                  <p className="text-gray-600">
-                    <strong>Start Time:</strong>{" "}
-                    {new Date(reservation.startTime).toLocaleDateString(
-                      undefined,
-                      {
+              <Link to={`/reservation/${reservation._id}`} key={index}>
+                <div className="border-b py-4 flex flex-col sm:flex-row gap-4 items-center">
+                  <img
+                    src={reservation.parkingSpace.spotImages[0] || "default-image.jpg"}
+                    alt="parking spot"
+                    className="w-24 h-24 sm:w-28 sm:h-28 rounded-lg object-cover"
+                  />
+                  <div className="flex-1">
+                    <p className="text-gray-600">
+                      <strong>Parking at:</strong> {reservation.parkingSpace.address}
+                    </p>
+                    <p className="text-gray-600">
+                      <strong>Start Time:</strong>{" "}
+                      {new Date(reservation.startTime).toLocaleDateString(undefined, {
                         weekday: "long",
                         year: "numeric",
                         month: "long",
@@ -124,14 +122,11 @@ const MyReservations = () => {
                         hour: "2-digit",
                         minute: "2-digit",
                         second: "2-digit",
-                      }
-                    )}
-                  </p>
-                  <p className="text-gray-600">
-                    <strong>End Time:</strong>{" "}
-                    {new Date(reservation.endTime).toLocaleDateString(
-                      undefined,
-                      {
+                      })}
+                    </p>
+                    <p className="text-gray-600">
+                      <strong>End Time:</strong>{" "}
+                      {new Date(reservation.endTime).toLocaleDateString(undefined, {
                         weekday: "long",
                         year: "numeric",
                         month: "long",
@@ -139,17 +134,17 @@ const MyReservations = () => {
                         hour: "2-digit",
                         minute: "2-digit",
                         second: "2-digit",
-                      }
-                    )}
-                  </p>
-                  <p className="text-gray-600">
-                    <strong>Cost:</strong> ${reservation.totalPrice}
-                  </p>
-                  <p className="text-gray-600">
-                    <strong>Payment Status:</strong> {reservation.paymentStatus}
-                  </p>
+                      })}
+                    </p>
+                    <p className="text-gray-600">
+                      <strong>Cost:</strong> ${reservation.totalPrice}
+                    </p>
+                    <p className="text-gray-600">
+                      <strong>Payment Status:</strong> {reservation.paymentStatus}
+                    </p>
+                  </div>
                 </div>
-              </div>
+              </Link>
             ))
           )}
         </div>
