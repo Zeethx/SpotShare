@@ -14,7 +14,6 @@ const Review = () => {
 
   //use firebase auth to get the owner email
   const owner = auth.currentUser.email;
-  console.log("Owner:", owner);
 
   useEffect(() => {
     window.onbeforeunload = () => true;
@@ -27,9 +26,7 @@ const Review = () => {
   const handleSubmit = async () => {
     try {
       const payload = { ...formData, owner: owner };
-      console.log("Payload:", payload);
       const response = await api.post("/parking-space/create", payload);
-      console.log("Submission successful:", response);
       dispatch(clearForm());
       navigate("/submission-confirmation");
     } catch (error) {

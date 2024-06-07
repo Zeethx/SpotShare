@@ -17,7 +17,6 @@ export default function ParkingHistory() {
           .filter((reservation) => new Date(reservation.endTime) < Date.now())
           .sort((a, b) => new Date(b.endTime) - new Date(a.endTime));
         setParkingHistory(filteredReservations);
-        console.log('User reservations:', filteredReservations);
       })
       .catch((error) => {
         setError('Failed to fetch reservations');

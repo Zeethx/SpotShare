@@ -37,8 +37,6 @@ const ProfilePage = () => {
       const formData = new FormData();
       formData.append("profilePhoto", file);
 
-      console.log("Uploading file:", file);
-
       api
         .post("/users/avatar", formData, {
           headers: {

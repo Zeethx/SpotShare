@@ -19,7 +19,6 @@ function Map({ address, onAddressChange }) {
 
   const onMapLoad = useCallback((map) => {
     setMap(map);
-    console.log('Map loaded:', map);
   }, []);
 
   const onPlaceChanged = () => {
@@ -32,8 +31,6 @@ function Map({ address, onAddressChange }) {
 
         setMarkerPosition({ lat, lng });
         onAddressChange(address);
-        console.log('Place changed:', place);
-        console.log('New coordinates:', { lat, lng });
         if (map) {
           map.panTo({ lat, lng });
           map.setZoom(15);
@@ -53,7 +50,6 @@ function Map({ address, onAddressChange }) {
           setMarkerPosition({ lat, lng });
           map.panTo({ lat, lng });
           map.setZoom(15);
-          console.log('Address geocoded:', address, { lat, lng });
         } else {
           console.error('Geocode was not successful for the following reason: ' + status);
         }
@@ -65,7 +61,6 @@ function Map({ address, onAddressChange }) {
     if (markerPosition && map) {
       map.panTo(markerPosition);
       map.setZoom(15);
-      console.log('Map panned to:', markerPosition);
     }
   }, [markerPosition, map]);
 

@@ -103,7 +103,6 @@ const ConfirmReservation = () => {
   const duration = calculateDuration(dateTimeIn, dateTimeOut);
   const finalPrice = calculatePrice(duration);
   const stripePrice = (finalPrice + (finalPrice*0.04 + 0.30));
-  console.log(stripePrice)
 
   const handleReservation = async () => {
     try {

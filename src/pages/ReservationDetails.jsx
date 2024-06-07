@@ -19,7 +19,6 @@ const ReservationDetails = () => {
         const response = await api.get(`/reservation/${id}`);
         setReservation(response.data.data);
         setLoading(false);
-        console.log(response.data.data);
       } catch (err) {
         setError("Failed to fetch reservation details");
         setLoading(false);

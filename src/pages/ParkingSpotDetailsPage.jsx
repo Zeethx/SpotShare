@@ -64,7 +64,7 @@ const ParkingSpotDetails = () => {
     api
       .put(`/parking-space/${id}/update`, formState)
       .then((response) => {
-        console.log("Update successful:", response.data.message);
+        setListing(response.data.data);
         alert("Listing updated successfully!");
         setIsEditMode(false);
       })
