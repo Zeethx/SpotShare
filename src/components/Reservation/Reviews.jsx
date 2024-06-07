@@ -13,7 +13,6 @@ function Reviews({ spotId }) {
                 const response = await api.get(`/review/${spotId}/all`);
                 setReviews(response.data.data);
                 setSortedReviews(response.data.data);
-                console.log("Reviews:", response.data.data);
             } catch (error) {
                 console.error("Error fetching reviews:", error);
             }

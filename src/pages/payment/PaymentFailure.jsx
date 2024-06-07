@@ -18,7 +18,6 @@ function PaymentFailure() {
         }, 1000);
       })
       .catch((err) => {
-        console.log(err);
       });
   }, [reservationId, navigate]);
   return (

@@ -36,3 +36,21 @@
     transform: rotate(360deg);
   }
 }
+
+/* Scrollbar styles */
+.scrollbar::-webkit-scrollbar {
+  width: 12px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Light grey track color */
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background: #888; /* Grey thumb color */
+  border-radius: 20px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Darker grey thumb hover color */
+}

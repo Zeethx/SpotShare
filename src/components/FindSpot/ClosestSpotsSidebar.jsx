@@ -99,6 +99,7 @@ useEffect(() => {
       <h2 className="text-3xl font-bold text-primary-color font-freeman mb-6 text-center">
         Closest Spots
       </h2>
+      <div className="overflow-auto h-screen overflow-x-hidden scrollbar-thumb-slate-700 scrollbar-track-gray-200 scrollbar-thin scrollbar-corner-secondary-color">
       <ul className="space-y-4">
         {updatedSpots
           .map((spot, index) => (
@@ -148,8 +149,9 @@ useEffect(() => {
               </button>
             </li>
           ))
-          .slice(0, 3)}
+          }
       </ul>
+      </div>
     </div>
   );
 }
