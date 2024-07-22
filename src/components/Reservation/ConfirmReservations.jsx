@@ -115,9 +115,12 @@ const ConfirmReservation = () => {
       });
   
       if (response.data && response.data.data) {
+        const reservationId = response.data.data._id;
+  
         const payment = await api.post("/pay/create-checkout-session", {
-          reservationId: response.data.data._id,
+          reservationId: reservationId,
           amount: stripePrice,
+          metadata: { reservationId: reservationId }, // Include reservation ID in metadata
         });
   
         if (payment.data && payment.data.data) {
