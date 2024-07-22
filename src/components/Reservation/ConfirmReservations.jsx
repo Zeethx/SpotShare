@@ -10,6 +10,7 @@ const ConfirmReservation = () => {
   const location = useLocation();
   const [spotDetails, setSpotDetails] = useState(null);
   const [vehicleReg, setVehicleReg] = useState("");
+  const [reservationId, setReservationId] = useState(null);
 
   // Get dateTimeIn and dateTimeOut from query parameters
   const getQueryParams = (search) => {
@@ -32,6 +33,23 @@ const ConfirmReservation = () => {
 
     fetchSpotDetails();
   }, [spotId]);
+
+  useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      if (reservationId) {
+        navigator.sendBeacon(`/reservation/delete/${reservationId}`);
+        setReservationId(null);
+      }
+    };
+
+    if (reservationId) {
+      window.addEventListener("beforeunload", handleBeforeUnload);
+    }
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [reservationId]);
 
   if (!spotDetails) {
     return <div>Loading...</div>;
@@ -102,7 +120,7 @@ const ConfirmReservation = () => {
 
   const duration = calculateDuration(dateTimeIn, dateTimeOut);
   const finalPrice = calculatePrice(duration);
-  const stripePrice = (finalPrice + (finalPrice*0.04 + 0.30));
+  const stripePrice = finalPrice + finalPrice * 0.04 + 0.30;
 
   const handleReservation = async () => {
     try {
@@ -113,16 +131,17 @@ const ConfirmReservation = () => {
         endTime: dateTimeOut.toISOString(),
         totalPrice: finalPrice,
       });
-  
+
       if (response.data && response.data.data) {
         const reservationId = response.data.data._id;
-  
+        setReservationId(reservationId);
+
         const payment = await api.post("/pay/create-checkout-session", {
           reservationId: reservationId,
           amount: stripePrice,
           metadata: { reservationId: reservationId }, // Include reservation ID in metadata
         });
-  
+
         if (payment.data && payment.data.data) {
           window.location.href = payment.data.data.url;
         } else {
@@ -135,7 +154,6 @@ const ConfirmReservation = () => {
       console.error("Error making reservation:", error);
     }
   };
-  
 
   return (
     <div className="min-h-screen flex flex-col items-center py-5">
@@ -155,12 +173,14 @@ const ConfirmReservation = () => {
                   {spotDetails.description}
                 </p>
                 <p className="text-lg text-gray-700">
-                  <span className="font-bold">{spotDetails.spotType === "Other"? " " : spotDetails.spotType} Parking at{": "}</span>
+                  <span className="font-bold">
+                    {spotDetails.spotType === "Other" ? " " : spotDetails.spotType} Parking at{": "}
+                  </span>
                   {spotDetails.address.split(",").slice(0, 2).join(",")}
                 </p>
                 <p className="text-lg text-gray-600">
                   <span className="font-semibold">Accomodation: </span> {spotDetails.spacesToRent}
-                  {spotDetails.spacesToRent > 1 ? " Spaces" : " Space"} available for a {spotDetails.vehicleSize === "Van/Minibus" ? "Van/Minibus" : `${spotDetails.vehicleSize} vehicle.` } 
+                  {spotDetails.spacesToRent > 1 ? " Spaces" : " Space"} available for a {spotDetails.vehicleSize === "Van/Minibus" ? "Van/Minibus" : `${spotDetails.vehicleSize} vehicle.`} 
                 </p>
                 <div className="mt-1 text-lg text-gray-600">
                   <p className="mb-1">
@@ -178,20 +198,15 @@ const ConfirmReservation = () => {
                   <p>
                     <span className="font-semibold">Duration: </span>
                     {duration.hours > 24
-                      ? `${Math.floor(duration.hours / 24)} days ${
-                          duration.hours % 24
-                        } hours ${duration.minutes} minutes`
+                      ? `${Math.floor(duration.hours / 24)} days ${duration.hours % 24} hours ${duration.minutes} minutes`
                       : `${duration.hours} hours ${duration.minutes} minutes`}
                   </p>
                 </div>
               </div>
               <div className="mb-8">
-                <h3 className="text-2xl font-semibold mb-4">
-                  Vehicle Information
-                </h3>
+                <h3 className="text-2xl font-semibold mb-4">Vehicle Information</h3>
                 <p className="text-md text-gray-600 mb-4">
-                  Your vehicle license plate number will be shared with the
-                  parking space owner.
+                  Your vehicle license plate number will be shared with the parking space owner.
                 </p>
                 <input
                   type="text"
@@ -224,9 +239,7 @@ const ConfirmReservation = () => {
                   )}
                 </ul>
               </div>
-              <p className="mt-2 text-red-600 text-sm">
-                Your Reservation Cannot be Cancelled.
-              </p>
+              <p className="mt-2 text-red-600 text-sm">Your Reservation Cannot be Cancelled.</p>
             </div>
 
             {/* Right Section */}
@@ -237,8 +250,7 @@ const ConfirmReservation = () => {
                   className="rounded-lg overflow-hidden shadow-lg"
                   arrows
                 >
-                  {spotDetails.spotImages &&
-                  spotDetails.spotImages.length > 0 ? (
+                  {spotDetails.spotImages && spotDetails.spotImages.length > 0 ? (
                     spotDetails.spotImages.map((imageLink, index) => (
                       <div key={index} className="p-2">
                         <img
@@ -285,11 +297,9 @@ const ConfirmReservation = () => {
         </div>
       </div>
       <div className="bg-white shadow-2xl rounded-lg w-full max-w-5xl mt-10 pt-0 px-5">
-      <Reviews spotId={spotId} />
+        <Reviews spotId={spotId} />
       </div>
     </div>
-    
-    
   );
 };
 
