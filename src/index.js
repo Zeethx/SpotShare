@@ -67,8 +67,8 @@ root.render(
             <Route path="/myreservations" element={<Protected><MyReservations /></Protected>} />
             <Route path="/reservation/:id" element={<Protected><ReservationDetails /> </Protected>} />
             <Route path="/write-a-review/:parkingId/:reservationId" element={<Protected><WriteAReview /></Protected>} />
-            <Route path="/payment-success" element={<PaymentSuccess />} />
-            <Route path="/payment-failed" element={<PaymentFailure />} />
+            <Route path="/reservation/success" element={<PaymentSuccess />} />
+            <Route path="/reservation/cancel" element={<PaymentFailure />} />
             <Route path="*" element={<NotFound />} />
             
           </Route>

@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { useParams, useLocation } from "react-router-dom";
-import api from "../../conf/axiosConfig"; // Ensure this is the correct path
-import Carousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
-import Reviews from "./Reviews";
+import React, { useEffect, useState } from 'react';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import api from '../../conf/axiosConfig'; // Ensure this is the correct path
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
+import Reviews from './Reviews';
 
 const ConfirmReservation = () => {
   const { spotId } = useParams();
   const location = useLocation();
+  const navigate = useNavigate();
   const [spotDetails, setSpotDetails] = useState(null);
-  const [vehicleReg, setVehicleReg] = useState("");
-  const [reservationId, setReservationId] = useState(null);
+  const [vehicleReg, setVehicleReg] = useState('');
 
   // Get dateTimeIn and dateTimeOut from query parameters
   const getQueryParams = (search) => {
@@ -18,8 +18,8 @@ const ConfirmReservation = () => {
   };
 
   const queryParams = getQueryParams(location.search);
-  const dateTimeIn = new Date(queryParams.get("dateTimeIn"));
-  const dateTimeOut = new Date(queryParams.get("dateTimeOut"));
+  const dateTimeIn = new Date(queryParams.get('dateTimeIn'));
+  const dateTimeOut = new Date(queryParams.get('dateTimeOut'));
 
   useEffect(() => {
     const fetchSpotDetails = async () => {
@@ -27,29 +27,12 @@ const ConfirmReservation = () => {
         const response = await api.get(`/parking-space/${spotId}`);
         setSpotDetails(response.data.data);
       } catch (error) {
-        console.error("Error fetching parking spot details:", error);
+        console.error('Error fetching parking spot details:', error);
       }
     };
 
     fetchSpotDetails();
   }, [spotId]);
-
-  useEffect(() => {
-    const handleBeforeUnload = (event) => {
-      if (reservationId) {
-        navigator.sendBeacon(`/reservation/delete/${reservationId}`);
-        setReservationId(null);
-      }
-    };
-
-    if (reservationId) {
-      window.addEventListener("beforeunload", handleBeforeUnload);
-    }
-
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, [reservationId]);
 
   if (!spotDetails) {
     return <div>Loading...</div>;
@@ -75,12 +58,12 @@ const ConfirmReservation = () => {
   };
 
   const formatDate = (date) => {
-    return date.toLocaleDateString("en-US", {
-      weekday: "long",
-      month: "long",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
+    return date.toLocaleDateString('en-US', {
+      weekday: 'long',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
     });
   };
 
@@ -124,34 +107,25 @@ const ConfirmReservation = () => {
 
   const handleReservation = async () => {
     try {
-      const response = await api.post("/reservation/create", {
+      const payment = await api.post('/pay/create-checkout-session', {
         parkingSpaceId: spotId,
-        vehicleReg: vehicleReg,
-        startTime: dateTimeIn.toISOString(),
-        endTime: dateTimeOut.toISOString(),
-        totalPrice: finalPrice,
+        amount: stripePrice,
+        metadata: {
+          spotId: spotId,
+          vehicleReg: vehicleReg,
+          startTime: dateTimeIn.toISOString(),
+          endTime: dateTimeOut.toISOString(),
+          totalPrice: finalPrice,
+        },
       });
 
-      if (response.data && response.data.data) {
-        const reservationId = response.data.data._id;
-        setReservationId(reservationId);
-
-        const payment = await api.post("/pay/create-checkout-session", {
-          reservationId: reservationId,
-          amount: stripePrice,
-          metadata: { reservationId: reservationId }, // Include reservation ID in metadata
-        });
-
-        if (payment.data && payment.data.data) {
-          window.location.href = payment.data.data.url;
-        } else {
-          console.error("Error creating payment session:", payment.data);
-        }
+      if (payment.data && payment.data.data) {
+        window.location.href = payment.data.data.url;
       } else {
-        console.error("Error creating reservation:", response.data);
+        console.error('Error creating payment session:', payment.data);
       }
     } catch (error) {
-      console.error("Error making reservation:", error);
+      console.error('Error making reservation:', error);
     }
   };
 
@@ -174,31 +148,32 @@ const ConfirmReservation = () => {
                 </p>
                 <p className="text-lg text-gray-700">
                   <span className="font-bold">
-                    {spotDetails.spotType === "Other" ? " " : spotDetails.spotType} Parking at{": "}
+                    {spotDetails.spotType === 'Other' ? ' ' : spotDetails.spotType} Parking at{': '}
                   </span>
-                  {spotDetails.address.split(",").slice(0, 2).join(",")}
+                  {spotDetails.address.split(',').slice(0, 2).join(',')}
                 </p>
                 <p className="text-lg text-gray-600">
                   <span className="font-semibold">Accomodation: </span> {spotDetails.spacesToRent}
-                  {spotDetails.spacesToRent > 1 ? " Spaces" : " Space"} available for a {spotDetails.vehicleSize === "Van/Minibus" ? "Van/Minibus" : `${spotDetails.vehicleSize} vehicle.`} 
+                  {spotDetails.spacesToRent > 1 ? ' Spaces' : ' Space'} available for a{' '}
+                  {spotDetails.vehicleSize === 'Van/Minibus'
+                    ? 'Van/Minibus'
+                    : `${spotDetails.vehicleSize} vehicle.`}
                 </p>
                 <div className="mt-1 text-lg text-gray-600">
                   <p className="mb-1">
                     <span className="font-semibold">Arriving on: </span>
-                    <span className="text-blue-600">
-                      {formatDate(dateTimeIn)}
-                    </span>
+                    <span className="text-blue-600">{formatDate(dateTimeIn)}</span>
                   </p>
                   <p className="mb-1">
                     <span className="font-semibold">Leaving on: </span>
-                    <span className="text-blue-600">
-                      {formatDate(dateTimeOut)}
-                    </span>
+                    <span className="text-blue-600">{formatDate(dateTimeOut)}</span>
                   </p>
                   <p>
                     <span className="font-semibold">Duration: </span>
                     {duration.hours > 24
-                      ? `${Math.floor(duration.hours / 24)} days ${duration.hours % 24} hours ${duration.minutes} minutes`
+                      ? `${Math.floor(duration.hours / 24)} days ${duration.hours % 24} hours ${
+                          duration.minutes
+                        } minutes`
                       : `${duration.hours} hours ${duration.minutes} minutes`}
                   </p>
                 </div>
@@ -245,11 +220,7 @@ const ConfirmReservation = () => {
             {/* Right Section */}
             <div className="w-full md:w-1/3 md:pl-4 mt-8 md:mt-0">
               <div className="mb-8">
-                <Carousel
-                  responsive={responsive}
-                  className="rounded-lg overflow-hidden shadow-lg"
-                  arrows
-                >
+                <Carousel responsive={responsive} className="rounded-lg overflow-hidden shadow-lg" arrows>
                   {spotDetails.spotImages && spotDetails.spotImages.length > 0 ? (
                     spotDetails.spotImages.map((imageLink, index) => (
                       <div key={index} className="p-2">
@@ -287,7 +258,7 @@ const ConfirmReservation = () => {
                 onClick={handleReservation}
                 disabled={!vehicleReg.length}
                 {...(!vehicleReg
-                  ? { title: "Please enter your vehicle registration number" }
+                  ? { title: 'Please enter your vehicle registration number' }
                   : {})}
               >
                 Reserve This Spot
