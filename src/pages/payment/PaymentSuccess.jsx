@@ -45,7 +45,7 @@ const PaymentSuccess = () => {
   return (
     <div className="flex pt-[4vw] justify-center">
       <div className="p-8 rounded text-center">
-        <img src="images/payment_success.svg" alt="Payment Successful" className="w-40 h-40 mx-auto mb-6" />
+        <img src="/images/payment_success.svg" alt="Payment Successful" className="w-40 h-40 mx-auto mb-6" />
         <h1 className="text-7xl font-bold text-gray-800 mb-4">Payment Successful!</h1>
         <p className="text-gray-700 text-xl mb-6">
           Thank you for parking with SpotShare. An automated payment receipt will be sent

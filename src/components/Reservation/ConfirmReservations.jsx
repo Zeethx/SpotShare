@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import api from '../../conf/axiosConfig'; // Ensure this is the correct path
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
@@ -8,7 +8,6 @@ import Reviews from './Reviews';
 const ConfirmReservation = () => {
   const { spotId } = useParams();
   const location = useLocation();
-  const navigate = useNavigate();
   const [spotDetails, setSpotDetails] = useState(null);
   const [vehicleReg, setVehicleReg] = useState('');
 
@@ -245,12 +244,12 @@ const ConfirmReservation = () => {
                   <span>
                     Transaction fee <span className="text-gray-500">(i)</span>
                   </span>
-                  <span>CA${(finalPrice * 0.05).toFixed(2)}</span>
+                  <span>CA${(stripePrice - finalPrice).toFixed(2)}</span>
                 </p>
                 <hr className="my-4" />
                 <p className="flex justify-between text-xl font-semibold text-gray-800">
                   <span>Final price</span>
-                  <span>CA${(finalPrice + finalPrice * 0.05).toFixed(2)}</span>
+                  <span>CA${(stripePrice).toFixed(2)}</span>
                 </p>
               </div>
               <button
