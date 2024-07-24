@@ -1,25 +1,14 @@
 import React, { useEffect } from "react";
-import api from "../../conf/axiosConfig";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function PaymentFailure() {
-  const location = useLocation();
   const navigate = useNavigate();
 
-  const query = new URLSearchParams(location.search);
-  const reservationId = query.get("reservationId");
-
   useEffect(() => {
-    api
-      .post(`/pay/${reservationId}/cancel-payment`)
-      .then((res) => {
-        setTimeout(() => {
-          navigate("/");
-        }, 1000);
-      })
-      .catch((err) => {
-      });
-  }, [reservationId, navigate]);
+    setTimeout(() => {
+      navigate("/");
+    }, 5000);
+  }, [navigate]);
   return (
     <div className="flex pt-[4vw] justify-center ">
     <div className=" p-8 rounded text-center">
