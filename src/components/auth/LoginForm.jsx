@@ -43,7 +43,7 @@ function LoginForm() {
         }
 
       } else {
-        console.error('Google Sign-In failed');
+        console.error('Failed to sign in with Google.');
         setErrorMessage('Failed to sign in with Google.');
       }
     } catch (error) {
@@ -92,10 +92,10 @@ function LoginForm() {
         <div className="flex flex-col items-center justify-center p-10 mt-0 mr-auto mb-0 ml-auto max-w-md rounded-lg shadow-2xl">
           <h2 className="text-4xl font-semibold mb-6">Login to SpotShare</h2>
           {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-          <form onSubmit={onSubmit} className="w-full space-y-6">
+          <form className="w-full space-y-6">
             <InputField label="Email" type="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} required />
             <InputField label="Password" type="password" placeholder="Enter your password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-            <Button type="submit" text="Log In" />
+            <Button type="submit" text="Log In" onClick={onSubmit} />
             <Button text={
               <div className='flex gap-2 justify-center'>
                 <img src="/images/googleg.png" alt="google" className='max-w-7' />
