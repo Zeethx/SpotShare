@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import api from "../conf/axiosConfig";
 import { Container, Loader } from "../components";
+import { Helmet } from "react-helmet";
 
 const MyReservations = () => {
   const [reservations, setReservations] = useState([]);
@@ -57,6 +58,12 @@ const MyReservations = () => {
 
   return (
     <Container>
+      <Helmet>
+        <title>SpotShare | My Reservations</title>
+        <meta name="description" content="View your reservations on SpotShare." />
+        <meta name="keywords" content="reservations, SpotShare" />
+      </Helmet>
+      
       <div className="container mx-auto p-4">
         <h1 className="text-3xl font-bold mb-4 text-center font-freeman">My Reservations</h1>
         <div className="mb-6">

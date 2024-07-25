@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, Link, useNavigate } from 'react-router-dom';
 import api from '../../conf/axiosConfig'; // Ensure this is the correct path
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
@@ -8,6 +8,7 @@ import Reviews from './Reviews';
 const ConfirmReservation = () => {
   const { spotId } = useParams();
   const location = useLocation();
+  const navigate = useNavigate();
   const [spotDetails, setSpotDetails] = useState(null);
   const [vehicleReg, setVehicleReg] = useState('');
 
@@ -120,11 +121,14 @@ const ConfirmReservation = () => {
 
       if (payment.data && payment.data.data) {
         window.location.href = payment.data.data.url;
-      } else {
-        console.error('Error creating payment session:', payment.data);
+      } else if (payment.data && payment.data.error) {
+        alert(payment.data.error.message);
       }
     } catch (error) {
-      console.error('Error making reservation:', error);
+      alert('Failed to create payment session. Please try again later.');
+      setTimeout(() => {
+        navigate(`/find`);
+      }, 3000);
     }
   };
 
@@ -213,7 +217,7 @@ const ConfirmReservation = () => {
                   )}
                 </ul>
               </div>
-              <p className="mt-2 text-red-600 text-sm">Your Reservation Cannot be Cancelled.</p>
+              <p className="mt-2 text-xs text-center">Review the <Link to="/terms-and-conditions" className='text-blue-500'>Cancellation Policy</Link> before reservation.</p>
             </div>
 
             {/* Right Section */}
