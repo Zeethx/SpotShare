@@ -4,7 +4,6 @@ import api from '../../conf/axiosConfig';
 function Reviews({ spotId }) {
     const [reviews, setReviews] = useState([]);
     const [sortedReviews, setSortedReviews] = useState([]);
-    const [sortCriteria, setSortCriteria] = useState('Most Relevant');
     const [showReviews, setShowReviews] = useState(false);
 
     useEffect(() => {

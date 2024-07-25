@@ -33,10 +33,15 @@ import WriteAReview from './pages/WriteAReview';
 import PaymentSuccess from './pages/payment/PaymentSuccess';
 import PaymentFailure from './pages/payment/PaymentFailure';
 import ReservationDetails from './pages/ReservationDetails';
+import TermsAndConditions from './pages/legal/TermsAndConditions';
+import PrivacyPolicy from './pages/legal/PrivacyPolicy';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const rootElement = document.getElementById('root');
+const root = ReactDOM.createRoot(rootElement);
 
-root.render(
+const renderMethod = rootElement.hasChildNodes() ? 'hydrateRoot' : 'render';
+
+root[renderMethod](
   <React.StrictMode>
     <Provider store={store}>
       <Router>
@@ -69,6 +74,8 @@ root.render(
             <Route path="/write-a-review/:parkingId/:reservationId" element={<Protected><WriteAReview /></Protected>} />
             <Route path="/reservation/success" element={<PaymentSuccess />} />
             <Route path="/reservation/cancel" element={<PaymentFailure />} />
+            <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="*" element={<NotFound />} />
             
           </Route>

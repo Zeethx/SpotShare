@@ -26,7 +26,7 @@ const Review = () => {
   const handleSubmit = async () => {
     try {
       const payload = { ...formData, owner: owner };
-      const response = await api.post("/parking-space/create", payload);
+      await api.post("/parking-space/create", payload);
       dispatch(clearForm());
       navigate("/submission-confirmation");
     } catch (error) {

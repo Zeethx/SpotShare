@@ -40,10 +40,10 @@ function Footer() {
                             <h2 className="mb-6 text-sm font-semibold  uppercase ">Legal</h2>
                             <ul className=" font-medium">
                                 <li className="mb-4">
-                                    <Link to="/" className="hover:underline">Privacy Policy</Link>
+                                    <Link to="/privacy-policy" className="hover:underline">Privacy Policy</Link>
                                 </li>
                                 <li>
-                                    <Link to="/" className="hover:underline">Terms &amp; Conditions</Link>
+                                    <Link to="/terms-and-conditions" className="hover:underline">Terms &amp; Conditions</Link>
                                 </li>
                             </ul>
                         </div>
