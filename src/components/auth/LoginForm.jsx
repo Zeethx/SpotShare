@@ -20,8 +20,28 @@ function LoginForm() {
       if (userCredential && userCredential.user) {
         const idToken = await userCredential.user.getIdToken();
         localStorage.setItem('token', idToken);
+        if(userCredential) {
+          try {
+            await api.post('/users/register', {
+              uid: userCredential.user.uid,
+              fullName: userCredential.user.displayName,
+              email: userCredential.user.email,
+              phoneNumber: userCredential.user.phoneNumber,
+              photoUrl: userCredential.user.photoURL,
+            });
+          } catch (error) {
+            console.error('Failed to create user:', error);
+          }
+        }
         dispatch(login({ email: userCredential.user.email, uid: userCredential.user.uid }));
         setIsLoggedIn(true);
+        try {
+          const userDetails = await api.get('/users/me');
+          localStorage.setItem('user', JSON.stringify(userDetails.data)); // Store user details in local storage
+        } catch (error) {
+          console.error('Failed to fetch user details');
+        }
+
       } else {
         console.error('Google Sign-In failed');
         setErrorMessage('Failed to sign in with Google.');
