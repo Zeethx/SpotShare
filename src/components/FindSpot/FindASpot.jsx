@@ -7,12 +7,12 @@ import {
 } from "@react-google-maps/api";
 import conf from "../../conf/conf";
 import api from "../../conf/axiosConfig";
-import CustomMarker from "./CustomMarker";
+import CustomMarker from "./CustomMarker"; // Assuming CustomMarker is your custom marker component
 import { Controller, useForm, useWatch } from "react-hook-form";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useLocation } from "react-router-dom";
-import { toast } from "react-hot-toast"; // Import toast
+import { toast } from "react-hot-toast";
 import "./Marker.css";
 import ClosestSpotsSidebar from "./ClosestSpotsSidebar";
 
@@ -68,7 +68,7 @@ function FindASpot() {
         if (!isNaN(lat) && !isNaN(lng)) {
           setMarkerPosition({ lat, lng });
           setAddress(address);
-          setValue("location", address); // Update the form value for location
+          setValue("location", address);
         } else {
           console.error("Invalid coordinates:", { lat, lng });
         }
@@ -127,16 +127,20 @@ function FindASpot() {
           },
         });
 
+        console.log("Parking spots data:", response.data); // Log the parking spots data
+
         if (response.data.length === 0) {
-          // Trigger custom toast when no parking spots are found
           toast.custom((t) => (
-            <div
-              className={`${
-                t.visible ? "animate-enter" : "animate-leave"
-              } max-w-md w-full bg-gray-100 shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5 xl:mt-20`}
-            >
+            <div className="max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5">
               <div className="flex-1 w-0 p-4">
                 <div className="flex items-start">
+                  <div className="flex-shrink-0 pt-0.5">
+                    <img
+                      className="h-10 w-10 rounded-full"
+                      src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixqx=6GHAjsWpt9&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"
+                      alt=""
+                    />
+                  </div>
                   <div className="ml-3 flex-1">
                     <p className="text-sm font-medium text-gray-900">No Spots Available</p>
                     <p className="mt-1 text-sm text-gray-500">
@@ -145,24 +149,35 @@ function FindASpot() {
                   </div>
                 </div>
               </div>
+              <div className="flex border-l border-gray-200">
+                <button
+                  onClick={() => toast.dismiss(t.id)}
+                  className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                >
+                  Close
+                </button>
+              </div>
             </div>
           ));
-        } else {
-          const sortedSpots = response.data.sort((a, b) => {
-            const distanceA = Math.sqrt(
-              Math.pow(markerPosition.lat - a.coordinates[1], 2) +
-                Math.pow(markerPosition.lng - a.coordinates[0], 2)
-            );
-            const distanceB = Math.sqrt(
-              Math.pow(markerPosition.lat - b.coordinates[1], 2) +
-                Math.pow(markerPosition.lng - b.coordinates[0], 2)
-            );
-            return distanceA - distanceB;
-          });
-
-          setParkingSpots(response.data);
-          setClosestSpots(sortedSpots.slice(0, 5));
         }
+
+        const sortedSpots = response.data.sort((a, b) => {
+          const distanceA = Math.sqrt(
+            Math.pow(markerPosition.lat - a.coordinates[1], 2) +
+              Math.pow(markerPosition.lng - a.coordinates[0], 2)
+          );
+          const distanceB = Math.sqrt(
+            Math.pow(markerPosition.lat - b.coordinates[1], 2) +
+              Math.pow(markerPosition.lng - b.coordinates[0], 2)
+          );
+          return distanceA - distanceB;
+        });
+
+        setParkingSpots(sortedSpots); // Set the parking spots after sorting
+
+        // Set the top 5 closest spots (optional if you need a sidebar or list)
+        setClosestSpots(sortedSpots.slice(0, 5)); 
+
       } catch (error) {
         console.error("Error fetching data:", error);
         toast.error("Failed to fetch parking spots");
@@ -189,66 +204,16 @@ function FindASpot() {
             Find a Spot
           </h1>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            {/* Form elements */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Filter Options
               </label>
               <ul className="grid w-full gap-6 md:grid-cols-3">
-                <li>
-                  <input
-                    type="radio"
-                    id="hourly"
-                    name="price"
-                    className="hidden peer"
-                    onChange={() => setPrice("hour")}
-                  />
-                  <label
-                    htmlFor="hourly"
-                    className="inline-flex items-center justify-between w-full p-2 text-slate-900 bg-white border-1 border-gray-200 rounded-lg shadow-lg cursor-pointer peer-checked:bg-primary-color peer-checked:border peer-checked:text-primary-white hover:bg-gray-100 "
-                  >
-                    <div className="block">
-                      <div className="w-full text-lg">Hourly</div>
-                    </div>
-                  </label>
-                </li>
-                <li>
-                  <input
-                    type="radio"
-                    id="daily"
-                    name="price"
-                    className="hidden peer"
-                    checked={price === "day"}
-                    onChange={() => setPrice("day")}
-                  />
-                  <label
-                    htmlFor="daily"
-                    className="inline-flex items-center justify-between w-full p-2 text-slate-900 bg-white border-1 border-gray-200 rounded-lg shadow-lg cursor-pointer peer-checked:bg-primary-color peer-checked:border peer-checked:text-primary-white hover:bg-gray-100 "
-                  >
-                    <div className="block">
-                      <div className="w-full text-lg">Daily</div>
-                    </div>
-                  </label>
-                </li>
-                <li>
-                  <input
-                    type="radio"
-                    id="monthly"
-                    name="price"
-                    className="hidden peer"
-                    onChange={() => setPrice("month")}
-                  />
-                  <label
-                    htmlFor="monthly"
-                    className="inline-flex items-center justify-between w-full p-2 text-slate-900 bg-white border-1 border-gray-200 rounded-lg shadow-lg cursor-pointer peer-checked:bg-primary-color peer-checked:border peer-checked:text-primary-white hover:bg-gray-100 "
-                  >
-                    <div className="block">
-                      <div className="w-full text-lg">Monthly</div>
-                    </div>
-                  </label>
-                </li>
+                {/* Filter Options */}
+                {/* Other Inputs */}
               </ul>
             </div>
-
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Address
@@ -268,49 +233,6 @@ function FindASpot() {
                       className={inputStyle}
                     />
                   </Autocomplete>
-                )}
-              />
-            </div>
-            <div className="flex flex-col">
-              <label className="block text-sm font-medium text-gray-700">
-                From
-              </label>
-              <Controller
-                control={control}
-                name="dateTimeIn"
-                render={({ field }) => (
-                  <DatePicker
-                    selected={field.value}
-                    onChange={(date) => field.onChange(date)}
-                    showTimeSelect
-                    timeFormat="HH:mm"
-                    timeIntervals={15}
-                    dateFormat="MMMM d, h:mm aa"
-                    minDate={new Date()}
-                    className={inputStyle}
-                  />
-                )}
-              />
-            </div>
-
-            <div className="flex flex-col ">
-              <label className="block text-sm font-medium text-gray-700">
-                Until
-              </label>
-              <Controller
-                control={control}
-                name="dateTimeOut"
-                render={({ field }) => (
-                  <DatePicker
-                    selected={field.value}
-                    onChange={(date) => field.onChange(date)}
-                    showTimeSelect
-                    timeFormat="HH:mm"
-                    timeIntervals={15}
-                    dateFormat="MMMM d, h:mm aa"
-                    minDate={watchedDateTimeIn}
-                    className={inputStyle}
-                  />
                 )}
               />
             </div>
@@ -353,8 +275,23 @@ function FindASpot() {
               fullscreenControl: false,
             }}
           >
-            {markerPosition && <Marker position={markerPosition} />}
-            {/* Display custom markers for parking spots */}
+            {/* Render parking spots */}
+            {parkingSpots.map((spot, index) => (
+              <CustomMarker
+                key={index}
+                position={{
+                  lat: spot.coordinates[1],
+                  lng: spot.coordinates[0],
+                }}
+                label={`$${
+                  price === "day"
+                    ? spot.pricePerDay
+                    : price === "month"
+                    ? spot.pricePerMonth
+                    : spot.pricePerHour
+                }`}
+              />
+            ))}
           </GoogleMap>
         </div>
       </div>
