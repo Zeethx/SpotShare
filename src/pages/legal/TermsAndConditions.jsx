@@ -31,8 +31,8 @@ function TermsAndConditions() {
                         1.2 By using our Services, you agree to these terms and
                         conditions, and our Privacy Policy, which can be found
                         at{" "}
-                        <a href="/privacy" className="text-blue-500">
-                            spotshare.ca/privacy
+                        <a href ="/privacy-policy" className="text-blue-500">
+                            spotshare.ca/privacy-policy
                         </a>
                         . If you do not agree with these terms, you should not
                         use the Services.
