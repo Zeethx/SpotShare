@@ -217,7 +217,7 @@ const ConfirmReservation = () => {
                   )}
                 </ul>
               </div>
-              <p className="mt-2 text-xs text-center">Review the <Link to="/terms-and-conditions" className='text-blue-500'>Cancellation Policy</Link> before reservation.</p>
+              <p className="mt-2 text-sm text-center">Review the <Link to="/terms-and-conditions" className='text-blue-500'>Terms and Conditions</Link> before reservation.</p>
             </div>
 
             {/* Right Section */}

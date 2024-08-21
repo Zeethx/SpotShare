@@ -9,6 +9,7 @@ const ParkingTable = ({ currentSpaces, approveListing, openRejectModal }) => {
                         <th className="py-3 px-6 border-b border-gray-300 text-left">Title</th>
                         <th className="py-3 px-6 border-b border-gray-300 text-left">Address</th>
                         <th className="py-3 px-6 border-b border-gray-300 text-left">Status</th>
+                        <th className="py-3 px-6 border-b border-gray-300 text-left">Active</th>
                         <th className="py-3 px-6 border-b border-gray-300 text-left">Actions</th>
                     </tr>
                 </thead>
@@ -27,7 +28,18 @@ const ParkingTable = ({ currentSpaces, approveListing, openRejectModal }) => {
                                 </span>
                             </td>
                             <td className="py-4 px-6 border-b border-gray-300">
-                                {space.status === 'Pending' && (
+                                {space.isActive ? (
+                                    <span className="inline-block px-3 py-1 rounded-full text-sm bg-green-200 text-green-800">
+                                        Active
+                                    </span>
+                                ) : (
+                                    <span className="inline-block px-3 py-1 rounded-full text-sm bg-red-200 text-red-800">
+                                        Deleted
+                                    </span>
+                                )}
+                            </td>
+                            <td className="py-4 px-6 border-b border-gray-300">
+                                {space.status === 'Pending' && space.isActive && (
                                     <div className="flex space-x-2">
                                         <button
                                             className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600"
@@ -43,7 +55,7 @@ const ParkingTable = ({ currentSpaces, approveListing, openRejectModal }) => {
                                         </button>
                                     </div>
                                 )}
-                                {space.status === 'Approved' && (
+                                {space.status === 'Approved' && space.isActive && (
                                     <button
                                         className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
                                         onClick={() => openRejectModal(space._id)}
@@ -51,15 +63,14 @@ const ParkingTable = ({ currentSpaces, approveListing, openRejectModal }) => {
                                         Reject
                                     </button>
                                 )}
-                                {space.status === 'Rejected' && (
+                                {space.status === 'Rejected' && space.isActive && (
                                     <button
                                         className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600"
                                         onClick={() => approveListing(space._id)}
                                     >
                                         Approve
                                     </button>
-                                )
-                                }
+                                )}
                             </td>
                         </tr>
                     ))}
