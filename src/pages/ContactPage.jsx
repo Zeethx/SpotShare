@@ -1,10 +1,20 @@
 import React from 'react'
-import { Container, Contact } from "../components";
+import { Container, Contact, Footer } from "../components";
+import { Helmet } from 'react-helmet'
 function ContactPage() {
   return (
-    <Container>
+    <div>
+      <Helmet>
+        <title>SpotShare | Contact Us</title>
+        <meta name="description" content="Contact SpotShare for any queries or feedback." />
+        <meta name="keywords" content="contact us, SpotShare, parking spaces, rent parking" />
+      </Helmet>
+
+      <Container>
         <Contact />
-    </Container>
+      </Container>
+      <Footer />
+    </div>
   )
 }
 

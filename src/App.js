@@ -6,6 +6,8 @@ import { useDispatch } from 'react-redux';
 import { login } from './store/authSlice';
 import { Loader } from './components';
 import { useUser } from './hooks/useUser';
+import { Toaster } from 'react-hot-toast'; // Import react-hot-toast
+
 
 function App() {
   const dispatch = useDispatch();
@@ -36,6 +38,10 @@ function App() {
         <main>
         <Outlet />
         </main>
+        <Toaster
+        position="top-center"
+        reverseOrder={false}
+      />
 
     </>
 

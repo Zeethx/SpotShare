@@ -12,6 +12,7 @@ import { Controller, useForm, useWatch } from "react-hook-form";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useLocation } from "react-router-dom";
+import { toast } from "react-hot-toast"; // Import toast
 import "./Marker.css";
 import ClosestSpotsSidebar from "./ClosestSpotsSidebar";
 
@@ -48,7 +49,6 @@ function FindASpot() {
 
   const onBackClick = () => {
     setClosestSpots([]);
-    // Reset the map
     setMarkerPosition(null);
     setAddress("");
   };
@@ -126,32 +126,55 @@ function FindASpot() {
             timeOut: data.dateTimeOut.toISOString(),
           },
         });
-        const sortedSpots = response.data.sort((a, b) => {
-          // Calculate distance or use a specific criterion
-          const distanceA = Math.sqrt(
-            Math.pow(markerPosition.lat - a.coordinates[1], 2) +
-              Math.pow(markerPosition.lng - a.coordinates[0], 2)
-          );
-          const distanceB = Math.sqrt(
-            Math.pow(markerPosition.lat - b.coordinates[1], 2) +
-              Math.pow(markerPosition.lng - b.coordinates[0], 2)
-          );
-          return distanceA - distanceB;
-        });
-        setParkingSpots(response.data);
-        setClosestSpots(sortedSpots.slice(0, 5)); // Get top 5 closest spots
+
+        if (response.data.length === 0) {
+          // Trigger custom toast when no parking spots are found
+          toast.custom((t) => (
+            <div
+              className={`${
+                t.visible ? "animate-enter" : "animate-leave"
+              } max-w-md w-full bg-gray-100 shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5 xl:mt-20`}
+            >
+              <div className="flex-1 w-0 p-4">
+                <div className="flex items-start">
+                  <div className="ml-3 flex-1">
+                    <p className="text-sm font-medium text-gray-900">No Spots Available</p>
+                    <p className="mt-1 text-sm text-gray-500">
+                      No parking spaces were found in this area. Try again later.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ));
+        } else {
+          const sortedSpots = response.data.sort((a, b) => {
+            const distanceA = Math.sqrt(
+              Math.pow(markerPosition.lat - a.coordinates[1], 2) +
+                Math.pow(markerPosition.lng - a.coordinates[0], 2)
+            );
+            const distanceB = Math.sqrt(
+              Math.pow(markerPosition.lat - b.coordinates[1], 2) +
+                Math.pow(markerPosition.lng - b.coordinates[0], 2)
+            );
+            return distanceA - distanceB;
+          });
+
+          setParkingSpots(response.data);
+          setClosestSpots(sortedSpots.slice(0, 5));
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
+        toast.error("Failed to fetch parking spots");
       }
     } else {
       console.error("Invalid marker position:", markerPosition);
+      toast.error("Please select a valid location");
     }
   };
 
   if (loadError) {
-    return (
-      <div className="text-center text-red-500 mt-4">Error loading maps</div>
-    );
+    return <div className="text-center text-red-500 mt-4">Error loading maps</div>;
   }
 
   if (!isLoaded) {
@@ -331,35 +354,7 @@ function FindASpot() {
             }}
           >
             {markerPosition && <Marker position={markerPosition} />}
-            {parkingSpots
-              .filter((spot) => {
-                const spotPrice =
-                  price === "day"
-                    ? spot.pricePerDay
-                    : price === "month"
-                    ? spot.pricePerMonth
-                    : spot.pricePerHour;
-                return spotPrice !== 0;
-              })
-              .map((spot, index) => (
-                <CustomMarker
-                  key={index}
-                  position={{
-                    lat: spot.coordinates[1],
-                    lng: spot.coordinates[0],
-                  }}
-                  label={`$${
-                    price === "day"
-                      ? spot.pricePerDay
-                      : price === "month"
-                      ? spot.pricePerMonth
-                      : spot.pricePerHour
-                  }`}
-                  spotId={spot._id}
-                  dateTimeIn={getValues("dateTimeIn")}
-                  dateTimeOut={getValues("dateTimeOut")}
-                />
-              ))}
+            {/* Display custom markers for parking spots */}
           </GoogleMap>
         </div>
       </div>

@@ -1,9 +1,11 @@
 import React from "react";
 import { Helmet } from "react-helmet";
+import { Footer } from "../../components";
 
 function TermsAndConditions() {
     return (
-        <div className="min-h-screen bg-gray-100 py-10 px-4 sm:px-6 lg:px-8">
+        <div>
+        <div className="min-h-screen py-10 px-4 sm:px-6 lg:px-8">
             <Helmet>
                 <title>SpotShare | Terms and Conditions</title>
                 <meta name="description" content="SpotShare's terms and conditions for using the website and services." />
@@ -474,6 +476,8 @@ function TermsAndConditions() {
                     </p>
                 </section>
             </div>
+        </div>
+        <Footer />
         </div>
     );
 }

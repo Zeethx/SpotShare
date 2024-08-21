@@ -14,7 +14,7 @@ export function HorizontalCard({description, imageUrl , title="" ,imgClass = ""}
           
         </div>
       </div>
-      <div className="flex items-center justify-center md:h-[200px] md:w-[300px] w-[200px]">
+      <div className="flex items-center justify-center sm:h-[200px] sm:w-[300px] w-[250px] pr-10 sm:r-0">
         <img
           src={imageUrl}
           className={"rounded-t-lg max-w-[200px] h-1/2 min-h-[100px] max-h-[200px] w-full md:max-h-full " + imgClass}
