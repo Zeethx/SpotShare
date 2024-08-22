@@ -90,13 +90,13 @@ const About = () => {
         <h2 className="text-4xl font-bold mb-6 text-center">Meet Our Team</h2>
         <div className="flex flex-col sm:flex-row items-center justify-around">
           <div className="bg-white text-gray-800 p-6 m-4 rounded-xl shadow-md max-w-sm text-center">
-            <img src="/images/founders/raghav.jpg" alt="Raghav Anand" className="w-32 h-32 rounded-full mx-auto mb-4" />
+            <img src="/images/founders/raghav.JPG" alt="Raghav Anand" className="w-32 h-32 rounded-full mx-auto mb-4" />
             <h3 className="text-xl font-semibold mb-2">Raghav Anand</h3>
             <p className="text-slate-900">Founder & CEO</p>
             <p className="mt-4 text-slate-900">Raghav is passionate about solving urban parking problems with innovative technology solutions. His vision drives SpotShare towards making cities more accessible for everyone.</p>
           </div>
           <div className="bg-white text-gray-800 p-6 m-4 rounded-xl shadow-md max-w-sm text-center">
-            <img src="images/founders/harshit.jpg" alt="Harshit Bedi" className="w-32 h-32 rounded-full mx-auto mb-4" />
+            <img src="images/founders/harshit.JPG" alt="Harshit Bedi" className="w-32 h-32 rounded-full mx-auto mb-4" />
             <h3 className="text-xl font-semibold mb-2">Harshit Bedi</h3>
             <p className="text-slate-900">Co-Founder & CTO</p>
             <p className="mt-4 text-slate-900">Harshit is the tech brain behind SpotShare. With his expertise in software development, he ensures the platform is robust, user-friendly, and efficient for all users.</p>
