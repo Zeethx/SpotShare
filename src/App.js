@@ -16,16 +16,16 @@ function App() {
 
   const checkUser = useCallback(async () => {
     if (user) {
-      const idToken = await user.getIdToken();
-      localStorage.setItem('token', idToken);
+      // Token is managed by Firebase SDK and fetched per-request in axiosConfig.js
+      // Do NOT store it in localStorage — keep it in memory only
       dispatch(login({ email: user.email, uid: user.uid }));
     }
+    setLoading(false);
   }, [user, dispatch]);
-  
+
   useEffect(() => {
     checkUser();
-    setLoading(false);
-  }, [user, checkUser]); 
+  }, [checkUser]);
 
   if (loading) {
     return <Loader />;

@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { addImage } from '../../store/formReducer';
 import { FormFooter } from "../";
+import toast from 'react-hot-toast';
 import api from "../../conf/axiosConfig";
 
 function GetSpotDetails3() {
@@ -10,15 +11,28 @@ function GetSpotDetails3() {
 
   const handleImageUpload = async (event, index) => {
     const file = event.target.files[0];
+    if (!file) return;
+
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+    const maxSize = 5 * 1024 * 1024; // 5MB
+    if (!allowedTypes.includes(file.type)) {
+      toast.error('Only JPEG, PNG, WebP, and GIF images are allowed.');
+      return;
+    }
+    if (file.size > maxSize) {
+      toast.error('Image must be under 5MB.');
+      return;
+    }
+
     const formData = new FormData();
     formData.append("spotImages", file);
 
     try {
       const response = await api.post("/parking-space/upload", formData);
-      const uploadedUrl = response.data.data[0]; // Ensure to get the correct URL from response
+      const uploadedUrl = response.data.data[0];
       dispatch(addImage({ index, url: uploadedUrl }));
-    } catch (error) {
-      console.error(error);
+    } catch {
+      toast.error('Failed to upload image. Please try again.');
     }
   };
 

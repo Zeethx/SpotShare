@@ -70,8 +70,8 @@ useEffect(() => {
       });
 
       setUpdatedSpots(updatedSpots);
-    } catch (error) {
-      console.error("Error fetching ratings:", error);
+    } catch {
+      // ratings are non-critical; silently skip on failure
     }
   };
 

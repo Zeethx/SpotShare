@@ -26,7 +26,6 @@ function Review() {
             }
         } catch (error) {
             setError('Failed to submit review');
-            console.error('Error submitting review:', error);
         }
     };
 

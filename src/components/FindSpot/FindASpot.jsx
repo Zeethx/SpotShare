@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import {
   GoogleMap,
-  Marker,
   Autocomplete,
   useJsApiLoader,
 } from "@react-google-maps/api";
@@ -69,8 +68,6 @@ function FindASpot() {
           setMarkerPosition({ lat, lng });
           setAddress(address);
           setValue("location", address); // Update the form value for location
-        } else {
-          console.error("Invalid coordinates:", { lat, lng });
         }
       }
     }
@@ -87,13 +84,7 @@ function FindASpot() {
             map.setCenter({ lat, lng });
             map.setZoom(13);
             setMarkerPosition({ lat, lng });
-          } else {
-            console.error("Invalid geocoded coordinates:", { lat, lng });
           }
-        } else {
-          console.error(
-            "Geocode was not successful for the following reason: " + status
-          );
         }
       });
     }
@@ -164,11 +155,9 @@ function FindASpot() {
           setClosestSpots(sortedSpots.slice(0, 5));
         }
       } catch (error) {
-        console.error("Error fetching data:", error);
         toast.error("Failed to fetch parking spots");
       }
     } else {
-      console.error("Invalid marker position:", markerPosition);
       toast.error("Please select a valid location");
     }
   };

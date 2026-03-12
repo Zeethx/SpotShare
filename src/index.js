@@ -39,9 +39,7 @@ import PrivacyPolicy from './pages/legal/PrivacyPolicy';
 const rootElement = document.getElementById('root');
 const root = ReactDOM.createRoot(rootElement);
 
-const renderMethod = rootElement.hasChildNodes() ? 'hydrateRoot' : 'render';
-
-root[renderMethod](
+root.render(
   <React.StrictMode>
     <Provider store={store}>
       <Router>
@@ -64,15 +62,15 @@ root[renderMethod](
               <Route path="review" element={<ReviewDetails />} />
             </Route>
             <Route path="/find" element={<Find />} />
-            <Route path="/reserve/:spotId" element={<ConfirmReservationPage />} />
+            <Route path="/reserve/:spotId" element={<Protected><ConfirmReservationPage /></Protected>} />
             <Route path="/submission-confirmation" element={<ReviewConfirmPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/parking-space/:id" element={<Protected><ParkingSpotDetailsPage /></Protected>} />
-            <Route path="/reservations/:id" element={<ReservationsPage />} />
+            <Route path="/reservations/:id" element={<Protected><ReservationsPage /></Protected>} />
             <Route path="/myreservations" element={<Protected><MyReservations /></Protected>} />
             <Route path="/reservation/:id" element={<Protected><ReservationDetails /> </Protected>} />
             <Route path="/write-a-review/:parkingId/:reservationId" element={<Protected><WriteAReview /></Protected>} />
-            <Route path="/reservation/success" element={<PaymentSuccess />} />
+            <Route path="/reservation/success" element={<Protected><PaymentSuccess /></Protected>} />
             <Route path="/reservation/cancel" element={<PaymentFailure />} />
             <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />

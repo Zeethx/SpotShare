@@ -37,19 +37,15 @@ function SignUpForm() {
 
       const response = await signUp(email, password);
       if (response === "auth/email-already-in-use") {
-        setErrorMessage('Email already in use');
+        setErrorMessage('Sign up failed. If you already have an account, please log in.');
       } else if (response && response.user) {
-        const idToken = await response.user.getIdToken();
-        localStorage.setItem('token', idToken);
-
-        const user = {
+        // Token is managed by Firebase SDK — never stored in localStorage.
+        // The /register endpoint gets uid from the verified Firebase token (auth middleware).
+        await api.post('/users/register', {
           fullName,
           email,
           phoneNumber,
-          uid: response.user.uid  
-        };
-
-        await api.post('/users/register', user);
+        });
 
         dispatch(login({ email, uid: response.user.uid }));
 
@@ -72,7 +68,7 @@ function SignUpForm() {
         <div className="flex flex-col items-center w-full pr-10 pb-20 pl-10 lg:flex-row">
           <div className="w-full bg-cover relative max-w-md lg:max-w-2xl lg:w-7/12">
             <div className="lg:flex flex-col items-center justify-center w-full h-full relative lg:pr-10 hidden">
-              <img src="https://res.cloudinary.com/macxenon/image/upload/v1631570592/Run_-_Health_qcghbu.png" alt="Health and Running"
+              <img src="/images/login_form.svg" alt="Sign up"
                 className="w-1/2 lg:w-full lg:h-full lg:object-cover"
               />
             </div>

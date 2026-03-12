@@ -17,44 +17,46 @@ const ProfilePage = () => {
       .then((response) => {
         setUser(response.data.data);
       })
-      .catch((error) => {
-        console.error("Error fetching user data:", error);
-      });
+      .catch(() => {});
     api
       .get("/users/parking-spaces")
       .then((response) => {
         setParkingSpots(response.data.data);
       })
-      .catch((error) => {
-        console.error("Error fetching parking spaces:", error);
-      });
+      .catch(() => {});
     }, []);
 
   const handleProfilePictureSubmit = (event) => {
     event.preventDefault();
     const file = fileInput.current.files[0];
-    if (file) {
-      const formData = new FormData();
-      formData.append("profilePhoto", file);
+    if (!file) return;
 
-      api
-        .post("/users/avatar", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then((response) => {
-          setUser(response.data.data);
-        })
-        .catch((error) => {
-          console.error(
-            "Error updating profile picture:",
-            error.response ? error.response.data : error.message
-          );
-        });
-    } else {
-      console.error("No file selected");
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+    const maxSize = 5 * 1024 * 1024; // 5MB
+    if (!allowedTypes.includes(file.type)) {
+      alert('Only JPEG, PNG, and WebP images are allowed.');
+      return;
     }
+    if (file.size > maxSize) {
+      alert('Image must be under 5MB.');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("profilePhoto", file);
+
+    api
+      .post("/users/avatar", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        setUser(response.data.data);
+      })
+      .catch(() => {
+        alert('Failed to update profile picture. Please try again.');
+      });
   };
 
   const handleProfilePictureClick = () => {

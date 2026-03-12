@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import toast from 'react-hot-toast';
 import api from '../../conf/axiosConfig';
 
 const FAQItem = ({ question, answer }) => {
@@ -23,19 +24,20 @@ const FAQItem = ({ question, answer }) => {
 };
 
 const Contact = () => {
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    const form = e.target;
     try {
-      api.post('users/contact', {
-        name: e.target[0].value,
-        email: e.target[1].value,
-        message: e.target[2].value,
+      await api.post('users/contact', {
+        name: form.elements['contact-name'].value,
+        email: form.elements['contact-email'].value,
+        message: form.elements['contact-message'].value,
       });
-      e.target.reset();
+      form.reset();
+      toast.success('Your message has been sent!');
     } catch (error) {
-      console.error(error);
+      toast.error('Failed to send message. Please try again or email us directly.');
     }
-    alert('Your message has been sent!');
   };
 
   const faqs = [
@@ -61,15 +63,15 @@ const Contact = () => {
         >
           <div>
             <label className="block text-gray-700">Enter your name</label>
-            <input type="text" className="border p-2 w-full rounded" />
+            <input type="text" name="contact-name" required className="border p-2 w-full rounded" />
           </div>
           <div>
             <label className="block text-gray-700">Enter your email</label>
-            <input type="email" className="border p-2 w-full rounded" />
+            <input type="email" name="contact-email" required className="border p-2 w-full rounded" />
           </div>
           <div>
             <label className="block text-gray-700">Message</label>
-            <textarea className="border p-2 w-full rounded" rows="4" />
+            <textarea name="contact-message" required className="border p-2 w-full rounded" rows="4" />
           </div>
           <button type="submit" className="bg-indigo-600 text-white p-2 w-full rounded hover:bg-indigo-700">
             Submit
@@ -84,7 +86,7 @@ const Contact = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-4xl mb-8">
         <div className="bg-white p-8 rounded-lg shadow-lg flex flex-col items-center">
           <span className="text-purple-600 text-3xl mb-4">📞</span>
-          <p>(+1) 226-975-6336</p>
+          <p>{process.env.REACT_APP_CONTACT_PHONE || '(+1) 226-975-6336'}</p>
         </div>
         <div className="bg-white p-8 rounded-lg shadow-lg flex flex-col items-center">
           <span className="text-purple-600 text-3xl mb-4">✉️</span>
@@ -99,7 +101,7 @@ const Contact = () => {
       <div className="max-w-4xl w-full mb-8">
         <h2 className="text-2xl font-semibold mb-4 text-center">Some of the most frequently asked questions</h2>
         {faqs.map((faq, index) => (
-          <FAQItem key={index} question={faq.question} answer={faq.answer} />
+          <FAQItem key={faq.question} question={faq.question} answer={faq.answer} />
         ))}
       </div>
     </div>

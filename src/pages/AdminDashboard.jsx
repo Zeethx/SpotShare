@@ -18,9 +18,7 @@ const AdminDashboard = () => {
         api.get('/parking-space/all').then((response) => {
             setParkingSpaces(response.data.data);
             setFilteredSpaces(response.data.data);
-        }).catch((error) => {
-            console.error('Failed to fetch parking spaces:', error);
-        });
+        }).catch(() => {});
     }, []);
 
     const applyFilter = useCallback(() => {
@@ -49,9 +47,7 @@ const AdminDashboard = () => {
         // Approve a parking space listing
         api.patch(`/parking-space/${id}/approve`, { status: 'Approved' }).then(() => {
             setParkingSpaces(parkingSpaces.map(space => space._id === id ? { ...space, status: 'Approved' } : space));
-        }).catch((error) => {
-            console.error('Failed to approve parking space:', error);
-        });
+        }).catch(() => {});
     };
 
     const openRejectModal = (id) => {
@@ -66,9 +62,7 @@ const AdminDashboard = () => {
                 setParkingSpaces(parkingSpaces.map(space => space._id === selectedSpaceId ? { ...space, status: 'Rejected', reason: rejectReason } : space));
                 setShowRejectModal(false);
                 setRejectReason('');
-            }).catch((error) => {
-                console.error('Failed to reject parking space:', error);
-            });
+            }).catch(() => {});
         }
     };
 

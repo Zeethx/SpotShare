@@ -37,8 +37,8 @@ function ProfileButton() {
       try {
         const response = await api.get('/users/me');
         setUserDetails(response.data.data);
-      } catch (error) {
-        console.error('Error fetching user data:', error);
+      } catch {
+        // silently skip; avatar will show placeholder
       }
     }
   }, [isUserLoggedIn]);

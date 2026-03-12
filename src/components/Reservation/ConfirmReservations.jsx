@@ -26,8 +26,8 @@ const ConfirmReservation = () => {
       try {
         const response = await api.get(`/parking-space/${spotId}`);
         setSpotDetails(response.data.data);
-      } catch (error) {
-        console.error('Error fetching parking spot details:', error);
+      } catch {
+        // spot details fetch failed; loading state will remain
       }
     };
 
@@ -84,38 +84,42 @@ const ConfirmReservation = () => {
     const days = Math.ceil(total / (1000 * 60 * 60 * 24));
     const months = Math.ceil(days / 30);
 
-    const pricePerHour = spotDetails.pricePerHour || Infinity;
-    const pricePerDay = spotDetails.pricePerDay || Infinity;
-    const pricePerMonth = spotDetails.pricePerMonth || Infinity;
+    // Use null instead of Infinity so free/zero-price spots don't break the display
+    const ph = (spotDetails.pricePerHour != null && spotDetails.pricePerHour > 0) ? spotDetails.pricePerHour : null;
+    const pd = (spotDetails.pricePerDay != null && spotDetails.pricePerDay > 0) ? spotDetails.pricePerDay : null;
+    const pm = (spotDetails.pricePerMonth != null && spotDetails.pricePerMonth > 0) ? spotDetails.pricePerMonth : null;
 
-    const hourlyPrice = hours * pricePerHour;
-    const dailyPrice = days * pricePerDay;
-    const monthlyPrice = months * pricePerMonth;
+    const hourlyTotal  = ph != null ? hours  * ph : null;
+    const dailyTotal   = pd != null ? days   * pd : null;
+    const monthlyTotal = pm != null ? months * pm : null;
 
-    if (monthlyPrice < dailyPrice && monthlyPrice < hourlyPrice) {
-      return monthlyPrice;
-    } else if (dailyPrice < hourlyPrice) {
-      return dailyPrice;
-    } else {
-      return hourlyPrice;
-    }
+    const candidates = [hourlyTotal, dailyTotal, monthlyTotal].filter(v => v != null);
+    return candidates.length > 0 ? Math.min(...candidates) : 0;
   };
 
   const duration = calculateDuration(dateTimeIn, dateTimeOut);
   const finalPrice = calculatePrice(duration);
-  const stripePrice = finalPrice + finalPrice * 0.04 + 0.30;
+  // Display-only fee calculation (actual amount is computed server-side)
+  const displayFee = finalPrice * 0.04 + 0.30;
+  const displayTotal = finalPrice + displayFee;
 
   const handleReservation = async () => {
+    // Validate vehicle registration before submitting
+    const vehicleRegRegex = /^[A-Z0-9 ]{1,10}$/;
+    if (!vehicleRegRegex.test(vehicleReg.trim())) {
+      alert('Please enter a valid vehicle registration plate (letters and numbers only).');
+      return;
+    }
+
     try {
+      // Do NOT send amount — the backend calculates it server-side
       const payment = await api.post('/pay/create-checkout-session', {
         parkingSpaceId: spotId,
-        amount: stripePrice,
         metadata: {
           spotId: spotId,
           vehicleReg: vehicleReg,
           startTime: dateTimeIn.toISOString(),
           endTime: dateTimeOut.toISOString(),
-          totalPrice: finalPrice,
         },
       });
 
@@ -248,12 +252,12 @@ const ConfirmReservation = () => {
                   <span>
                     Transaction fee <span className="text-gray-500">(i)</span>
                   </span>
-                  <span>CA${(stripePrice - finalPrice).toFixed(2)}</span>
+                  <span>CA${displayFee.toFixed(2)}</span>
                 </p>
                 <hr className="my-4" />
                 <p className="flex justify-between text-xl font-semibold text-gray-800">
-                  <span>Final price</span>
-                  <span>CA${(stripePrice).toFixed(2)}</span>
+                  <span>Estimated total</span>
+                  <span>CA${displayTotal.toFixed(2)}</span>
                 </p>
               </div>
               <button

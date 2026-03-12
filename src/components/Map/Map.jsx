@@ -50,8 +50,6 @@ function Map({ address, onAddressChange }) {
           setMarkerPosition({ lat, lng });
           map.panTo({ lat, lng });
           map.setZoom(15);
-        } else {
-          console.error('Geocode was not successful for the following reason: ' + status);
         }
       });
     }

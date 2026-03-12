@@ -22,12 +22,12 @@ function Testimonial() {
           <div className="isolate flex -space-x-2">
             <img
               className="relative z-30 inline-block h-20 w-20 rounded-full ring-2 ring-white object-cover"
-              src="/images/driver_profile.png"
+              src="/images/directions.jpeg"
               alt="Dan_Abromov"
             />
           </div>
           <div>
-            <p className="font-semibold text-black">Maheepjot Singh Pruthi</p>
+            <p className="font-semibold text-black">MMS Nagani</p>
           </div>
         </figcaption>
       </figure>

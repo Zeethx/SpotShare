@@ -29,8 +29,8 @@ const Review = () => {
       await api.post("/parking-space/create", payload);
       dispatch(clearForm());
       navigate("/submission-confirmation");
-    } catch (error) {
-      console.error("Submission failed:", error);
+    } catch {
+      // submission failed silently; user can retry
     }
   };
 

@@ -18,36 +18,24 @@ function LoginForm() {
     try {
       const userCredential = await googleSignIn();
       if (userCredential && userCredential.user) {
-        const idToken = await userCredential.user.getIdToken();
-        localStorage.setItem('token', idToken);
-        if(userCredential) {
-          try {
-            await api.post('/users/register', {
-              uid: userCredential.user.uid,
-              fullName: userCredential.user.displayName,
-              email: userCredential.user.email,
-              phoneNumber: userCredential.user.phoneNumber,
-              photoUrl: userCredential.user.photoURL,
-            });
-          } catch (error) {
-            console.error('Failed to create user:', error);
-          }
+        // Token is managed by Firebase SDK and fetched per-request in axiosConfig.js
+        // Do NOT store token or user PII in localStorage
+        try {
+          await api.post('/users/register', {
+            fullName: userCredential.user.displayName,
+            email: userCredential.user.email,
+            phoneNumber: userCredential.user.phoneNumber,
+            photoUrl: userCredential.user.photoURL,
+          });
+        } catch (error) {
+          // user may already exist — not a blocking error
         }
         dispatch(login({ email: userCredential.user.email, uid: userCredential.user.uid }));
         setIsLoggedIn(true);
-        try {
-          const userDetails = await api.get('/users/me');
-          localStorage.setItem('user', JSON.stringify(userDetails.data)); // Store user details in local storage
-        } catch (error) {
-          console.error('Failed to fetch user details');
-        }
-
       } else {
-        console.error('Google Sign-In failed');
         setErrorMessage('Failed to sign in with Google.');
       }
     } catch (error) {
-      console.error('Error during Google Sign-In:', error);
       setErrorMessage('Failed to sign in with Google.');
     }
   };
@@ -57,21 +45,14 @@ function LoginForm() {
     try {
       const userCredential = await signIn(email, password);
       if (userCredential && userCredential.user) {
-        const idToken = await userCredential.user.getIdToken();
-        localStorage.setItem('token', idToken);
+        // Token is managed by Firebase SDK and fetched per-request in axiosConfig.js
+        // Do NOT store token or user PII in localStorage
         dispatch(login({ email, uid: userCredential.user.uid }));
         setIsLoggedIn(true);
-        try {
-          const userDetails = await api.get('/users/me');
-          localStorage.setItem('user', JSON.stringify(userDetails.data)); // Store user details in local storage
-        } catch (error) {
-          console.error('Failed to fetch user details');
-        }
       } else {
         setErrorMessage('Invalid email or password');
       }
     } catch (error) {
-      console.error('Error during sign-in:', error);
       setErrorMessage('Invalid email or password');
     }
   };

@@ -27,7 +27,7 @@ export const signIn = async (email, password) => {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         return userCredential;
     } catch (error) {
-        return ("Signin failed:", error);
+        throw error;
     }
 }
 
@@ -37,34 +37,31 @@ export const googleSignIn = async () => {
         const userCredential = await signInWithPopup(auth, provider);
         return userCredential;
     } catch (error) {
-        return ("Google Signin failed:", error);
+        throw error;
     }
 }
 
 export const signOutUser = async () => {
     try {
         await signOut(auth);
-        return ("Signout successful");
     } catch (error) {
-        return ("Signout failed:", error);
+        throw error;
     }
 }
 
 export const resetPassword = async (email) => {
     try {
         await sendPasswordResetEmail(auth, email);
-        return ("Password reset email sent");
     } catch (error) {
-        return ("Password reset failed:", error);
+        throw error;
     }
 }
 
 export const userUpdatePassword = async (password) => {
     try {
         await updatePassword(auth.currentUser, password);
-        return ("Password updated");
     } catch (error) {
-        return ("Password update failed:", error);
+        throw error;
     }
 }
 

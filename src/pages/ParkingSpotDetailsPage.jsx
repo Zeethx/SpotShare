@@ -7,6 +7,7 @@ import FormTextArea from "../components/ParkingSpace/FormTextArea";
 import DaysAvailable from "../components/ParkingSpace/DaysAvailable";
 import { ImageCarousel, Container } from "../components";
 import DeleteModal from "../components/ParkingSpace/DeleteModal";
+import { toast } from "react-hot-toast";
 
 const ParkingSpotDetails = () => {
   const { id } = useParams();
@@ -34,20 +35,19 @@ const ParkingSpotDetails = () => {
         });
       })
       .catch((error) => {
-        if (error.response.status === 403) {
+        if (error.response?.status === 403) {
           navigate("/404");
         }
-        console.error("Error fetching listing details:", error);
       });
   }, [id, navigate]);
 
   const handleDeleteParkingSpot = async () => {
     try {
       await api.delete(`/parking-space/${id}/remove`);
-      alert("Parking spot deleted successfully!");
+      toast.success("Parking spot deleted successfully!");
       navigate("/profile");
-    } catch (error) {
-      console.error("Failed to delete parking spot: ", error);
+    } catch {
+      toast.error("Failed to delete parking spot. Please try again.");
     }
   };
 
@@ -65,12 +65,11 @@ const ParkingSpotDetails = () => {
       .put(`/parking-space/${id}/update`, formState)
       .then((response) => {
         setListing(response.data.data);
-        alert("Listing updated successfully!");
+        toast.success("Listing updated successfully!");
         setIsEditMode(false);
       })
-      .catch((error) => {
-        console.error("Error updating listing details:", error);
-        alert("Failed to update listing.");
+      .catch(() => {
+        toast.error("Failed to update listing.");
       });
   };
 
