@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { GoogleMap, Marker, Autocomplete, useJsApiLoader } from "@react-google-maps/api";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 import conf from "../../conf/conf";
 import "./Map.css";
 
@@ -7,7 +7,7 @@ const libraries = ["places"];
 
 function Map({ address, onAddressChange }) {
   const [markerPosition, setMarkerPosition] = useState(null);
-  const [autocomplete, setAutocomplete] = useState(null);
+  const autocompleteInputRef = useRef(null);
   const [map, setMap] = useState(null);
 
   const inputStyle = "absolute top-5 left-1/2 transform -translate-x-1/2 w-11/12 max-w-md px-4 py-2 text-lg bg-white shadow-md rounded-full box-border";
@@ -21,23 +21,24 @@ function Map({ address, onAddressChange }) {
     setMap(map);
   }, []);
 
-  const onPlaceChanged = () => {
-    if (autocomplete) {
-      const place = autocomplete.getPlace();
+  useEffect(() => {
+    if (!isLoaded || !autocompleteInputRef.current) return;
+    const ac = new window.google.maps.places.Autocomplete(autocompleteInputRef.current);
+    ac.addListener("place_changed", () => {
+      const place = ac.getPlace();
       if (place && place.geometry) {
         const lat = place.geometry.location.lat();
         const lng = place.geometry.location.lng();
-        const address = place.formatted_address;
-
         setMarkerPosition({ lat, lng });
-        onAddressChange(address);
+        onAddressChange(place.formatted_address);
         if (map) {
           map.panTo({ lat, lng });
           map.setZoom(15);
         }
       }
-    }
-  };
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoaded, map]);
 
   useEffect(() => {
     if (address && map) {
@@ -79,12 +80,12 @@ function Map({ address, onAddressChange }) {
         onLoad={onMapLoad}
         options={{ mapTypeControl: false, streetViewControl: false, fullscreenControl: false }}
       >
-        <Autocomplete
-          onLoad={(autocomplete) => setAutocomplete(autocomplete)}
-          onPlaceChanged={onPlaceChanged}
-        >
-          <input type="text" placeholder="Enter your Address" className={inputStyle} />
-        </Autocomplete>
+        <input
+          type="text"
+          placeholder="Enter your Address"
+          ref={autocompleteInputRef}
+          className={inputStyle}
+        />
         {markerPosition && <Marker position={markerPosition} />}
       </GoogleMap>
     </div>

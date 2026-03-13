@@ -11,23 +11,19 @@ import { Toaster } from 'react-hot-toast'; // Import react-hot-toast
 
 function App() {
   const dispatch = useDispatch();
-  const [loading, setLoading] = React.useState(true);
-  const { user } = useUser();
-
-  const checkUser = useCallback(async () => {
-    if (user) {
-      // Token is managed by Firebase SDK and fetched per-request in axiosConfig.js
-      // Do NOT store it in localStorage — keep it in memory only
-      dispatch(login({ email: user.email, uid: user.uid }));
-    }
-    setLoading(false);
-  }, [user, dispatch]);
+  const { user, loading } = useUser();
+  // authReady gates the Outlet — only true after dispatch(login) has run,
+  // so ProtectedRoute never reads Redux before the auth status is set.
+  const [authReady, setAuthReady] = React.useState(false);
 
   useEffect(() => {
-    checkUser();
-  }, [checkUser]);
+    if (!loading) {
+      if (user) dispatch(login({ email: user.email, uid: user.uid }));
+      setAuthReady(true);
+    }
+  }, [loading, user, dispatch]);
 
-  if (loading) {
+  if (loading || !authReady) {
     return <Loader />;
   }
 
