@@ -1,7 +1,6 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   GoogleMap,
-  Autocomplete,
   useJsApiLoader,
 } from "@react-google-maps/api";
 import conf from "../../conf/conf";
@@ -20,7 +19,7 @@ const libraries = ["places"];
 function FindASpot() {
   const location = useLocation();
   const [markerPosition, setMarkerPosition] = useState(null);
-  const [autocomplete, setAutocomplete] = useState(null);
+  const autocompleteInputRef = useRef(null);
   const [map, setMap] = useState(null);
   const [parkingSpots, setParkingSpots] = useState([]);
   const [closestSpots, setClosestSpots] = useState([]);
@@ -56,22 +55,25 @@ function FindASpot() {
     setMap(map);
   }, []);
 
-  const onPlaceChanged = () => {
-    if (autocomplete) {
-      const place = autocomplete.getPlace();
-      if (place && place.geometry) {
-        const lat = place.geometry.location.lat();
-        const lng = place.geometry.location.lng();
-        const address = place.formatted_address;
-
-        if (!isNaN(lat) && !isNaN(lng)) {
-          setMarkerPosition({ lat, lng });
-          setAddress(address);
-          setValue("location", address); // Update the form value for location
-        }
+  const onPlaceChanged = (place) => {
+    if (place && place.geometry) {
+      const lat = place.geometry.location.lat();
+      const lng = place.geometry.location.lng();
+      const address = place.formatted_address;
+      if (!isNaN(lat) && !isNaN(lng)) {
+        setMarkerPosition({ lat, lng });
+        setAddress(address);
+        setValue("location", address);
       }
     }
   };
+
+  useEffect(() => {
+    if (!isLoaded || !autocompleteInputRef.current) return;
+    const ac = new window.google.maps.places.Autocomplete(autocompleteInputRef.current);
+    ac.addListener("place_changed", () => onPlaceChanged(ac.getPlace()));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoaded]);
 
   useEffect(() => {
     if (address && map) {
@@ -246,17 +248,16 @@ function FindASpot() {
                 name="location"
                 control={control}
                 render={({ field }) => (
-                  <Autocomplete
-                    onLoad={(autocomplete) => setAutocomplete(autocomplete)}
-                    onPlaceChanged={onPlaceChanged}
-                  >
-                    <input
-                      type="text"
-                      placeholder="Enter the Address"
-                      {...field}
-                      className={inputStyle}
-                    />
-                  </Autocomplete>
+                  <input
+                    type="text"
+                    placeholder="Enter the Address"
+                    {...field}
+                    ref={(el) => {
+                      field.ref(el);
+                      autocompleteInputRef.current = el;
+                    }}
+                    className={inputStyle}
+                  />
                 )}
               />
             </div>

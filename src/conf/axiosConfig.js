@@ -2,7 +2,7 @@ import axios from 'axios';
 import { auth } from '../firebase/firebase';
 
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_BASE_URL || 'https://localhost:8000/api/v1',
+  baseURL: process.env.REACT_APP_API_BASE_URL || 'http://localhost:8000/api/v1',
 });
 
 // Request interceptor — fetch a fresh Firebase token on every request.
