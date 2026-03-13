@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 import api from "../../conf/axiosConfig";
 import { clearForm } from "../../store/formReducer";
 import Carousel from "react-multi-carousel";
@@ -13,7 +14,7 @@ const Review = () => {
   const formData = useSelector((state) => state.form);
 
   //use firebase auth to get the owner email
-  const owner = auth.currentUser.email;
+  const owner = auth.currentUser?.email;
 
   useEffect(() => {
     window.onbeforeunload = () => true;
@@ -30,7 +31,7 @@ const Review = () => {
       dispatch(clearForm());
       navigate("/submission-confirmation");
     } catch {
-      // submission failed silently; user can retry
+      toast.error('Failed to submit listing. Please try again.');
     }
   };
 

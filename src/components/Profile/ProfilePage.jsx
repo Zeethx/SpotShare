@@ -1,6 +1,10 @@
 // src/pages/ProfilePage.tsx
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import toast from "react-hot-toast";
+import { logout } from "../../store/authSlice";
+import { signOutUser } from "../../firebase/auth";
 import api from "../../conf/axiosConfig";
 import CurrentListings from "./CurrentListings";
 import ParkingHistory from "./ParkingHistory";
@@ -10,6 +14,7 @@ const ProfilePage = () => {
   const [parkingSpots, setParkingSpots] = useState([]);
   const fileInput = useRef(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     api
@@ -17,14 +22,20 @@ const ProfilePage = () => {
       .then((response) => {
         setUser(response.data.data);
       })
-      .catch(() => {});
+      .catch(async (error) => {
+        const status = error.response?.status;
+        if (status === 401 || status === 404) {
+          await signOutUser();
+          dispatch(logout());
+        }
+      });
     api
       .get("/users/parking-spaces")
       .then((response) => {
         setParkingSpots(response.data.data);
       })
       .catch(() => {});
-    }, []);
+    }, [dispatch]);
 
   const handleProfilePictureSubmit = (event) => {
     event.preventDefault();
@@ -38,7 +49,7 @@ const ProfilePage = () => {
       return;
     }
     if (file.size > maxSize) {
-      alert('Image must be under 5MB.');
+      toast.error('Image must be under 5MB.');
       return;
     }
 
@@ -55,7 +66,7 @@ const ProfilePage = () => {
         setUser(response.data.data);
       })
       .catch(() => {
-        alert('Failed to update profile picture. Please try again.');
+        toast.error('Failed to update profile picture. Please try again.');
       });
   };
 

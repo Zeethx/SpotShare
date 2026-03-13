@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import { toast } from 'react-hot-toast';
 import api from '../conf/axiosConfig';
 import { ParkingTable, Pagination, SearchFilterBar, RejectModal } from '../components/Admin';
 
@@ -18,7 +19,7 @@ const AdminDashboard = () => {
         api.get('/parking-space/all').then((response) => {
             setParkingSpaces(response.data.data);
             setFilteredSpaces(response.data.data);
-        }).catch(() => {});
+        }).catch(() => { toast.error('Failed to load listings.'); });
     }, []);
 
     const applyFilter = useCallback(() => {
@@ -47,7 +48,7 @@ const AdminDashboard = () => {
         // Approve a parking space listing
         api.patch(`/parking-space/${id}/approve`, { status: 'Approved' }).then(() => {
             setParkingSpaces(parkingSpaces.map(space => space._id === id ? { ...space, status: 'Approved' } : space));
-        }).catch(() => {});
+        }).catch(() => { toast.error('Failed to approve listing.'); });
     };
 
     const openRejectModal = (id) => {
@@ -62,7 +63,7 @@ const AdminDashboard = () => {
                 setParkingSpaces(parkingSpaces.map(space => space._id === selectedSpaceId ? { ...space, status: 'Rejected', reason: rejectReason } : space));
                 setShowRejectModal(false);
                 setRejectReason('');
-            }).catch(() => {});
+            }).catch(() => { toast.error('Failed to reject listing.'); });
         }
     };
 

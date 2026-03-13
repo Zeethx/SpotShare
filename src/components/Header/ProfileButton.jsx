@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '../../store/authSlice';
+import { signOutUser } from '../../firebase/auth';
 import { LogoutBtn } from '../';
 import api from '../../conf/axiosConfig';
 
@@ -11,6 +13,7 @@ function ProfileButton() {
   const dropdownRef = useRef(null);
 
   const isUserLoggedIn = useSelector((state) => state.auth.status);
+  const dispatch = useDispatch();
 
   const handleProfileClick = () => {
     navigate('/profile');
@@ -37,11 +40,18 @@ function ProfileButton() {
       try {
         const response = await api.get('/users/me');
         setUserDetails(response.data.data);
-      } catch {
-        // silently skip; avatar will show placeholder
+      } catch (error) {
+        const status = error.response?.status;
+        // 401 = token rejected by backend, 404 = user record doesn't exist in DB.
+        // Both mean the session is unrecoverable — sign out so the UI is consistent.
+        // Anything else (500, network error) is transient; leave the user logged in.
+        if (status === 401 || status === 404) {
+          await signOutUser();
+          dispatch(logout());
+        }
       }
     }
-  }, [isUserLoggedIn]);
+  }, [isUserLoggedIn, dispatch]);
 
   useEffect(() => {
     fetchUserDetails();
