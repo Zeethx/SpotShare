@@ -1,5 +1,5 @@
 import './App.css';
-import React, {useEffect, useCallback} from 'react';
+import React, {useEffect} from 'react';
 import { Outlet } from 'react-router-dom';
 import Header from './components/Header/Header';
 import { useDispatch } from 'react-redux';
