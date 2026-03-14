@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react';
-import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 export const useUser = () => {
     const [user, setUser] = useState(null);
@@ -7,19 +7,8 @@ export const useUser = () => {
 
     useEffect(() => {
         const auth = getAuth();
-        const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-            if (firebaseUser) {
-                try {
-                    await firebaseUser.getIdToken();
-                    setUser(firebaseUser);
-                } catch {
-                    // Token is invalid or revoked — sign out to clear the stale session
-                    await signOut(auth);
-                    setUser(null);
-                }
-            } else {
-                setUser(null);
-            }
+        const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+            setUser(firebaseUser ?? null);
             setLoading(false);
         });
 

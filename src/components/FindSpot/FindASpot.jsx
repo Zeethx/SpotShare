@@ -358,6 +358,9 @@ function FindASpot() {
                     ? spot.pricePerMonth
                     : spot.pricePerHour
                 }`}
+                spotId={spot._id}
+                dateTimeIn={getValues("dateTimeIn")}
+                dateTimeOut={getValues("dateTimeOut")}
               />
             ))}
           </GoogleMap>

@@ -18,20 +18,15 @@ function LoginForm() {
     try {
       const userCredential = await googleSignIn();
       if (userCredential && userCredential.user) {
-        // Token is managed by Firebase SDK and fetched per-request in axiosConfig.js
-        // Do NOT store token or user PII in localStorage
-        try {
-          await api.post('/users/register', {
-            fullName: userCredential.user.displayName,
-            email: userCredential.user.email,
-            phoneNumber: userCredential.user.phoneNumber,
-            photoUrl: userCredential.user.photoURL,
-          });
-        } catch (error) {
-          // user may already exist — not a blocking error
-        }
         dispatch(login({ email: userCredential.user.email, uid: userCredential.user.uid }));
         setIsLoggedIn(true);
+        // Fire-and-forget: ensure user exists in DB (idempotent, non-blocking)
+        api.post('/users/register', {
+          fullName: userCredential.user.displayName,
+          email: userCredential.user.email,
+          phoneNumber: userCredential.user.phoneNumber,
+          photoUrl: userCredential.user.photoURL,
+        }).catch(() => {});
       } else {
         setErrorMessage('Failed to sign in with Google.');
       }
